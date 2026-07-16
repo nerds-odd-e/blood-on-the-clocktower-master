@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { loadCatalog } from '../../../domain/script'
 import { useSetupSessionStore } from '../../../state/setupSessionStore'
 
@@ -12,6 +13,7 @@ const DIFFICULTY_LABEL = {
 } as const
 
 export function NightReadyStep({ onBack }: NightReadyStepProps) {
+  const navigate = useNavigate()
   const players = useSetupSessionStore((state) => state.players)
   const difficulty = useSetupSessionStore((state) => state.difficulty)
   const bag = useSetupSessionStore((state) => state.bag)
@@ -22,6 +24,7 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
   const retryCriticalPersist = useSetupSessionStore(
     (state) => state.retryCriticalPersist,
   )
+  const startFirstNight = useSetupSessionStore((state) => state.startFirstNight)
 
   if (!bag) return null
 
@@ -63,10 +66,12 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
 
   const statusCopy =
     persistWriteStatus === 'saved'
-      ? 'Assignments are saved. Night coaching arrives in the next update — stay ready at the table.'
+      ? 'Assignments are saved. When the table is ready, start the first night.'
       : persistWriteStatus === 'saving'
         ? 'Saving your assignments… keep this screen open for a moment.'
         : 'Couldn’t save your assignments on this device. Check storage, then try again — nothing here blames you.'
+
+  const startDisabled = persistWriteStatus === 'saving'
 
   return (
     <section className="flex min-h-dvh flex-col gap-6 pt-8 pb-8">
@@ -104,13 +109,26 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
         ))}
       </dl>
 
-      <button
-        type="button"
-        className="min-h-11 self-start text-body underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-        onClick={onBack}
-      >
-        Back
-      </button>
+      <footer className="sticky bottom-0 mt-auto flex flex-col gap-2 bg-[var(--color-dominant)] py-4">
+        <button
+          type="button"
+          className="min-h-11 self-start text-body underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
+          onClick={onBack}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          disabled={startDisabled}
+          className="min-h-12 rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50"
+          onClick={() => {
+            startFirstNight()
+            navigate('/play')
+          }}
+        >
+          Start first night
+        </button>
+      </footer>
     </section>
   )
 }

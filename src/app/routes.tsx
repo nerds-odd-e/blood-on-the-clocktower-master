@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { ScriptHome } from '../ui/home/ScriptHome'
 import { SetupWizard } from '../ui/setup/SetupWizard'
-import { PlayStub } from '../ui/play/PlayStub'
+import { PlayScreen } from '../ui/play/PlayScreen'
 
 /**
  * Shallow route table: /, /setup, /play (D-09).
@@ -11,7 +11,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<ScriptHome />} />
       <Route path="/setup" element={<SetupWizard />} />
-      <Route path="/play" element={<PlayStub />} />
+      <Route path="/play" element={<PlayScreen />} />
     </Routes>
   )
 }

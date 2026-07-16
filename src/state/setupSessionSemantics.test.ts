@@ -245,4 +245,40 @@ describe('assertSetupSessionSemantics', () => {
     )
     expect(tooFew.ok).toBe(false)
   })
+
+  it('accepts persist-v2 play field shapes when present', () => {
+    expect(
+      assertSetupSessionSemantics(
+        legalSession({
+          nightKind: 'first',
+          beatIndex: 0,
+          playSurface: 'coach',
+          deadPlayerIds: [],
+          reminders: {},
+          demonBluffs: [],
+          diedTonightIds: [],
+          playStarted: false,
+        }),
+        catalog,
+      ),
+    ).toEqual({ ok: true })
+  })
+
+  it('rejects malformed play array fields', () => {
+    const badDead = assertSetupSessionSemantics(
+      legalSession({
+        deadPlayerIds: [''],
+      }),
+      catalog,
+    )
+    expect(badDead.ok).toBe(false)
+
+    const badBeat = assertSetupSessionSemantics(
+      legalSession({
+        beatIndex: -1,
+      }),
+      catalog,
+    )
+    expect(badBeat.ok).toBe(false)
+  })
 })

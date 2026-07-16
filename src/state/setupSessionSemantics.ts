@@ -34,6 +34,15 @@ export type PersistedSetupSession = {
       believedRoleId?: string
     }
   >
+  /** Play fields (persist v2). Optional so Phase 2-shaped fixtures still type-check. */
+  nightKind?: 'first' | 'other'
+  beatIndex?: number
+  playSurface?: 'coach' | 'grimoire' | 'bridge'
+  deadPlayerIds?: string[]
+  reminders?: Record<string, string[]>
+  demonBluffs?: string[]
+  diedTonightIds?: string[]
+  playStarted?: boolean
 }
 
 export type SemanticsResult = { ok: true } | { ok: false; reason: string }
@@ -68,7 +77,7 @@ export function assertSetupSessionSemantics(
         return fail('Assignment key must equal assignment.playerId')
       }
     }
-    return { ok: true }
+    return assertPlayFieldShapes(session)
   }
 
   if (players.length < 5 || players.length > 15) {
@@ -129,5 +138,63 @@ export function assertSetupSessionSemantics(
     }
   }
 
+  const playShape = assertPlayFieldShapes(session)
+  if (!playShape.ok) return playShape
+
+  return { ok: true }
+}
+
+/** Light shape checks for persist-v2 play arrays (eligibility waits for 03-04). */
+function assertPlayFieldShapes(session: PersistedSetupSession): SemanticsResult {
+  if (session.deadPlayerIds !== undefined) {
+    if (!Array.isArray(session.deadPlayerIds)) {
+      return fail('deadPlayerIds must be an array')
+    }
+    for (const id of session.deadPlayerIds) {
+      if (typeof id !== 'string' || id.length === 0) {
+        return fail('deadPlayerIds entries must be nonempty strings')
+      }
+    }
+  }
+  if (session.diedTonightIds !== undefined) {
+    if (!Array.isArray(session.diedTonightIds)) {
+      return fail('diedTonightIds must be an array')
+    }
+    for (const id of session.diedTonightIds) {
+      if (typeof id !== 'string' || id.length === 0) {
+        return fail('diedTonightIds entries must be nonempty strings')
+      }
+    }
+  }
+  if (session.demonBluffs !== undefined) {
+    if (!Array.isArray(session.demonBluffs)) {
+      return fail('demonBluffs must be an array')
+    }
+    for (const id of session.demonBluffs) {
+      if (typeof id !== 'string' || id.length === 0) {
+        return fail('demonBluffs entries must be nonempty strings')
+      }
+    }
+  }
+  if (session.reminders !== undefined) {
+    if (
+      typeof session.reminders !== 'object' ||
+      session.reminders === null ||
+      Array.isArray(session.reminders)
+    ) {
+      return fail('reminders must be a record of string arrays')
+    }
+    for (const tokens of Object.values(session.reminders)) {
+      if (!Array.isArray(tokens)) {
+        return fail('reminders values must be string arrays')
+      }
+    }
+  }
+  if (
+    session.beatIndex !== undefined &&
+    (!Number.isInteger(session.beatIndex) || session.beatIndex < 0)
+  ) {
+    return fail('beatIndex must be a nonnegative integer')
+  }
   return { ok: true }
 }

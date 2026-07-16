@@ -51,12 +51,23 @@ export const SetupPlayerSchema = z.object({
   notes: z.string().max(200).optional(),
 })
 
+export const NightKindSchema = z.enum(['first', 'other'])
+export const PlaySurfaceSchema = z.enum(['coach', 'grimoire', 'bridge'])
+
 const PersistedSetupSessionSchema = z.object({
   wizardStep: WizardStepSchema,
   players: z.array(SetupPlayerSchema).max(15),
   difficulty: DifficultySchema,
   bag: BagPlanSchema.nullable(),
   assignments: z.record(z.string(), AssignmentSchema),
+  nightKind: NightKindSchema,
+  beatIndex: z.number().int().nonnegative(),
+  playSurface: PlaySurfaceSchema,
+  deadPlayerIds: z.array(z.string().min(1)),
+  reminders: z.record(z.string(), z.array(z.string())),
+  demonBluffs: z.array(z.string().min(1)),
+  diedTonightIds: z.array(z.string().min(1)),
+  playStarted: z.boolean(),
 })
 
 export type WizardStep = z.infer<typeof WizardStepSchema>
@@ -64,8 +75,21 @@ export type Difficulty = z.infer<typeof DifficultySchema>
 export type Experience = z.infer<typeof ExperienceSchema>
 export type PlayerAge = z.infer<typeof AgeSchema>
 export type SetupPlayer = z.infer<typeof SetupPlayerSchema>
+export type NightKind = z.infer<typeof NightKindSchema>
+export type PlaySurface = z.infer<typeof PlaySurfaceSchema>
 
 type PersistedSetupSession = z.infer<typeof PersistedSetupSessionSchema>
+
+const PLAY_FIELD_DEFAULTS = {
+  nightKind: 'first' as const,
+  beatIndex: 0,
+  playSurface: 'coach' as const,
+  deadPlayerIds: [] as string[],
+  reminders: {} as Record<string, string[]>,
+  demonBluffs: [] as string[],
+  diedTonightIds: [] as string[],
+  playStarted: false,
+}
 
 type SetupSessionState = PersistedSetupSession & {
   hasHydrated: boolean
@@ -86,6 +110,7 @@ type SetupSessionState = PersistedSetupSession & {
   awaitCriticalPersist: () => Promise<void>
   retryCriticalPersist: () => Promise<void>
   advanceToNightReady: () => Promise<void>
+  startFirstNight: () => void
 }
 
 function partializedSession(state: PersistedSetupSession) {
@@ -95,6 +120,14 @@ function partializedSession(state: PersistedSetupSession) {
     difficulty: state.difficulty,
     bag: state.bag,
     assignments: state.assignments,
+    nightKind: state.nightKind,
+    beatIndex: state.beatIndex,
+    playSurface: state.playSurface,
+    deadPlayerIds: state.deadPlayerIds,
+    reminders: state.reminders,
+    demonBluffs: state.demonBluffs,
+    diedTonightIds: state.diedTonightIds,
+    playStarted: state.playStarted,
   }
 }
 
@@ -104,8 +137,8 @@ const freshSession = (): PersistedSetupSession => ({
   difficulty: 'standard',
   bag: null,
   assignments: {},
+  ...PLAY_FIELD_DEFAULTS,
 })
-
 export function remainingTokens(
   bag: BagPlan | null,
   assignments: Record<string, Assignment>,
@@ -229,7 +262,7 @@ export const useSetupSessionStore = create<SetupSessionState>()(
       awaitCriticalPersist: async () => {
         set({ persistWriteStatus: 'saving' })
         const snapshot = partializedSession(get())
-        const payload = JSON.stringify({ state: snapshot, version: 1 })
+        const payload = JSON.stringify({ state: snapshot, version: 2 })
         try {
           await idbStorage.setItem(SETUP_SESSION_STORAGE_KEY, payload)
           set({ persistWriteStatus: 'saved' })
@@ -244,10 +277,30 @@ export const useSetupSessionStore = create<SetupSessionState>()(
         set({ wizardStep: 'nightReady', persistWriteStatus: 'saving' })
         await get().awaitCriticalPersist()
       },
+      startFirstNight: () =>
+        set({
+          nightKind: 'first',
+          beatIndex: 0,
+          playSurface: 'coach',
+          playStarted: true,
+        }),
     }),
     {
       name: SETUP_SESSION_STORAGE_KEY,
-      version: 1,
+      version: 2,
+      migrate: (persistedState, version) => {
+        if (
+          version < 2 &&
+          persistedState != null &&
+          typeof persistedState === 'object'
+        ) {
+          return {
+            ...(persistedState as Record<string, unknown>),
+            ...PLAY_FIELD_DEFAULTS,
+          }
+        }
+        return persistedState as PersistedSetupSession
+      },
       storage: createJSONStorage(() => idbStorage),
       partialize: (state) => partializedSession(state),
       merge: (persistedState, currentState) => {
