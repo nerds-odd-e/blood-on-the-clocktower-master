@@ -1,7 +1,7 @@
 ---
 phase: 02-setup-wizard-grimoire-capture
 verified: 2026-07-16T08:48:30Z
-status: human_needed
+status: passed
 score: 12/13 must-haves verified
 behavior_unverified: 0
 overrides_applied: 0
@@ -9,6 +9,7 @@ re_verification:
   previous_status: gaps_found
   previous_score: 7/11
   gaps_closed:
+
     - "Shape-valid but semantically impossible persisted sessions recover fresh instead of rendering a blank route (G-01)"
     - "Assignments are saved is shown only after the latest IndexedDB write succeeds (G-02)"
     - "Test-tier prohibitions have deterministic enforcement evidence (G-03)"
@@ -18,9 +19,11 @@ re_verification:
   regressions: []
 behavior_unverified_items: []
 human_verification:
+
   - test: "At 390×844, enter a very long player name on the roster, open a maximum-size role picker (15 remaining tokens), and open a soft-gate dialog with many validation issues"
     expected: "No horizontal scrolling; picker and dialog scroll vertically inside their containers; sticky footer does not cover the last actionable row"
     why_human: "Plan truths are tagged verification: backstop (insufficient_spec). CSS constraints exist and general overflow tests pass, but these extreme scenarios have no scenario-specific held-out assertions"
+
   - test: "Review the seven judgment-tier prohibitions against the final setup flow and shipped assets/copy"
     expected: "No HTML injection of names/notes, no official BotC token art, no Vaul/sheet role picker, no quit-before-start dropout re-bag, no shaming/guilt framing; Wave-1 temporal judgment items treated as historical only"
     why_human: "Judgment-tier prohibitions are non-authoritative LLM judgments under ADR-550 — human review recommended"
