@@ -108,8 +108,11 @@ test.describe('setup record roles', () => {
       page.getByRole('heading', { name: 'Night ready' }),
     ).toBeVisible()
     await expect(page).toHaveURL(/\/setup$/)
-    await expect(page.getByRole('link', { name: /play/i })).toHaveCount(0)
+    await expect(
+      page.getByRole('button', { name: 'Start first night' }),
+    ).toBeVisible()
   })
+
 
   test('a complete recording reaches Night ready without an override', async ({
     page,
@@ -131,7 +134,11 @@ test.describe('setup record roles', () => {
     await expect(page.getByText('Bag', { exact: true })).toBeVisible()
     await expect(page.getByText('Assignments', { exact: true })).toBeVisible()
     await expect(page.getByText('Assignments are saved')).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Start first night' }),
+    ).toBeVisible()
   })
+
 
   test('withholds saved assurance when the critical IndexedDB write fails, then retries', async ({
     page,

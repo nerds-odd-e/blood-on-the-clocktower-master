@@ -42,11 +42,11 @@ created: 2026-07-16
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | 01-T1 | 01 | 0 | COACH-01 | — | N/A | unit | `CURSOR_DEV=true nix develop -c npm run test:unit -- src/domain/engine/buildNightBeats.test.ts` | ✅ present | ❌ red |
 | 01-T1 | 01 | 0 | COACH-04 | — | N/A | unit | same + golden bags | ✅ present | ❌ red |
-| TBD | TBD | 0 | COACH-02 | — | N/A | e2e | `CURSOR_DEV=true nix develop -c npm test -- e2e/play-coach.spec.ts` | ❌ W0 | ⬜ pending |
-| TBD | TBD | 0 | COACH-03 | — | N/A | e2e | same | ❌ W0 | ⬜ pending |
-| 01-T1 | 01 | 0 | GRIM-04 | T-03-01 | Bluff IDs from eligible catalog set only | unit + e2e | `bluffs.test.ts` + play-coach | ✅ unit present | ❌ red |
-| TBD | TBD | 0 | GRIM-03 | T-03-02 | Reminder strings from catalog enum | unit + e2e | engine + play-grimoire | ❌ W0 | ⬜ pending |
-| TBD | TBD | 0 | handoff | — | N/A | e2e | rewrite `e2e/stubs.spec.ts` `/play` | ⚠️ obsolete | ⬜ pending |
+| 01-T2 | 01 | 0 | COACH-02 | — | N/A | e2e | `CURSOR_DEV=true nix develop -c npm test -- e2e/play-coach.spec.ts` | ✅ present | ❌ red |
+| 01-T2 | 01 | 0 | COACH-03 | — | N/A | e2e | same | ✅ present | ❌ red |
+| 01-T1 | 01 | 0 | GRIM-04 | T-03-01 | Bluff IDs from eligible catalog set only | unit + e2e | `bluffs.test.ts` + play-coach | ✅ unit+e2e present | ❌ red |
+| 01-T2 | 01 | 0 | GRIM-03 | T-03-02 | Reminder strings from catalog enum | unit + e2e | engine + play-grimoire | ✅ e2e present | ❌ red |
+| 01-T2 | 01 | 0 | handoff | — | N/A | e2e | rewrite `e2e/stubs.spec.ts` `/play` + setup-record Start first night | ✅ rewritten | ❌ red |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -59,10 +59,10 @@ created: 2026-07-16
 - [x] `src/domain/engine/buildNightBeats.test.ts` — COACH-01/04 golden cases (Drunk believed, ≥7 info gating, 5 vs 7+, Ravenkeeper/Scarlet Woman) — present, still RED (missing `buildNightBeats` module)
 - [x] `src/domain/coach/composePrompt.test.ts` — short/detail keys resolve — present, still RED (missing `composePrompt` module)
 - [x] `src/domain/grimoire/bluffs.test.ts` — eligible pool + selection constraints — present, still RED (missing `eligibleBluffs` module)
-- [ ] `e2e/play-coach.spec.ts` — Night ready → first night → Next → expand → Demon bluffs (7p)
-- [ ] `e2e/play-grimoire.spec.ts` — dead toggle + reminder place/clear + other night bridge
-- [ ] Rewrite `e2e/stubs.spec.ts` `/play` stub assertions
-- [ ] Update `e2e/setup-record.spec.ts` — expect Start first night CTA (invert “no play link”)
+- [x] `e2e/play-coach.spec.ts` — Night ready → first night → Next → expand → Demon bluffs (7p) — present, still RED until coach UI ships
+- [x] `e2e/play-grimoire.spec.ts` — dead toggle + reminder place/clear + other night bridge — present, still RED until grimoire UI ships
+- [x] Rewrite `e2e/stubs.spec.ts` `/play` stub assertions — coach-or-empty contract (no Play stub heading)
+- [x] Update `e2e/setup-record.spec.ts` — expect Start first night CTA (invert “no play link”) — present, still RED until Night ready CTA ships
 
 ---
 
