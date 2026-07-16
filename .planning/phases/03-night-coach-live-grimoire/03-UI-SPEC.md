@@ -1,10 +1,11 @@
 ---
 phase: 3
 slug: night-coach-live-grimoire
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-07-16
+reviewed_at: 2026-07-16T09:24:00Z
 ---
 
 # Phase 3 — UI Design Contract
@@ -331,10 +332,11 @@ Do **not** list the full night sheet with empty “not in play” slots (D-07).
 ## UI Considerations
 
 > Shape-rooted UI state coverage. Empty/error COPY lives in Copywriting Contract — this section references those rows.
+> Resolved via ui-consideration-probe after checker approval (kinds confirmed with operator: E2 includes `list-collection`).
 
 **Elements classified (kinds confirmed):**
 - E1 Night ready handoff (`nav` + `interactive-control`)
-- E2 Coach beat view (`static-content` + `interactive-control`)
+- E2 Coach beat view (`static-content` + `interactive-control` + `list-collection`)
 - E3 Expand detail (`interactive-control` + `static-content`)
 - E4 Demon bluff picker (`list-collection` + `form`)
 - E5 Soft bluff confirm (`interactive-control`)
@@ -343,12 +345,12 @@ Do **not** list the full night sheet with empty “not in play” slots (D-07).
 - E8 Reminder picker (`list-collection` + `interactive-control`)
 - E9 Grimoire / coach secondary chrome (`nav`)
 
-Applicable state considerations resolved: **30 covered, 4 backstop, 6 dismissed, 0 unresolved**
+Applicable state considerations resolved: **34 covered, 4 backstop, 8 dismissed, 0 unresolved**
 
 | Category | Element(s) | Status | Resolution / Reason |
 |----------|------------|--------|---------------------|
 | loading | E1 | ✅ covered | Persist saving state uses Night ready body (saving); CTA disabled while `persistWriteStatus === 'saving'` |
-| error | E1 | ✅ covered | Persist error body + retry control (existing Phase 2 pattern); Start first night still available if in-memory session valid |
+| error | E1 | ✅ covered | Persist error body + retry control (Phase 2 pattern); Start first night still available if in-memory session valid |
 | overflow | E1 | ✅ covered | Summary + sticky CTA in PhoneShell; vertical scroll only |
 | long-text | E1 | ✅ covered | Summary values wrap as Body; no horizontal scroll |
 | empty | E2 | ✅ covered | No assignments / empty queue → Empty coach heading/body from Copywriting |
@@ -357,8 +359,8 @@ Applicable state considerations resolved: **30 covered, 4 backstop, 6 dismissed,
 | populated | E2 | ✅ covered | One beat card: title, optional player, short prompt, Expand, sticky Next |
 | partial | E2 | ✅ covered | Partial grimoire: only recorded wakes appear; procedural beats still gate correctly |
 | overflow | E2 | ✅ covered | Long detail + bluffs scroll above sticky footer; overflow-x hidden |
+| zero-one-many | E2 | ✅ covered | 0 beats → empty coach; 1+ → meta “step {n} of {total}” with single current card |
 | long-text | E2 | 🧪 backstop | Long role/player names wrap in Heading/sub-label — visual check at 390×844 |
-| empty | E3 | 🚫 dismissed | Expand has no empty dataset — collapsed vs expanded only |
 | overflow | E3 | ✅ covered | Expanded detail wraps in beat card; page scrolls vertically |
 | long-text | E3 | ✅ covered | Detail paragraphs wrap as Body; catalog reminders not truncated mid-word |
 | empty | E4 | ✅ covered | No eligible roles → Bluff picker empty pool copy |
@@ -370,8 +372,8 @@ Applicable state considerations resolved: **30 covered, 4 backstop, 6 dismissed,
 | zero-one-many | E4 | ✅ covered | 0 selected → soft confirm; 1–2 → soft confirm; 3 → Next without dialog |
 | long-text | E4 | ✅ covered | Role names wrap inside chips |
 | long-text | E5 | ✅ covered | Soft-confirm body uses fixed template with {n}; wraps in dialog |
-| overflow | E5 | ✅ covered | Dialog content scrolls if needed (Phase 2 ConfirmDialog pattern) |
-| empty | E6 | 🚫 dismissed | Bridge only shown when queue completes — not an empty collection |
+| loading | E6 | 🚫 dismissed | Bridge is local Zustand surface switch — no async nav/data load |
+| error | E6 | 🚫 dismissed | Bridge has no fetch/submit failure mode |
 | overflow | E6 | ✅ covered | Bridge copy + sticky CTA within shell |
 | long-text | E6 | ✅ covered | Bridge body wraps; fixed copy |
 | empty | E7 | ✅ covered | Zero players → Empty state heading/body (grimoire) |
@@ -381,15 +383,17 @@ Applicable state considerations resolved: **30 covered, 4 backstop, 6 dismissed,
 | partial | E7 | ✅ covered | Unassigned rows show Role not recorded; Drunk shows believes cover |
 | overflow | E7 | 🧪 backstop | 15 players + reminders scroll vertically without horizontal overflow |
 | zero-one-many | E7 | ✅ covered | 0 → empty copy; 1+ → list; reminder chips 0/1/many on row |
-| long-text | E7 | ✅ covered | Player/role names wrap; reminder chip labels wrap or stack |
 | empty | E8 | ✅ covered | Role with no `reminders[]` → Reminder picker empty copy |
+| loading | E8 | 🚫 dismissed | Reminder catalog is sync from role data — no remote load |
+| error | E8 | 🚫 dismissed | Picker has no fetch/submit failure; clear is instant local toggle |
 | populated | E8 | ✅ covered | Catalog reminder strings as tappable chips; existing chips clear on tap |
+| partial | E8 | ✅ covered | Player may have some reminders placed and others available in picker |
 | overflow | E8 | ✅ covered | Picker scrolls inside grimoire panel |
 | zero-one-many | E8 | ✅ covered | 0 chips on row until placed; many chips stack/wrap under name |
 | long-text | E8 | 🧪 backstop | Long reminder strings wrap in chips — visual check |
 | loading | E9 | 🚫 dismissed | Surface switch is local Zustand — no async nav data |
 | error | E9 | 🚫 dismissed | Grimoire/Back links have no fetch failure mode |
-| overflow | E9 | ✅ covered | Header meta + Grimoire link wrap/truncate within shell width; prefer wrap |
+| overflow | E9 | ✅ covered | Header meta + Grimoire link wrap within shell width; prefer wrap |
 | long-text | E9 | ✅ covered | Fixed labels Grimoire / Back to coach — no dynamic truncation |
 
 ### Planner lift notes
@@ -411,14 +415,14 @@ Applicable state considerations resolved: **30 covered, 4 backstop, 6 dismissed,
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-07-16
 
 ---
 
