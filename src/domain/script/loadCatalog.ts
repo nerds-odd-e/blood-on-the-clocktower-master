@@ -8,6 +8,9 @@
  *
  * Role field shape and night ordinals curated from the bra1n/townsquare
  * interchange `roles.json` (edition "tb", travelers excluded) — 22 characters.
+ * Cross-check sample: Poisoner firstNight (17) precedes information townsfolk
+ * wakes (Washerwoman 33+) and Spy (49); Imp firstNight is 0 (Demon Info is a
+ * procedural beat, not a role wake).
  */
 import rolesJson from '../../data/scripts/trouble-brewing/roles.json'
 import setupChartJson from '../../data/scripts/trouble-brewing/setup-chart.json'
@@ -16,18 +19,48 @@ import {
   CatalogSchema,
   ProceduralBeatsSchema,
   SetupChartSchema,
+  type Role,
   type TroubleBrewingCatalog,
 } from './schemas'
 
-export function loadCatalog(): TroubleBrewingCatalog {
+export type TeamCounts = {
+  townsfolk: number
+  outsider: number
+  minion: number
+  demon: number
+}
+
+export type LoadedCatalog = TroubleBrewingCatalog & {
+  teamCounts: TeamCounts
+}
+
+export function summarizeTeamCounts(roles: Role[]): TeamCounts {
+  const counts: TeamCounts = {
+    townsfolk: 0,
+    outsider: 0,
+    minion: 0,
+    demon: 0,
+  }
+  for (const role of roles) {
+    counts[role.team] += 1
+  }
+  return counts
+}
+
+export function loadCatalog(): LoadedCatalog {
   const roles = CatalogSchema.shape.roles.parse(rolesJson)
   const setupChart = SetupChartSchema.parse(setupChartJson).rows
   const proceduralBeats = ProceduralBeatsSchema.parse(proceduralBeatsJson).beats
 
-  return CatalogSchema.parse({
+  const catalog = CatalogSchema.parse({
     scriptId: 'trouble-brewing',
     roles,
     setupChart,
     proceduralBeats,
   })
+
+  return {
+    ...catalog,
+    teamCounts: summarizeTeamCounts(catalog.roles),
+  }
 }

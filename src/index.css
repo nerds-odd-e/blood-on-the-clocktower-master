@@ -13,6 +13,16 @@
   --color-text-muted: #a39e96;
   --color-border: #2a2622;
 
+  /* Team badge colors (UI-SPEC — informational chips, not accent) */
+  --color-team-townsfolk-bg: #1e3a2f;
+  --color-team-townsfolk-fg: #b8d4c8;
+  --color-team-outsider-bg: #2a3340;
+  --color-team-outsider-fg: #b0c4d8;
+  --color-team-minion-bg: #3a1e28;
+  --color-team-minion-fg: #e0b0b8;
+  --color-team-demon-bg: #3a2418;
+  --color-team-demon-fg: #e0c4a8;
+
   /* Typography roles */
   --font-display: "Fraunces", serif;
   --font-body: "Source Sans 3", sans-serif;

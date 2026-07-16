@@ -1,4 +1,9 @@
-export { loadCatalog } from './loadCatalog'
+export {
+  loadCatalog,
+  summarizeTeamCounts,
+  type LoadedCatalog,
+  type TeamCounts,
+} from './loadCatalog'
 export {
   CatalogSchema,
   ProceduralBeatsSchema,
