@@ -127,7 +127,11 @@ type SetupSessionState = PersistedSetupSession & {
   persistWriteStatus: PersistWriteStatus
   /** Anchor beat id for remapping when the night queue membership changes. */
   currentBeatId: string | null
+  /** Surface to restore when leaving grimoire (coach vs night-complete bridge). */
+  grimoireReturnSurface: 'coach' | 'bridge'
   setWizardStep: (wizardStep: WizardStep) => void
+  openGrimoire: () => void
+  returnFromGrimoire: () => void
   setDifficulty: (difficulty: Difficulty) => void
   generateBag: () => void
   clearBag: () => void
@@ -210,6 +214,7 @@ export const useSetupSessionStore = create<SetupSessionState>()(
     (set, get) => ({
       ...freshSession(),
       currentBeatId: null,
+      grimoireReturnSurface: 'coach' as const,
       hasHydrated: false,
       hydrationError: false,
       persistWriteStatus: 'saved' as PersistWriteStatus,
@@ -334,6 +339,7 @@ export const useSetupSessionStore = create<SetupSessionState>()(
         set({
           ...freshSession(),
           currentBeatId: null,
+          grimoireReturnSurface: 'coach',
           persistWriteStatus: 'saved',
         }),
       clearHydrationError: () => set({ hydrationError: false }),
@@ -428,6 +434,16 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           }
         }),
       setPlaySurface: (playSurface) => set({ playSurface }),
+      openGrimoire: () =>
+        set((state) => ({
+          playSurface: 'grimoire' as const,
+          grimoireReturnSurface:
+            state.playSurface === 'bridge' ? ('bridge' as const) : ('coach' as const),
+        })),
+      returnFromGrimoire: () =>
+        set((state) => ({
+          playSurface: state.grimoireReturnSurface,
+        })),
       setDemonBluffs: (roleIds) =>
         set((state) => {
           const eligible = new Set(

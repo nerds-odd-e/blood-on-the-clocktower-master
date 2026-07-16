@@ -28,7 +28,10 @@ export function PlayScreen() {
   const advanceBeat = useSetupSessionStore((state) => state.advanceBeat)
   const retreatBeat = useSetupSessionStore((state) => state.retreatBeat)
   const syncBeatCursor = useSetupSessionStore((state) => state.syncBeatCursor)
-  const setPlaySurface = useSetupSessionStore((state) => state.setPlaySurface)
+  const openGrimoire = useSetupSessionStore((state) => state.openGrimoire)
+  const returnFromGrimoire = useSetupSessionStore(
+    (state) => state.returnFromGrimoire,
+  )
   const toggleDemonBluff = useSetupSessionStore(
     (state) => state.toggleDemonBluff,
   )
@@ -106,7 +109,7 @@ export function PlayScreen() {
         onToggleDead={toggleDead}
         onSetPlayerReminders={setPlayerReminders}
         onToggleDemonBluff={toggleDemonBluff}
-        onBackToCoach={() => setPlaySurface('coach')}
+        onBackToCoach={() => returnFromGrimoire()}
         onRetryPersist={() => {
           void retryCriticalPersist()
         }}
@@ -119,7 +122,7 @@ export function PlayScreen() {
       <NightBridgeView
         nightKind={nightKind}
         onStartOtherNight={startOtherNight}
-        onOpenGrimoire={() => setPlaySurface('grimoire')}
+        onOpenGrimoire={() => openGrimoire()}
       />
     )
   }
@@ -134,7 +137,7 @@ export function PlayScreen() {
           <button
             type="button"
             className="min-h-11 text-body text-[var(--color-text-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-            onClick={() => setPlaySurface('grimoire')}
+            onClick={() => openGrimoire()}
           >
             Grimoire
           </button>
@@ -169,7 +172,7 @@ export function PlayScreen() {
       onToggleDemonBluff={toggleDemonBluff}
       onNext={() => advanceBeat(beatIds)}
       onBack={() => retreatBeat(beatIds)}
-      onOpenGrimoire={() => setPlaySurface('grimoire')}
+      onOpenGrimoire={() => openGrimoire()}
       onRetryPersist={() => {
         void retryCriticalPersist()
       }}
