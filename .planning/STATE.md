@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-07-16T07:57:09.803Z"
+stopped_at: Completed 02-04-PLAN.md
+last_updated: "2026-07-16T08:06:36.553Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 02 execution started
 
-Progress: [████████░░] 80%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Progress: [████████░░] 80%
 | Phase 02 P01 | 9min | 2 tasks | 7 files |
 | Phase 02 P02 | 14min | 2 tasks | 12 files |
 | Phase 02 P03 | 6min | 2 tasks | 12 files |
+| Phase 02 P04 | 5min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -96,6 +97,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Keep optional player profiles in session state only; bag generation remains independent of profiles.
 - [Phase 02]: Represent Drunk with a Townsfolk cover token while retaining true Outsider composition. — Keeps the digital grimoire aligned with the physical token players draw.
 - [Phase 02]: Generate bags from player count, difficulty, and catalog only. — Enforces D-07 profile isolation at the type and store boundary.
+- [Phase 02]: Derive the visible role picker from the globally unassigned physical bag-token multiset, including when editing an assigned player. — Keeps assigned physical tokens out of the available pool until explicitly cleared.
+- [Phase 02]: Persist both true Drunk identity and the Townsfolk role the player believes when its physical cover token is recorded. — Preserves both mechanical truth and player-facing knowledge for night coaching.
 
 ### Pending Todos
 
@@ -124,6 +127,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T07:57:09.799Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-07-16T08:06:36.548Z
+Stopped at: Completed 02-04-PLAN.md
 Resume file: None

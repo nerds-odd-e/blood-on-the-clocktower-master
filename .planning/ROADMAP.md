@@ -63,7 +63,7 @@ Plans:
   4. After the physical deal, Storyteller can record assignments via tap player → pick character
   5. App blocks starting night until recorded roles match the expected team composition
 
-**Plans:** 3/5 plans executed
+**Plans:** 4/5 plans executed
 
 Plans:
 **Wave 1**
@@ -80,7 +80,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 02-04-PLAN.md — Deal coaching + remaining-token role recording
+- [x] 02-04-PLAN.md — Deal coaching + remaining-token role recording
 
 **Wave 5** *(blocked on Wave 4)*
 
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
-| 2. Setup Wizard & Grimoire Capture | 3/5 | In Progress|  |
+| 2. Setup Wizard & Grimoire Capture | 4/5 | In Progress|  |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
 ## Coverage Map
