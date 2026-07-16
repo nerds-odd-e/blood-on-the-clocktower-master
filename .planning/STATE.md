@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
-status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-07-16T08:06:36.553Z"
+status: verifying
+stopped_at: Completed 02-05-PLAN.md
+last_updated: "2026-07-16T08:13:28.498Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-16 — Phase 02 execution started
 
-Progress: [█████████░] 90%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -67,6 +67,7 @@ Progress: [█████████░] 90%
 | Phase 02 P02 | 14min | 2 tasks | 12 files |
 | Phase 02 P03 | 6min | 2 tasks | 12 files |
 | Phase 02 P04 | 5min | 2 tasks | 11 files |
+| Phase 02 P05 | 4min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,8 @@ Recent decisions affecting current work:
 - [Phase 02]: Generate bags from player count, difficulty, and catalog only. — Enforces D-07 profile isolation at the type and store boundary.
 - [Phase 02]: Derive the visible role picker from the globally unassigned physical bag-token multiset, including when editing an assigned player. — Keeps assigned physical tokens out of the available pool until explicitly cleared.
 - [Phase 02]: Persist both true Drunk identity and the Townsfolk role the player believes when its physical cover token is recorded. — Preserves both mechanical truth and player-facing knowledge for night coaching.
+- [Phase 02]: Keep Start night primary on the record surface, but render Start anyway as a neutral secondary outline inside the warning dialog. — Preserves one clear forward action without styling a local override as destructive or as the default.
+- [Phase 02]: Advance by persisted wizardStep only, retaining /setup and exposing no /play affordance until Phase 3. — Keeps the setup handoff available to the next phase without prematurely opening the coach.
 
 ### Pending Todos
 
@@ -127,6 +130,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T08:06:36.548Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-07-16T08:13:28.494Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None

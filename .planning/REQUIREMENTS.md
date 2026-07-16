@@ -18,7 +18,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Grimoire
 
 - [x] **GRIM-01**: After a random deal, Storyteller can record who received which role (tap player → pick character)
-- [ ] **GRIM-02**: App blocks starting night until recorded roles match the expected team composition
+- [x] **GRIM-02**: App blocks starting night until recorded roles match the expected team composition
 - [ ] **GRIM-03**: Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens
 - [ ] **GRIM-04**: Storyteller can record Demon bluffs for the game
 
@@ -79,7 +79,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETUP-04 | Phase 2 | Complete |
 | SETUP-05 | Phase 2 | Complete |
 | GRIM-01 | Phase 2 | Complete |
-| GRIM-02 | Phase 2 | Pending |
+| GRIM-02 | Phase 2 | Complete |
 | GRIM-03 | Phase 3 | Pending |
 | GRIM-04 | Phase 3 | Pending |
 | COACH-01 | Phase 3 | Pending |
