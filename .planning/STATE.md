@@ -4,15 +4,15 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 3
 current_phase_name: Night Coach & Live Grimoire
-status: planning
-stopped_at: Phase 3 UI-SPEC approved
-last_updated: "2026-07-16T09:25:34.958Z"
+status: ready_to_execute
+stopped_at: Phase 3 plans created (03-01..03-05)
+last_updated: "2026-07-16T09:35:00.000Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 3 UI-SPEC written
+last_activity_desc: Phase 3 PLAN.md files written (5 MVP vertical slices)
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 11
+  total_plans: 16
   completed_plans: 11
 ---
 
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 3 — Night Coach & Live Grimoire
-Plan: Not started
-Status: UI-SPEC draft complete — ready for checker / plan-phase
-Last activity: 2026-07-16 — Phase 3 UI-SPEC written
+Plan: 0/5 plans executed
+Status: Plans ready — run /gsd-execute-phase 3
+Last activity: 2026-07-16 — Phase 3 plans created (03-01..03-05)
 
-Progress: [██████████] 100% (6/6 plans executed)
+Progress: Phase 3 planning complete (0/5 plans executed)
 
 ## Performance Metrics
 
