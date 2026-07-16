@@ -15,8 +15,10 @@
 import rolesJson from '../../data/scripts/trouble-brewing/roles.json'
 import setupChartJson from '../../data/scripts/trouble-brewing/setup-chart.json'
 import proceduralBeatsJson from '../../data/scripts/trouble-brewing/procedural-beats.json'
+import coachCopyJson from '../../data/scripts/trouble-brewing/coach-copy.json'
 import {
   CatalogSchema,
+  CoachCopySchema,
   ProceduralBeatsSchema,
   SetupChartSchema,
   type Role,
@@ -51,12 +53,14 @@ export function loadCatalog(): LoadedCatalog {
   const roles = CatalogSchema.shape.roles.parse(rolesJson)
   const setupChart = SetupChartSchema.parse(setupChartJson).rows
   const proceduralBeats = ProceduralBeatsSchema.parse(proceduralBeatsJson).beats
+  const coachCopy = CoachCopySchema.parse(coachCopyJson).entries
 
   const catalog = CatalogSchema.parse({
     scriptId: 'trouble-brewing',
     roles,
     setupChart,
     proceduralBeats,
+    coachCopy,
   })
 
   return {

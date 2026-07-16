@@ -6,9 +6,12 @@ export {
 } from './loadCatalog'
 export {
   CatalogSchema,
+  CoachCopySchema,
+  CoachCopyEntrySchema,
   ProceduralBeatsSchema,
   RoleSchema,
   SetupChartSchema,
+  type CoachCopyEntry,
   type ProceduralBeat,
   type Role,
   type SetupChartRow,

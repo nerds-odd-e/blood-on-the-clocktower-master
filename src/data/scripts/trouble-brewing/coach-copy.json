@@ -1,0 +1,99 @@
+{
+  "entries": [
+    {
+      "id": "dusk",
+      "short": "Settle the table. Lights down when you are ready to wake the first player.",
+      "detail": "Checklist: confirm all eyes closed; note any day deaths already marked; keep this phone private."
+    },
+    {
+      "id": "minion-info",
+      "short": "Wake the Minions. Show them each other and the Demon.",
+      "detail": "Point silently; do not speak character names aloud if the table can hear. Put heads down when done."
+    },
+    {
+      "id": "demon-info",
+      "short": "Wake the Demon. Show them their Minions, then three bluff characters.",
+      "detail": "Record the three bluffs below before you continue. Bluffs must be good characters not in play."
+    },
+    {
+      "id": "dawn",
+      "short": "Dawn. Everyone may open their eyes.",
+      "detail": "Announce any deaths you decided at night. Do not invent day nominations here — move to table talk."
+    },
+    {
+      "id": "wake:washerwoman",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Show a Townsfolk token and point to two players, one of whom is that Townsfolk. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:librarian",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Show an Outsider token and point to two players, one of whom is that Outsider (or show that no Outsiders are in play). ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:investigator",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Show a Minion token and point to two players, one of whom is that Minion. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:chef",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Show a finger count for how many pairs of neighbouring evil players there are. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:empath",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Show 0, 1, or 2 for how many of their living neighbours are evil. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:fortuneteller",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "They point to two players. Nod or shake for whether one is the Demon (you may treat one player as a red herring). ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:undertaker",
+      "nightKind": "other",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "If someone was executed today, show that player's character token. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:monk",
+      "nightKind": "other",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "Clear the previous protect mark. They choose a player (not themself) to protect from the Demon tonight. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:ravenkeeper",
+      "nightKind": "other",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "If they died tonight, they point to a player — show that player's character token. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:butler",
+      "short": "Wake {Role}. Follow the short procedure, then put them back to sleep.",
+      "detail": "They point to a player. Mark that player as Master. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:poisoner",
+      "short": "Wake {Role}. They choose a player to poison tonight.",
+      "detail": "Clear any previous poison mark, then mark their choice. ST judges the answer — this app does not auto-resolve."
+    },
+    {
+      "id": "wake:spy",
+      "short": "Wake the Spy. Orient the grimoire carefully before you show anything.",
+      "detail": "Keep ST-private chrome out of sight. Tip the device or cover headers before the Spy looks. (Dedicated shutter view is deferred.)"
+    },
+    {
+      "id": "wake:scarletwoman",
+      "nightKind": "other",
+      "short": "Wake {Role}. Check whether their conditional ability matters tonight.",
+      "detail": "If the Imp dies while enough players are alive, the Scarlet Woman becomes the Demon — update the Grimoire if that happened. This is a tip for you; the app does not auto-swap."
+    },
+    {
+      "id": "wake:imp",
+      "nightKind": "other",
+      "short": "Wake the Demon. They choose a player to kill tonight.",
+      "detail": "Mark deaths on the Grimoire when resolved. Star-pass: if the Imp kills themself, update who is the Demon on the Grimoire."
+    }
+  ]
+}

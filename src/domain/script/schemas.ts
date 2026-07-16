@@ -54,6 +54,17 @@ export const ProceduralBeatsSchema = z.object({
   beats: z.array(ProceduralBeatSchema).min(1),
 })
 
+export const CoachCopyEntrySchema = z.object({
+  id: z.string().min(1),
+  short: z.string().min(1),
+  detail: z.string().min(1),
+  nightKind: z.enum(['first', 'other']).optional(),
+})
+
+export const CoachCopySchema = z.object({
+  entries: z.array(CoachCopyEntrySchema).min(1),
+})
+
 export const CatalogSchema = z.object({
   scriptId: z.literal('trouble-brewing'),
   roles: z
@@ -71,9 +82,11 @@ export const CatalogSchema = z.object({
     }, { message: 'TB roles must be 13/4/4/1 by team' }),
   setupChart: SetupChartSchema.shape.rows,
   proceduralBeats: ProceduralBeatsSchema.shape.beats,
+  coachCopy: CoachCopySchema.shape.entries,
 })
 
 export type Role = z.infer<typeof RoleSchema>
 export type SetupChartRow = z.infer<typeof SetupChartRowSchema>
 export type ProceduralBeat = z.infer<typeof ProceduralBeatSchema>
+export type CoachCopyEntry = z.infer<typeof CoachCopyEntrySchema>
 export type TroubleBrewingCatalog = z.infer<typeof CatalogSchema>
