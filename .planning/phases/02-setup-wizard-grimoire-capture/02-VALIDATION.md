@@ -46,7 +46,7 @@ created: 2026-07-16
 | 02-02-T2 | 02 | 2 | SETUP-03 | T-02-02 | More → Experience New/Some/Veteran, Age Kid/Teen/Adult, notes persist after returning from Difficulty | e2e | `npx playwright test e2e/setup-wizard.spec.ts` | ✅ exists | ✅ green |
 | 02-03-T1 | 03 | 3 | SETUP-04 | T-02-04 | Legal bag for N×difficulty; Baron/Drunk rules | unit | `npx vitest run src/domain/bag` | ✅ exists | ✅ green |
 | 02-02-T2 / 02-05-T2 | 02 / 05 | 2 / 5 | SETUP-05 | — | Script → players → difficulty order enforced; Night ready stays on /setup in plan 05 | e2e | `npx playwright test e2e/setup-wizard.spec.ts e2e/setup-record.spec.ts` | ✅ wizard scaffold | ✅ current slice green |
-| 02-04-T2 | 04 | 4 | GRIM-01 | T-02-08 | Tap player → pick remaining token; clear restores | e2e | `npx playwright test e2e/setup-record.spec.ts` | ❌ W0 | ⬜ pending |
+| 02-04-T2 | 04 | 4 | GRIM-01 | T-02-08 | Tap player → pick remaining token; clear restores | e2e | `npx playwright test e2e/setup-record.spec.ts` | ✅ exists | ✅ green |
 | 02-05-T2 | 05 | 5 | GRIM-02 | T-02-12 | Mismatch warning; Start anyway → Night ready | e2e | `npx playwright test e2e/setup-record.spec.ts` | ❌ W0 | ⬜ pending |
 | 02-01-T2 / 02-02-T2 | 01 / 02 | 1 / 2 | — | — | `/setup` stub copy removed; `/play` still stub | e2e | update `e2e/stubs.spec.ts` | ✅ rewritten | ✅ green |
 
@@ -60,9 +60,9 @@ created: 2026-07-16
 - [x] Install `zustand`, `idb-keyval`, `vitest`; add `test:unit` script
 - [x] `vitest.config.ts` with `environment: 'node'`, include `src/**/*.test.ts`
 - [x] `src/domain/bag/buildBag.test.ts` — N=5..15 × 3 difficulties; Baron±Drunk fixtures; never `tokens.includes('drunk')`
-- [ ] `src/domain/grimoire/validateAssignments.test.ts` — match / missing / duplicate
+- [x] `src/domain/grimoire/validateAssignments.test.ts` — match / missing / duplicate
 - [x] `e2e/setup-wizard.spec.ts` — RED happy path through five players to Difficulty
-- [ ] `e2e/setup-record.spec.ts` — assign all + soft gate
+- [x] `e2e/setup-record.spec.ts` — assign all + clear restoration (soft gate follows in plan 05)
 - [x] Update `e2e/stubs.spec.ts` — `/setup` expects script-step copy; keep `/play` stub
 
 ---

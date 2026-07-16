@@ -46,9 +46,9 @@ test.describe('setup record roles', () => {
 
     await rows.first().click()
     await expect(
-      page.getByTestId('setup-role-chip').filter({
-        has: page.locator(`[data-role-id="${clearedRoleId}"]`),
-      }),
+      page.locator(
+        `[data-testid="setup-role-chip"][data-role-id="${clearedRoleId}"]`,
+      ),
     ).toHaveCount(1)
   })
 })

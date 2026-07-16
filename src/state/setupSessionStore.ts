@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { buildBag, type BagPlan } from '../domain/bag'
+import type { Assignment } from '../domain/grimoire'
 import { loadCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
 
@@ -31,6 +32,13 @@ const BagPlanSchema = z.object({
   whyNote: z.string().min(1),
 })
 
+const AssignmentSchema = z.object({
+  playerId: z.string().min(1),
+  bagRoleId: z.string().min(1),
+  trueRoleId: z.string().min(1).optional(),
+  believedRoleId: z.string().min(1).optional(),
+})
+
 export const SetupPlayerSchema = z.object({
   id: z.string().min(1),
   name: z.string(),
@@ -44,7 +52,7 @@ const PersistedSetupSessionSchema = z.object({
   players: z.array(SetupPlayerSchema).max(15),
   difficulty: DifficultySchema,
   bag: BagPlanSchema.nullable(),
-  assignments: z.record(z.string(), z.unknown()),
+  assignments: z.record(z.string(), AssignmentSchema),
 })
 
 export type WizardStep = z.infer<typeof WizardStepSchema>
@@ -62,6 +70,8 @@ type SetupSessionState = PersistedSetupSession & {
   setDifficulty: (difficulty: Difficulty) => void
   generateBag: () => void
   clearBag: () => void
+  assignRole: (playerId: string, bagRoleId: string) => void
+  clearRole: (playerId: string) => void
   addPlayer: () => void
   updatePlayer: (id: string, changes: Partial<Omit<SetupPlayer, 'id'>>) => void
   movePlayer: (id: string, direction: -1 | 1) => void
@@ -77,6 +87,30 @@ const freshSession = (): PersistedSetupSession => ({
   bag: null,
   assignments: {},
 })
+
+export function remainingTokens(
+  bag: BagPlan | null,
+  assignments: Record<string, Assignment>,
+  excludedPlayerId?: string,
+) {
+  if (!bag) return []
+
+  const assignedCounts = new Map<string, number>()
+  for (const assignment of Object.values(assignments)) {
+    if (assignment.playerId === excludedPlayerId) continue
+    assignedCounts.set(
+      assignment.bagRoleId,
+      (assignedCounts.get(assignment.bagRoleId) ?? 0) + 1,
+    )
+  }
+
+  return bag.tokens.filter((roleId) => {
+    const assigned = assignedCounts.get(roleId) ?? 0
+    if (assigned === 0) return true
+    assignedCounts.set(roleId, assigned - 1)
+    return false
+  })
+}
 
 export const useSetupSessionStore = create<SetupSessionState>()(
   persist(
@@ -97,6 +131,36 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           return { bag, assignments: {}, wizardStep: 'bag' }
         }),
       clearBag: () => set({ bag: null, assignments: {} }),
+      assignRole: (playerId, bagRoleId) =>
+        set((state) => {
+          if (
+            !state.players.some((player) => player.id === playerId) ||
+            !remainingTokens(state.bag, state.assignments, playerId).includes(
+              bagRoleId,
+            )
+          ) {
+            return state
+          }
+
+          const isDrunkCover = state.bag?.drunk?.coverRoleId === bagRoleId
+          const assignment: Assignment = {
+            playerId,
+            bagRoleId,
+            ...(isDrunkCover
+              ? { trueRoleId: 'drunk', believedRoleId: bagRoleId }
+              : { trueRoleId: bagRoleId, believedRoleId: bagRoleId }),
+          }
+          return {
+            assignments: { ...state.assignments, [playerId]: assignment },
+          }
+        }),
+      clearRole: (playerId) =>
+        set((state) => {
+          if (!state.assignments[playerId]) return state
+          const assignments = { ...state.assignments }
+          delete assignments[playerId]
+          return { assignments }
+        }),
       addPlayer: () =>
         set((state) => ({
           players:
@@ -133,9 +197,14 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           return { players }
         }),
       removePlayer: (id) =>
-        set((state) => ({
-          players: state.players.filter((player) => player.id !== id),
-        })),
+        set((state) => {
+          const assignments = { ...state.assignments }
+          delete assignments[id]
+          return {
+            players: state.players.filter((player) => player.id !== id),
+            assignments,
+          }
+        }),
       resetFresh: () => set({ ...freshSession() }),
       clearHydrationError: () => set({ hydrationError: false }),
     }),

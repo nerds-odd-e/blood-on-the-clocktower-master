@@ -3,6 +3,8 @@ import { DifficultyStep } from './steps/DifficultyStep'
 import { BagStep } from './steps/BagStep'
 import { PlayersStep } from './steps/PlayersStep'
 import { ScriptStep } from './steps/ScriptStep'
+import { DealStep } from './steps/DealStep'
+import { RecordStep } from './steps/RecordStep'
 
 export function SetupWizard() {
   const wizardStep = useSetupSessionStore((state) => state.wizardStep)
@@ -46,6 +48,15 @@ export function SetupWizard() {
       {wizardStep === 'players' ? <PlayersStep /> : null}
       {wizardStep === 'difficulty' ? <DifficultyStep /> : null}
       {wizardStep === 'bag' ? <BagStep /> : null}
+      {wizardStep === 'deal' ? (
+        <DealStep
+          onBack={() => setWizardStep('bag')}
+          onContinue={() => setWizardStep('record')}
+        />
+      ) : null}
+      {wizardStep === 'record' ? (
+        <RecordStep onBack={() => setWizardStep('deal')} />
+      ) : null}
     </div>
   )
 }
