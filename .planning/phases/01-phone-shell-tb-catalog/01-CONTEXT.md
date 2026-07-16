@@ -22,17 +22,18 @@ Deliver an installable phone-first offline PWA shell that exposes a curated Trou
 ### Test automation
 - **D-05:** Prefer **Playwright end-to-end** as the primary (and Phase 1–only) automated test layer — not Vitest unit suites for catalog/domain.
 - **D-06:** Aim for **full coverage of shipped Phase 1 behavior** via Playwright (home/shell, stub routes, catalog surface, offline/PWA checks where feasible in E2E).
-- **D-07:** **Playwright-only for Phase 1** — assert catalog correctness (role counts, setup chart, night order) through the running app / E2E fixtures; do **not** add a Vitest domain golden suite this phase. This **overrides** Vitest-first guidance in `01-RESEARCH.md` / `01-VALIDATION.md` for Phase 1 planning.
+- **D-07:** **Playwright-only for Phase 1** — assert catalog correctness (role counts, setup chart, night order) through the running app against the real bundled TB JSON; do **not** add a Vitest domain golden suite this phase. This **overrides** Vitest-first guidance in `01-RESEARCH.md` / `01-VALIDATION.md` for Phase 1 planning.
+- **D-08:** **No mocks in test automation** — exercise the real app against real bundled Trouble Brewing data (and real PWA/service-worker behavior where tested). Do not stub/mock the catalog, network layer, or domain loaders. Phase 1 has no external service dependencies; keep tests on the real stack.
 
 ### Carried forward (ratified — not re-litigated)
-- **D-08:** Follow approved `01-UI-SPEC.md` for visual/copy/layout contract (table-lantern dark shell, Fraunces + Source Sans 3, “Start setup”, stub `/setup` + `/play`, no shadcn/icons in Phase 1).
-- **D-09:** Project locks remain: phone-first; TB only; offline PWA after first load; no accounts; no official BotC token art; wizard/coach out of scope.
+- **D-09:** Follow approved `01-UI-SPEC.md` for visual/copy/layout contract (table-lantern dark shell, Fraunces + Source Sans 3, “Start setup”, stub `/setup` + `/play`, no shadcn/icons in Phase 1).
+- **D-10:** Project locks remain: phone-first; TB only; offline PWA after first load; no accounts; no official BotC token art; wizard/coach out of scope.
 
 ### Claude's Discretion
 - Home catalog depth within UI-SPEC (optional compact role roster vs card-only) — follow UI-SPEC optional roster rules; omit Almanac ability text on home.
 - Catalog payload field optionality (reminders, image URLs, short ability strings stored-but-hidden) — follow RESEARCH recommendations; exclude Travelers from v1 catalog UI/data.
 - Night-order: ship ordinals (+ any procedural stubs RESEARCH recommends) as data for Phase 3 — no coach UI now.
-- Exact Playwright project layout, fixtures, and how offline is asserted in E2E (DevTools/context offline) — choose practical coverage without blocking the walking skeleton.
+- Exact Playwright project layout and how offline is asserted in E2E (e.g. browser context offline mode against the real preview build) — choose practical coverage without blocking the walking skeleton; still no catalog/network mocks (D-08).
 - Scaffold path (`create-vite` + manual PWA vs PWA scaffold) — follow RESEARCH primary recommendation.
 
 </decisions>
@@ -81,6 +82,7 @@ Deliver an installable phone-first offline PWA shell that exposes a curated Trou
 
 - Offline cue copy should read as calm meta (“Offline ready”), not a second primary button.
 - User wants automation confidence via Playwright E2E with full coverage of what ships — treat E2E as the quality gate for Phase 1, not a thin smoke layer on top of unit tests.
+- No mocks: real app + real TB data only (no stubbed catalog or fake network).
 
 </specifics>
 

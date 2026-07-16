@@ -79,6 +79,16 @@
 **User's choice:** Playwright-only
 **Notes:** Explicitly overrides Phase 1 Vitest-first research/validation defaults.
 
+### Mocking / test doubles
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| No mocks — real app + real data | No stubbing catalog/network/domain; exercise real stack | ✓ |
+| Mock external deps | N/A — user assumes none | |
+
+**User's choice:** Don't mock anything; use the real thing with real data
+**Notes:** Stated after CONTEXT was written; folded into D-08. Aligns with Phase 1 having no external service dependencies (bundled TB JSON + local PWA).
+
 ---
 
 ## Claude's Discretion
