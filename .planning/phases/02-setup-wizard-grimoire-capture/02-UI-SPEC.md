@@ -175,7 +175,7 @@ Voice: table-lantern coach — short, calm, second-person to the Storyteller. No
 | Record heading | **Record roles** |
 | Record help | Tap a player, then pick the character they drew. Fix mistakes anytime. |
 | Unassigned hint | Not recorded yet |
-| Role picker title | Pick character |
+| Role picker title | Pick character for {Name} |
 | Role picker empty pool | All bag tokens are assigned. Tap a player to change or clear. |
 | Clear assignment | **Clear role** |
 | Soft-gate heading | Recording is incomplete |
@@ -257,7 +257,8 @@ Each step has exactly one visual/interaction focus (thumb-primary). Secondary ch
 
 ### Record step (D-13–D-15)
 - Player list in seat order; each row shows name + assigned character name (or Unassigned hint).
-- Tap player → role picker panel (secondary surface, inline below row or full-width panel under list — prefer **full-width panel below list** for thumb reach; not a Vaul sheet).
+- Assigned rows keep a 1–2px accent left bar (“has role”). The currently selected row also shows a persistent text-primary outline ring (same token as non-CTA focus rings) so selection is visible independent of assignment.
+- Tap player → role picker panel (secondary surface, inline below row or full-width panel under list — prefer **full-width panel below list** for thumb reach; not a Vaul sheet). Heading: **Pick character for {Name}**.
 - Picker lists **only remaining bag tokens**, grouped by team chips. Tap assigns and closes picker.
 - Tap assigned player → picker with remaining tokens **plus** Clear role (returns token to pool).
 - **Start night** always enabled when on this step (soft gate). If `validateAssignments` fails → confirm dialog listing concrete issues; **Start anyway** / **Keep recording**. On clean pass or confirm → Night ready.

@@ -29,6 +29,28 @@ async function assignEveryBagToken(page: Page) {
 test.describe('setup record roles', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 
+  test('shows selected player outline affordance and named picker heading', async ({
+    page,
+  }) => {
+    await reachRecordStep(page)
+
+    const rows = page.getByTestId('setup-player-row')
+    const first = rows.first()
+    await first.click()
+
+    await expect(first).toHaveAttribute('aria-pressed', 'true')
+    await expect(
+      page.getByRole('heading', { name: 'Pick character for Alice' }),
+    ).toBeVisible()
+
+    await page.getByTestId('setup-role-chip').first().click()
+
+    await expect(first).toHaveAttribute('aria-pressed', 'false')
+    await expect(
+      page.getByRole('heading', { name: /Pick character for/ }),
+    ).toHaveCount(0)
+  })
+
   test('assigns only remaining bag roles and Clear role restores a chip', async ({
     page,
   }) => {

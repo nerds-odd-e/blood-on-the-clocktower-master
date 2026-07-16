@@ -20,6 +20,7 @@ const TEAM_BADGE_CLASS: Record<(typeof TEAM_ORDER)[number], string> = {
 }
 
 type RolePickerProps = {
+  playerName: string
   remaining: string[]
   roles: Role[]
   canClear: boolean
@@ -28,6 +29,7 @@ type RolePickerProps = {
 }
 
 export function RolePicker({
+  playerName,
   remaining,
   roles,
   canClear,
@@ -45,13 +47,14 @@ export function RolePicker({
       (option): option is typeof option & { role: Role } =>
         option.role !== undefined,
     )
+  const heading = `Pick character for ${playerName}`
 
   return (
     <section
       className="rounded-sm border border-[var(--color-border)] bg-[var(--color-secondary)] p-4"
-      aria-label="Pick character"
+      aria-label={heading}
     >
-      <h2 className="text-heading">Pick character</h2>
+      <h2 className="text-heading">{heading}</h2>
 
       {options.length === 0 ? (
         <p className="mt-3 text-body text-[var(--color-text-muted)]">

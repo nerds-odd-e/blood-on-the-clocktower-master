@@ -55,6 +55,7 @@ export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
       <div className="flex flex-col gap-2">
         {players.map((player) => {
           const assignment = assignments[player.id]
+          const isSelected = selectedPlayerId === player.id
           return (
             <button
               key={player.id}
@@ -63,10 +64,14 @@ export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
                 assignment
                   ? 'border-l-2 border-[var(--color-accent)]'
                   : 'border-[var(--color-border)]'
+              } ${
+                isSelected
+                  ? 'outline outline-2 outline-offset-2 outline-[var(--color-text-primary)]'
+                  : ''
               }`}
               data-testid="setup-player-row"
               data-role-id={assignment?.bagRoleId}
-              aria-pressed={selectedPlayerId === player.id}
+              aria-pressed={isSelected}
               onClick={() => setSelectedPlayerId(player.id)}
             >
               <span className="block text-body">{player.name}</span>
@@ -88,6 +93,10 @@ export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
 
       {selectedPlayerId ? (
         <RolePicker
+          playerName={
+            players.find((player) => player.id === selectedPlayerId)?.name ??
+            'player'
+          }
           remaining={remainingTokens(
             bag,
             assignments,

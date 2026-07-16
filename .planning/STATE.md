@@ -131,9 +131,10 @@ Items acknowledged and carried forward from previous milestone close:
 |------|------|-----------|--------|
 | 2026-07-16 | Setup nix flake + agent/cursor/claude nix prefix rules | `260716-j2f-setup-nix-flake-and-agent-cursor-claude-` | complete |
 | 2026-07-16 | Setup GitHub Actions CI to run tests and lint/build | `260716-j64-setup-github-actions-ci-to-run-tests-and` | complete |
+| 2026-07-16 | Record-step selected player affordance (outline + named picker) | `260716-p8k-record-selected-player-affordance` | complete |
 
 ## Session Continuity
 
-Last session: 2026-07-16T08:42:48.644Z
-Stopped at: Completed 02-06-PLAN.md
+Last session: 2026-07-16T09:07:34Z
+Stopped at: Completed quick task record-selected-player-affordance
 Resume file: None
