@@ -106,7 +106,7 @@ Plans:
   4. First-night Demon/Minion information steps appear when those roles are in play, and Storyteller can record Demon bluffs
   5. Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens during play
 
-**Plans:** 1/5 plans executed
+**Plans:** 2/5 plans executed
 
 Plans:
 **Wave 1**
@@ -115,7 +115,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02-PLAN.md — buildNightBeats engine + persist v2 + Start first night → PlayScreen beat landing
+- [x] 03-02-PLAN.md — buildNightBeats engine + persist v2 + Start first night → PlayScreen beat landing
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -140,7 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
 | 2. Setup Wizard & Grimoire Capture | 6/6 | Complete    | 2026-07-16 |
-| 3. Night Coach & Live Grimoire | 1/5 | In Progress|  |
+| 3. Night Coach & Live Grimoire | 2/5 | In Progress|  |
 
 ## Coverage Map
 

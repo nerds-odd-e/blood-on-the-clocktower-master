@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: night-coach-live-grimoire
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-07-16T09:44:18.689Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-07-16T09:47:31.390Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 16
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 03 (night-coach-live-grimoire) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 03 execution started
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
@@ -70,6 +70,7 @@ Progress: [████████░░] 75%
 | Phase 02 P05 | 4min | 2 tasks | 7 files |
 | Phase 02 P06 | 6min | 3 tasks | 45 files |
 | Phase 03 P01 | 2min | 2 tasks | 8 files |
+| Phase 03 P02 | 5min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Bluff helper import path locked to ./eligibleBluffs (PATTERNS preferred name)
 - [Phase ?]: setup-record Night ready asserts Start first night button instead of forbidding /play links
 - [Phase ?]: stubs /play asserts Nothing to coach yet OR night meta — not Play stub heading
+- [Phase ?]: Resolve hasMinion/hasDemon via trueRoleId ?? bagRoleId (truth), not believed wake role
+- [Phase ?]: PlayScreen empty coach when !playStarted or no assignments; otherwise night meta + beat label
+- [Phase ?]: Delete PlayStub; /play routes only to PlayScreen
 
 ### Pending Todos
 
@@ -139,6 +143,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T09:44:18.684Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-07-16T09:47:31.385Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
