@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: phone-shell-tb-catalog
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-07-16T05:28:12.241Z"
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-07-16T05:38:36.989Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 01 (phone-shell-tb-catalog) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 01 execution started
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [██████░░░░] 60%
 | Phase 01 P01 | 10min | 2 tasks | 25 files |
 | Phase 01 P02 | 5min | 2 tasks | 13 files |
 | Phase 01 P03 | 9min | 2 tasks | 15 files |
+| Phase 01 P04 | 7min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,9 @@ Recent decisions affecting current work:
 - [Phase ?]: TB roles from townsquare TB interchange excluding travelers (22 / 13-4-4-1)
 - [Phase ?]: Setup chart locked to RESEARCH A1; verification note in loadCatalog.ts header
 - [Phase ?]: Offline ready chip optimistic on Zod success; original PWA icons only
+- [Phase ?]: E2E hooks: tb-script-card, tb-team-counts, tb-setup-chart, tb-role-row with data-first-night
+- [Phase ?]: teamCounts derived in loadCatalog (not stored in JSON) for UI + later phases
+- [Phase ?]: Night-order sample: Poisoner firstNight < Washerwoman and Spy via visible data attrs
 
 ### Pending Todos
 
@@ -102,6 +106,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T05:28:12.237Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-07-16T05:38:36.984Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None
