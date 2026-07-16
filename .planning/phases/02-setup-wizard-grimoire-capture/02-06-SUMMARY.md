@@ -142,7 +142,7 @@ Each task was committed atomically:
 4. **Task 2 GREEN: persistWriteStatus + focus restore** - `d79706a` (feat)
 5. **Task 3: Prohibition fixtures and descriptors** - `3add338` (feat)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `1a3570d` (docs: complete plan)
 
 _Note: TDD tasks used RED → GREEN commits_
 
