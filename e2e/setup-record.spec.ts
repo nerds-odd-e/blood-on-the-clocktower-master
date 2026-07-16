@@ -108,5 +108,52 @@ test.describe('setup record roles', () => {
     await expect(page.getByText('Difficulty')).toBeVisible()
     await expect(page.getByText('Bag', { exact: true })).toBeVisible()
     await expect(page.getByText('Assignments', { exact: true })).toBeVisible()
+    await expect(page.getByText('Assignments are saved')).toBeVisible()
+  })
+
+  test('withholds saved assurance when the critical IndexedDB write fails, then retries', async ({
+    page,
+  }) => {
+    await reachRecordStep(page)
+    await assignEveryBagToken(page)
+
+    await page.evaluate(() => {
+      ;(window as Window & { __ST_FAIL_IDB_WRITES?: boolean }).__ST_FAIL_IDB_WRITES =
+        true
+    })
+
+    await page.getByRole('button', { name: 'Start night' }).click()
+    await expect(
+      page.getByRole('heading', { name: 'Night ready' }),
+    ).toBeVisible()
+    await expect(page.getByText('Assignments are saved')).toHaveCount(0)
+    await expect(
+      page.getByRole('button', { name: 'Retry' }),
+    ).toBeVisible()
+
+    await page.evaluate(() => {
+      ;(window as Window & { __ST_FAIL_IDB_WRITES?: boolean }).__ST_FAIL_IDB_WRITES =
+        false
+    })
+    await page.getByRole('button', { name: 'Retry' }).click()
+    await expect(page.getByText('Assignments are saved')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Retry' })).toHaveCount(0)
+  })
+
+  test('restores focus to Start night after soft-gate Keep recording', async ({
+    page,
+  }) => {
+    await reachRecordStep(page)
+
+    const startNight = page.getByRole('button', { name: 'Start night' })
+    await startNight.click()
+    const dialog = page.getByRole('dialog', {
+      name: 'Recording is incomplete',
+    })
+    await expect(dialog).toBeVisible()
+    await dialog.getByRole('button', { name: 'Keep recording' }).click()
+    await expect(dialog).toHaveCount(0)
+
+    await expect(startNight).toBeFocused()
   })
 })
