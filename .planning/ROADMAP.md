@@ -7,7 +7,7 @@ Ship a phone-first offline co-pilot so a new Storyteller can run Trouble Brewing
 ## Phases
 
 - [ ] **Phase 1: Phone Shell & TB Catalog** - Installable phone-first offline app with Trouble Brewing data
-- [ ] **Phase 2: Setup Wizard & Grimoire Capture** - Wizard → legal bag → deal → recorded roles with composition gate
+- [x] **Phase 2: Setup Wizard & Grimoire Capture** - Wizard → legal bag → deal → recorded roles with composition gate (completed 2026-07-16)
 - [ ] **Phase 3: Night Coach & Live Grimoire** - Next-beat First/Other night coach with tokens, bluffs, and detail
 
 ## Phase Details
@@ -63,7 +63,7 @@ Plans:
   4. After the physical deal, Storyteller can record assignments via tap player → pick character
   5. App blocks starting night until recorded roles match the expected team composition
 
-**Plans:** 6/6 plans executed
+**Plans:** 6/6 plans complete
 
 Plans:
 **Wave 1**
@@ -118,7 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
-| 2. Setup Wizard & Grimoire Capture | 6/6 | In Progress|  |
+| 2. Setup Wizard & Grimoire Capture | 6/6 | Complete    | 2026-07-16 |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
 ## Coverage Map
