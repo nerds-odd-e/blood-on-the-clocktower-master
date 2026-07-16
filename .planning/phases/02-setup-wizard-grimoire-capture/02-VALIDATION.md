@@ -21,7 +21,7 @@ created: 2026-07-16
 | Property | Value |
 |----------|-------|
 | **Framework** | Playwright `^1.61.1` (E2E) + Vitest `^4.1.10` (domain, Wave 0 install) |
-| **Config file** | `playwright.config.ts` (exists); `vitest.config.ts` or Vite `test` key — Wave 0 |
+| **Config file** | `playwright.config.ts` + `vitest.config.ts` (`node`, `src/**/*.test.ts`) |
 | **Quick run command** | `npx vitest run src/domain/bag src/domain/grimoire` |
 | **Full suite command** | `npm run test:unit && npm test` |
 | **Estimated runtime** | ~90–120 seconds (unit + Playwright preview) |
@@ -57,8 +57,8 @@ created: 2026-07-16
 
 ## Wave 0 Requirements
 
-- [ ] Install `zustand`, `idb-keyval`, `vitest`; add `test:unit` script
-- [ ] `vitest.config.ts` (or vite `test` block) with `environment: 'node'`, include `src/**/*.test.ts`
+- [x] Install `zustand`, `idb-keyval`, `vitest`; add `test:unit` script
+- [x] `vitest.config.ts` with `environment: 'node'`, include `src/**/*.test.ts`
 - [ ] `src/domain/bag/buildBag.test.ts` — N=5..15 × 3 difficulties; Baron±Drunk fixtures; never `tokens.includes('drunk')`
 - [ ] `src/domain/grimoire/validateAssignments.test.ts` — match / missing / duplicate
 - [ ] `e2e/setup-wizard.spec.ts` — happy path to bag review
