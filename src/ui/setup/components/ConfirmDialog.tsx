@@ -6,6 +6,7 @@ type ConfirmDialogProps = {
   confirmLabel: string
   dismissLabel: string
   destructive?: boolean
+  secondaryConfirm?: boolean
   onConfirm: () => void
   onDismiss: () => void
 }
@@ -16,6 +17,7 @@ export function ConfirmDialog({
   confirmLabel,
   dismissLabel,
   destructive = false,
+  secondaryConfirm = false,
   onConfirm,
   onDismiss,
 }: ConfirmDialogProps) {
@@ -60,7 +62,7 @@ export function ConfirmDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
-        className="w-full max-w-sm rounded-sm border border-[var(--color-border)] bg-[var(--color-secondary)] p-4"
+        className="max-h-[calc(100dvh-3rem)] w-full max-w-sm overflow-y-auto rounded-sm border border-[var(--color-border)] bg-[var(--color-secondary)] p-4"
       >
         <h2 id="confirm-dialog-title" className="text-heading">
           {title}
@@ -72,6 +74,8 @@ export function ConfirmDialog({
             className={`min-h-11 rounded-sm px-4 text-body font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
               destructive
                 ? 'bg-[var(--color-destructive)] text-[var(--color-text-primary)] focus-visible:outline-[var(--color-text-primary)]'
+                : secondaryConfirm
+                  ? 'border border-[var(--color-border)] bg-transparent text-[var(--color-text-primary)] focus-visible:outline-[var(--color-text-primary)]'
                 : 'bg-[var(--color-accent)] text-[#0B0B0B] focus-visible:outline-[var(--color-accent)]'
             }`}
             onClick={onConfirm}

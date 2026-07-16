@@ -5,6 +5,7 @@ import { PlayersStep } from './steps/PlayersStep'
 import { ScriptStep } from './steps/ScriptStep'
 import { DealStep } from './steps/DealStep'
 import { RecordStep } from './steps/RecordStep'
+import { NightReadyStep } from './steps/NightReadyStep'
 
 export function SetupWizard() {
   const wizardStep = useSetupSessionStore((state) => state.wizardStep)
@@ -55,7 +56,13 @@ export function SetupWizard() {
         />
       ) : null}
       {wizardStep === 'record' ? (
-        <RecordStep onBack={() => setWizardStep('deal')} />
+        <RecordStep
+          onBack={() => setWizardStep('deal')}
+          onStartNight={() => setWizardStep('nightReady')}
+        />
+      ) : null}
+      {wizardStep === 'nightReady' ? (
+        <NightReadyStep onBack={() => setWizardStep('record')} />
       ) : null}
     </div>
   )

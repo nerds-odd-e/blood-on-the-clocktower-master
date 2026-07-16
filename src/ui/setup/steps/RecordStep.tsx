@@ -1,17 +1,24 @@
 import { loadCatalog } from '../../../domain/script'
 import {
+  validateAssignments,
+  type AssignmentIssue,
+} from '../../../domain/grimoire'
+import {
   remainingTokens,
   useSetupSessionStore,
 } from '../../../state/setupSessionStore'
 import { RolePicker } from '../components/RolePicker'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 import { useState } from 'react'
 
 type RecordStepProps = {
   onBack: () => void
+  onStartNight: () => void
 }
 
-export function RecordStep({ onBack }: RecordStepProps) {
+export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null)
+  const [startIssues, setStartIssues] = useState<AssignmentIssue[] | null>(null)
   const players = useSetupSessionStore((state) => state.players)
   const bag = useSetupSessionStore((state) => state.bag)
   const assignments = useSetupSessionStore((state) => state.assignments)
@@ -22,6 +29,18 @@ export function RecordStep({ onBack }: RecordStepProps) {
   const selectedAssignment = selectedPlayerId
     ? assignments[selectedPlayerId]
     : undefined
+
+  const describeIssue = (issue: AssignmentIssue) => {
+    if (issue.code === 'unassigned') {
+      const player = players.find((candidate) => candidate.id === issue.playerId)
+      return `${player?.name || 'A player'} has no character yet.`
+    }
+    if (issue.code === 'duplicate_token') {
+      const role = roleById.get(issue.roleId)
+      return `${role?.name ?? issue.roleId} is assigned more than once.`
+    }
+    return `Recorded roles do not match the bag (${issue.detail}).`
+  }
 
   return (
     <section className="flex flex-col gap-6 pt-8 pb-8">
@@ -78,13 +97,51 @@ export function RecordStep({ onBack }: RecordStepProps) {
         />
       ) : null}
 
-      <button
-        type="button"
-        className="min-h-11 self-start text-body underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-        onClick={onBack}
-      >
-        Back
-      </button>
+      <footer className="sticky bottom-0 mt-auto flex flex-col gap-2 bg-[var(--color-dominant)] py-4">
+        <button
+          type="button"
+          className="min-h-11 self-start text-body underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
+          onClick={onBack}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          className="min-h-12 rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+          onClick={() => {
+            if (!bag) return
+            const issues = validateAssignments({ players, bag, assignments })
+            if (issues.length > 0) {
+              setStartIssues(issues)
+              return
+            }
+            onStartNight()
+          }}
+        >
+          Start night
+        </button>
+      </footer>
+
+      {startIssues ? (
+        <ConfirmDialog
+          title="Recording is incomplete"
+          confirmLabel="Start anyway"
+          dismissLabel="Keep recording"
+          secondaryConfirm
+          onConfirm={() => {
+            setStartIssues(null)
+            onStartNight()
+          }}
+          onDismiss={() => setStartIssues(null)}
+        >
+          <p>You can still start night, but fix these if you can:</p>
+          <ul className="mt-3 list-disc space-y-2 pl-5">
+            {startIssues.map((issue, index) => (
+              <li key={`${issue.code}-${index}`}>{describeIssue(issue)}</li>
+            ))}
+          </ul>
+        </ConfirmDialog>
+      ) : null}
     </section>
   )
 }
