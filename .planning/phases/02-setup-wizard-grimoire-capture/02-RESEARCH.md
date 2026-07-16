@@ -452,26 +452,30 @@ Use a **pure summary** on `/setup`: roster count, difficulty, bag composition co
 | A3 | Recording physical bag tokens + auto Drunk mark on cover assign is enough for Phase 2 grimoire (bluffs/reminders Phase 3) | GRIM-01 | Phase 3 may need richer assignment shape — keep `trueRoleId` / `believedRoleId` fields now |
 | A4 | Mid-wizard IndexedDB persist is desired from first wizard commit (not localStorage interim) | Persistence | Slightly more Wave 0 work; STACK-aligned |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should bag generation be deterministic-seeded for tests only?**
    - What we know: UI has no regenerate; production can use `Math.random` / `crypto.getRandomValues`.
    - What's unclear: Whether to inject `rng` for golden tests.
    - Recommendation: `buildBag(..., rng = defaultRng)` for Vitest; production uses crypto.
+   - RESOLVED: Inject optional `rng` into `buildBag` for Vitest determinism; production default uses `crypto.getRandomValues`-backed picker (plans 02-03).
 
 2. **Script step UX when TB is the only script**
    - What we know: SETUP-05 includes script step; home already selected TB.
    - Recommendation: One-screen confirm “Trouble Brewing” + Continue (no multi-script picker).
+   - RESOLVED: Single TB confirm card + Continue setup / Back to home (D-18/D-20; UI-SPEC Script step; plan 02-02). No multi-script picker.
 
 3. **Exact copy for whyNote / soft-gate**
    - Discretion: table-lantern voice from 01-UI-SPEC; finalize in UI-SPEC / plan copy table.
+   - RESOLVED: Copy ownership is `02-UI-SPEC.md` (whyNote Easy/Standard/Hard lines + soft-gate issue templates). Plans cite UI-SPEC strings; do not invent alternate copy in domain modules.
 
 ## Environment Availability
 
 | Dependency | Required By | Available | Version | Fallback |
 |------------|------------|-----------|---------|----------|
-| Node.js | npm scripts / Vitest / Playwright | ✓ | v24.5.0 | — |
-| npm | installs | ✓ | 11.5.1 | — |
+| Nix flake (`flake.nix`) | All repo tooling | ✓ | project flake | — |
+| Node.js (via nix develop) | npm scripts / Vitest / Playwright | ✓ | pinned in flake | — |
+| npm (via nix develop) | installs | ✓ | pinned in flake | — |
 | Playwright preview E2E | SETUP/GRIM flows | ✓ | @playwright/test in package.json | — |
 | IndexedDB (browser) | persist | ✓ (Chromium E2E) | — | In-memory mock only for unit tests of domain (not store) |
 
@@ -479,7 +483,7 @@ Use a **pure summary** on `/setup`: roster count, difficulty, bag composition co
 
 **Missing dependencies with fallback:** none  
 
-Step 2.6: External tools probed — Node/npm/Playwright present. No flake.nix / no `nix develop` required.
+Step 2.6: External tools run through the project Nix flake. Prefix every tooling command with `CURSOR_DEV=true nix develop -c …` per `.cursor/rules/nix.mdc` / `AGENTS.md`. Git commands do not need the Nix prefix.
 
 ## Validation Architecture
 
