@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
 status: ready_to_execute
-stopped_at: Phase 2 plans revised (5 plans, 5 waves) after checker feedback
-last_updated: "2026-07-16T07:30:00.000Z"
+stopped_at: Phase 2 plan 02-02 revised for hydrate gate + error UI
+last_updated: "2026-07-16T14:30:00.000Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 02 plans revised for checker (split Wave 0 / wizard shell)
+last_activity_desc: Phase 02-02 Task 2 hydrate gate + Couldn’t restore error UI (checker blocker)
 progress:
   total_phases: 3
   completed_phases: 1
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 Phase: 02 (setup-wizard-grimoire-capture) — READY TO EXECUTE
 Plan: 0 of 5
 Status: Plans revised — ready for `/gsd-execute-phase 2`
-Last activity: 2026-07-16 — Phase 02 plans revised (5 MVP vertical slices, waves 1–5)
+Last activity: 2026-07-16 — Phase 02-02 revised: SetupWizard hasHydrated gate + persist-hydrate error copy
 
 Progress: [░░░░░░░░░░] 0%
 
