@@ -116,7 +116,7 @@ Each task was committed atomically:
 1. **Task 1: Tailwind tokens, viewport, and PhoneShell** - `f78663b` (feat)
 2. **Task 2: Routes, stubs, and ScriptHome composition** - `ea2c410` (feat)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `bb92c3a` (docs: complete plan)
 
 ## Files Created/Modified
 
