@@ -128,7 +128,7 @@ Each task was committed atomically:
 1. **Task 1: RED domain unit scaffolds for beats, prompts, bluffs** - `5dfd627` (test)
 2. **Task 2: RED play E2E + invert Night ready /play stub contracts** - `2688a03` (test)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `063125b` (docs: complete Wave 0 RED gates plan)
 
 ## Files Created/Modified
 
