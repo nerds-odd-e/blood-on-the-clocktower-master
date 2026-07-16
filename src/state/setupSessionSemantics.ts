@@ -1,4 +1,5 @@
 import { validateBag } from '../domain/bag'
+import { eligibleBluffRoleIds } from '../domain/grimoire'
 import type { LoadedCatalog } from '../domain/script'
 
 /** Minimal shape for semantic checks; store Zod type stays authoritative for persistence. */
@@ -141,6 +142,26 @@ export function assertSetupSessionSemantics(
   const playShape = assertPlayFieldShapes(session)
   if (!playShape.ok) return playShape
 
+  const bluffEligibility = assertDemonBluffEligibility(session, catalog)
+  if (!bluffEligibility.ok) return bluffEligibility
+
+  return { ok: true }
+}
+
+/** demonBluffs ⊆ eligibleBluffRoleIds when assignments are present (T-03-01). */
+function assertDemonBluffEligibility(
+  session: PersistedSetupSession,
+  catalog: LoadedCatalog,
+): SemanticsResult {
+  if (session.demonBluffs === undefined) return { ok: true }
+  if (Object.keys(session.assignments).length === 0) return { ok: true }
+
+  const eligible = new Set(eligibleBluffRoleIds(session.assignments, catalog))
+  for (const id of session.demonBluffs) {
+    if (!eligible.has(id)) {
+      return fail('demonBluffs contains an ineligible role id')
+    }
+  }
   return { ok: true }
 }
 
@@ -169,6 +190,9 @@ function assertPlayFieldShapes(session: PersistedSetupSession): SemanticsResult 
   if (session.demonBluffs !== undefined) {
     if (!Array.isArray(session.demonBluffs)) {
       return fail('demonBluffs must be an array')
+    }
+    if (session.demonBluffs.length > 3) {
+      return fail('demonBluffs must contain at most 3 role ids')
     }
     for (const id of session.demonBluffs) {
       if (typeof id !== 'string' || id.length === 0) {

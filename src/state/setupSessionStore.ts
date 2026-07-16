@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { buildBag, type BagPlan } from '../domain/bag'
-import type { Assignment } from '../domain/grimoire'
+import { eligibleBluffRoleIds, type Assignment } from '../domain/grimoire'
 import { loadCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
 import type { PersistWriteStatus } from './persistStatus'
@@ -115,6 +115,8 @@ type SetupSessionState = PersistedSetupSession & {
   retreatBeat: () => void
   clampBeatIndex: (queueLength: number) => void
   setPlaySurface: (playSurface: PlaySurface) => void
+  setDemonBluffs: (roleIds: string[]) => void
+  toggleDemonBluff: (roleId: string) => void
 }
 
 function partializedSession(state: PersistedSetupSession) {
@@ -314,6 +316,38 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           return state
         }),
       setPlaySurface: (playSurface) => set({ playSurface }),
+      setDemonBluffs: (roleIds) =>
+        set((state) => {
+          const eligible = new Set(
+            eligibleBluffRoleIds(state.assignments, loadCatalog()),
+          )
+          const next = roleIds
+            .filter((id) => eligible.has(id))
+            .slice(0, 3)
+          // Deduplicate while preserving order
+          const seen = new Set<string>()
+          const unique: string[] = []
+          for (const id of next) {
+            if (seen.has(id)) continue
+            seen.add(id)
+            unique.push(id)
+          }
+          return { demonBluffs: unique }
+        }),
+      toggleDemonBluff: (roleId) =>
+        set((state) => {
+          const eligible = new Set(
+            eligibleBluffRoleIds(state.assignments, loadCatalog()),
+          )
+          if (!eligible.has(roleId)) return state
+          if (state.demonBluffs.includes(roleId)) {
+            return {
+              demonBluffs: state.demonBluffs.filter((id) => id !== roleId),
+            }
+          }
+          if (state.demonBluffs.length >= 3) return state
+          return { demonBluffs: [...state.demonBluffs, roleId] }
+        }),
     }),
     {
       name: SETUP_SESSION_STORAGE_KEY,

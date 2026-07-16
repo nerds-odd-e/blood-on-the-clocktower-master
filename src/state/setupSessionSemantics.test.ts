@@ -281,4 +281,44 @@ describe('assertSetupSessionSemantics', () => {
     )
     expect(badBeat.ok).toBe(false)
   })
+
+  it('rejects demonBluffs that are ineligible when assignments are present', () => {
+    const players = basePlayers(7)
+    const bag = buildBag({
+      playerCount: 7,
+      difficulty: 'standard',
+      catalog,
+      rng: () => 0.42,
+    })
+    const assignments = Object.fromEntries(
+      players.map((player, index) => [
+        player.id,
+        {
+          playerId: player.id,
+          bagRoleId: bag.tokens[index]!,
+        },
+      ]),
+    )
+
+    const result = assertSetupSessionSemantics(
+      legalSession({
+        players,
+        bag,
+        assignments,
+        demonBluffs: ['poisoner'],
+      }),
+      catalog,
+    )
+    expect(result.ok).toBe(false)
+  })
+
+  it('rejects demonBluffs longer than 3', () => {
+    const result = assertSetupSessionSemantics(
+      legalSession({
+        demonBluffs: ['washerwoman', 'librarian', 'empath', 'chef'],
+      }),
+      catalog,
+    )
+    expect(result.ok).toBe(false)
+  })
 })
