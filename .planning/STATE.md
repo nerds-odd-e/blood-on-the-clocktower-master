@@ -5,14 +5,14 @@ milestone_name: milestone
 current_phase: 1
 current_phase_name: Phone Shell & TB Catalog
 status: ready_to_execute
-stopped_at: Phase 1 plans created
-last_updated: "2026-07-16T04:40:00.000Z"
+stopped_at: Phase 1 plans revised after checker (4 plans)
+last_updated: "2026-07-16T04:45:00.000Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 1 plans + walking skeleton written (01-01..01-03)
+last_activity_desc: Phase 1 plans revised — Wave 1 split into 01-01 RED / 01-02 green; catalog 01-03; offline 01-04
 progress:
   total_phases: 1
   completed_phases: 0
-  total_plans: 3
+  total_plans: 4
   completed_plans: 0
 ---
 
@@ -28,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 1 of 3 (Phone Shell & TB Catalog)
-Plan: 0 of 3 in current phase
-Status: Ready to execute (3 plans, walking skeleton)
-Last activity: 2026-07-16 — Phase 1 plans created (01-01..01-03 + SKELETON)
+Plan: 0 of 4 in current phase
+Status: Ready to execute (4 plans after checker revision, walking skeleton)
+Last activity: 2026-07-16 — Plans revised: 01-01 RED scaffold, 01-02 green shell/catalog/PWA, 01-03 catalog lock, 01-04 offline
 
 Progress: [░░░░░░░░░░] 0%
 

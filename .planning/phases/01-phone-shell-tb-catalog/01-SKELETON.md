@@ -2,6 +2,7 @@
 
 **Phase:** 1
 **Generated:** 2026-07-16
+**Revised:** 2026-07-16 (Wave 1 split: RED scaffold vs green shell/catalog/PWA)
 
 ## Capability Proven End-to-End
 
@@ -23,13 +24,22 @@ A Storyteller can open a phone-first installable offline PWA, see Trouble Brewin
 | Deployment target | Local `nix-shell -p nodejs --run 'npm run build && npm run preview'` | HTTPS host deferred; localhost SW sufficient for Phase 1 offline proof |
 | Directory layout | `src/app` (shell/routes), `src/domain/script`, `src/data/scripts/trouble-brewing`, `src/ui/*`, `e2e/` | RESEARCH recommended structure |
 
+## Plan / Wave Map
+
+| Plan | Wave | Delivers |
+|------|------|----------|
+| `01-01` | 1 | Vite scaffold + Playwright RED smoke + VALIDATION.md Playwright retarget |
+| `01-02` | 2 | PhoneShell, stubs, TB catalog load, VitePWA, smoke GREEN |
+| `01-03` | 3 | Setup-chart lock + Zod sum refinement + `e2e/catalog.spec.ts` |
+| `01-04` | 4 | Offline reload + viewport E2E (`e2e/offline.spec.ts`) |
+
 ## Stack Touched in Phase 1
 
-- [x] Project scaffold (framework, build, lint, Playwright test runner)
-- [x] Routing — `/`, `/setup`, `/play`
-- [x] Data path — real catalog read (Zod-validated bundled JSON); no write store in Phase 1
-- [x] UI — **Start setup** → `/setup` stub; **Back to home** → `/`
-- [x] Deployment — documented local full-stack run via preview (PWA SW)
+- [x] Project scaffold (framework, build, lint, Playwright test runner) — plan 01-01
+- [x] Routing — `/`, `/setup`, `/play` — plan 01-02
+- [x] Data path — real catalog read (Zod-validated bundled JSON); no write store in Phase 1 — plans 01-02 / 01-03
+- [x] UI — **Start setup** → `/setup` stub; **Back to home** → `/` — plan 01-02
+- [x] Deployment — documented local full-stack run via preview (PWA SW) — plans 01-02 / 01-04
 
 ## Out of Scope (Deferred to Later Slices)
 

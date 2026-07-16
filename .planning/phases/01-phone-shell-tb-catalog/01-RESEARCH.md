@@ -442,21 +442,24 @@ Encode as JSON (player counts 5–15). Commonly cited distribution [ASSUMED — 
 
 **If empty of unverified claims beyond A1–A4:** core stack/PWA claims were registry- and docs-verified.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Setup chart authoritative source**
+1. **Setup chart authoritative source** — RESOLVED
    - What we know: Chart exists on physical setup sheet / wiki Setup; community PDFs list counts
    - What's unclear: Exact Outsider/Minion counts for 10–15 in secondary web sources conflict
    - Recommendation: Wave 0 task — photograph/transcribe official sheet or wiki Setup table; lock JSON + tests
+   - **RESOLVED:** Lock `setup-chart.json` to the distribution table in this RESEARCH.md (A1 / official sheet transcription path). Plans `01-02` (initial bundle) and `01-03` (Zod sum refinement + Playwright catalog suite) treat that table as authoritative; put the verification source note in the `loadCatalog.ts` header comment (not inside the JSON).
 
-2. **Ability text provenance**
+2. **Ability text provenance** — RESOLVED
    - What we know: townsquare includes ability strings; Almanac scraping is IP-sensitive
    - What's unclear: How much ability text to show on Phase 1 home
    - Recommendation: Show role names + teams + night ordinals; keep ability strings short; paraphrase if displaying coaching later
+   - **RESOLVED:** Per CONTEXT Claude's Discretion + UI-SPEC catalog content policy — Phase 1 home shows names + team badges (+ optional compact roster); omit Almanac ability dump on home. Ability strings may exist on role rows for later phases but must not be featured as home Almanac paragraphs (D-09 / plan `01-02`–`01-03`).
 
-3. **UI-phase**
+3. **UI-phase** — RESOLVED
    - Roadmap marks `UI hint: yes`; `workflow.ui_phase: true`
    - Recommendation: Planner should expect `/gsd-ui-phase` or minimal UI-SPEC for home shell before execute if orchestrator runs UI gate
+   - **RESOLVED:** `01-UI-SPEC.md` is approved and locked via CONTEXT D-09. Execute follows that contract; no further UI-phase gate before Wave 1 execute.
 
 ## Environment Availability
 
