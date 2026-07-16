@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 01
 current_phase_name: phone-shell-tb-catalog
-status: executing
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-07-16T05:38:36.989Z"
+status: verifying
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-07-16T05:50:22.631Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 01 (phone-shell-tb-catalog) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-16 — Phase 01 execution started
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [████████░░] 80%
 | Phase 01 P02 | 5min | 2 tasks | 13 files |
 | Phase 01 P03 | 9min | 2 tasks | 15 files |
 | Phase 01 P04 | 7min | 2 tasks | 5 files |
+| Phase 01 P05 | 8min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Recent decisions affecting current work:
 - [Phase ?]: E2E hooks: tb-script-card, tb-team-counts, tb-setup-chart, tb-role-row with data-first-night
 - [Phase ?]: teamCounts derived in loadCatalog (not stored in JSON) for UI + later phases
 - [Phase ?]: Night-order sample: Poisoner firstNight < Washerwoman and Spy via visible data attrs
+- [Phase ?]: Offline proof uses browserContext.setOffline against vite preview after SW control
+- [Phase ?]: wave_0_complete true; nyquist_compliant left for validate-phase
+- [Phase ?]: TDD Task 1 suite green on first run — PWA already in 01-03; no separate RED fail
 
 ### Pending Todos
 
@@ -106,6 +110,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T05:38:36.984Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-07-16T05:50:22.626Z
+Stopped at: Completed 01-05-PLAN.md
 Resume file: None

@@ -24,7 +24,7 @@ Ship a phone-first offline co-pilot so a new Storyteller can run Trouble Brewing
   2. After first load, Storyteller can reload and use the app with no network connection and no account
   3. App exposes Trouble Brewing as the available script with roles/night data loaded for later setup and coach
 
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans executed
 
 Plans:
 **Wave 1**
@@ -45,7 +45,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 01-05-PLAN.md — Offline/viewport Playwright proof + VALIDATION status sync
+- [x] 01-05-PLAN.md — Offline/viewport Playwright proof + VALIDATION status sync
 
 **UI hint**: yes
 
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Phone Shell & TB Catalog | 4/5 | In Progress|  |
+| 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
 | 2. Setup Wizard & Grimoire Capture | 0/TBD | Not started | - |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
