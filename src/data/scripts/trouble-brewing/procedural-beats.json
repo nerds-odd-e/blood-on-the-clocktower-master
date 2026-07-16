@@ -1,0 +1,32 @@
+{
+  "beats": [
+    {
+      "id": "dusk",
+      "label": "Dusk",
+      "phase": "night",
+      "ordinal": 1,
+      "notes": "Phase 3 coach stub — announce dusk / night begins."
+    },
+    {
+      "id": "minion-info",
+      "label": "Minion Info",
+      "phase": "first-night",
+      "ordinal": 2,
+      "notes": "Phase 3 coach stub — wake minions when player count ≥ 7."
+    },
+    {
+      "id": "demon-info",
+      "label": "Demon Info",
+      "phase": "first-night",
+      "ordinal": 3,
+      "notes": "Phase 3 coach stub — wake demon; share bluffs."
+    },
+    {
+      "id": "dawn",
+      "label": "Dawn",
+      "phase": "night",
+      "ordinal": 99,
+      "notes": "Phase 3 coach stub — announce dawn / day begins."
+    }
+  ]
+}
