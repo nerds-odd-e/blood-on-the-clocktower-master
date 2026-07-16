@@ -5,14 +5,14 @@ milestone_name: milestone
 current_phase: 1
 current_phase_name: Phone Shell & TB Catalog
 status: ready_to_execute
-stopped_at: Phase 1 plans revised after checker (4 plans)
-last_updated: "2026-07-16T04:45:00.000Z"
+stopped_at: Phase 1 plans revised (5 plans after scope split)
+last_updated: "2026-07-16T04:55:00.000Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 1 plans revised — Wave 1 split into 01-01 RED / 01-02 green; catalog 01-03; offline 01-04
+last_activity_desc: Phase 1 plans revised iteration 2 — split 01-02 shell vs 01-03 catalog/PWA; catalog lock 01-04; offline 01-05
 progress:
   total_phases: 1
   completed_phases: 0
-  total_plans: 4
+  total_plans: 5
   completed_plans: 0
 ---
 
@@ -28,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 1 of 3 (Phone Shell & TB Catalog)
-Plan: 0 of 4 in current phase
-Status: Ready to execute (4 plans after checker revision, walking skeleton)
-Last activity: 2026-07-16 — Plans revised: 01-01 RED scaffold, 01-02 green shell/catalog/PWA, 01-03 catalog lock, 01-04 offline
+Plan: 0 of 5 in current phase
+Status: Ready to execute (5 plans after checker revision iteration 2, walking skeleton)
+Last activity: 2026-07-16 — Plans revised: 01-01 RED scaffold, 01-02 shell/routes, 01-03 catalog/PWA/green smoke, 01-04 catalog lock, 01-05 offline
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -86,6 +86,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T04:40:00.000Z
-Stopped at: Phase 1 plans created
+Last session: 2026-07-16T04:55:00.000Z
+Stopped at: Phase 1 plans revised (iteration 2/3)
 Resume file: .planning/phases/01-phone-shell-tb-catalog/01-01-PLAN.md
