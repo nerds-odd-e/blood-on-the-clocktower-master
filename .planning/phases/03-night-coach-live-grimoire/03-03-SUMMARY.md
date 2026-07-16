@@ -116,7 +116,7 @@ Each task was committed atomically:
 1. **Task 1: coach-copy data + composePrompt green** - `b845ffb` (feat)
 2. **Task 2: CoachBeatView full-screen next-beat UX** - `2ea989c` (feat)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `9dfff3c` (docs: complete plan)
 
 ## Files Created/Modified
 
