@@ -1,169 +1,172 @@
 ---
 phase: 02-setup-wizard-grimoire-capture
-verified: 2026-07-16T08:24:00Z
-status: gaps_found
-score: 7/11 must-haves verified
-behavior_unverified: 1
-behavior_unverified_items:
-  - truth: "Assigning the Drunk cover token persists trueRoleId=drunk and believedRoleId=coverRoleId"
-    test: "Generate a deterministic Drunk bag, assign its cover token, and inspect the persisted assignment"
-    expected: "The assignment keeps the physical cover as bagRoleId/believedRoleId and drunk as trueRoleId"
-    why_human: "The transition exists in the store, but no current unit or browser test exercises this branch"
-decision_coverage:
-  honored: 21
-  total: 21
-  not_honored: []
-gaps:
-  - id: G-01
-    severity: blocker
-    truth: "Persisted setup recovery cannot strand the wizard on an impossible downstream step"
-    evidence: "PersistedSetupSessionSchema validates shapes only; wizardStep=bag or nightReady with bag=null parses, while BagStep and NightReadyStep return null"
-    fix: "Add semantic session validation during merge and browser tests for shape-valid impossible sessions"
-  - id: G-02
-    severity: blocker
-    truth: "Recorded assignments are durably saved before the app assures the Storyteller that they are saved"
-    evidence: "Zustand persistence writes are fire-and-forget, no write error/status is exposed, and NightReadyStep unconditionally renders 'Assignments are saved.'"
-    fix: "Await a critical durable save or track saving/saved/error state; gate the assurance and test a rejected IndexedDB write"
-  - id: G-03
-    severity: workflow
-    truth: "Test-tier prohibitions have deterministic enforcement evidence"
-    evidence: "All 13 test-tier prohibition descriptors omit check_violation_fixture (most omit the descriptor entirely), so prohibition-enforcement must fail closed even though direct source/tests show no current violation"
-    fix: "Project the required check descriptors and known-bad fixtures, or re-author these items at the supported verification tier"
+verified: 2026-07-16T08:48:30Z
+status: human_needed
+score: 12/13 must-haves verified
+behavior_unverified: 0
+overrides_applied: 0
+re_verification:
+  previous_status: gaps_found
+  previous_score: 7/11
+  gaps_closed:
+    - "Shape-valid but semantically impossible persisted sessions recover fresh instead of rendering a blank route (G-01)"
+    - "Assignments are saved is shown only after the latest IndexedDB write succeeds (G-02)"
+    - "Test-tier prohibitions have deterministic enforcement evidence (G-03)"
+    - "Assigning the Drunk cover token persists trueRoleId=drunk and believedRoleId=coverRoleId (prior behavior_unverified)"
+    - "ConfirmDialog restores focus to the Start night trigger after soft-gate dismiss (prior WR-01 warning)"
+  gaps_remaining: []
+  regressions: []
+behavior_unverified_items: []
+human_verification:
+  - test: "At 390×844, enter a very long player name on the roster, open a maximum-size role picker (15 remaining tokens), and open a soft-gate dialog with many validation issues"
+    expected: "No horizontal scrolling; picker and dialog scroll vertically inside their containers; sticky footer does not cover the last actionable row"
+    why_human: "Plan truths are tagged verification: backstop (insufficient_spec). CSS constraints exist and general overflow tests pass, but these extreme scenarios have no scenario-specific held-out assertions"
+  - test: "Review the seven judgment-tier prohibitions against the final setup flow and shipped assets/copy"
+    expected: "No HTML injection of names/notes, no official BotC token art, no Vaul/sheet role picker, no quit-before-start dropout re-bag, no shaming/guilt framing; Wave-1 temporal judgment items treated as historical only"
+    why_human: "Judgment-tier prohibitions are non-authoritative LLM judgments under ADR-550 — human review recommended"
+mvp_note: "ROADMAP phase goal is not in As a… I want to… so that… form (user-story.validate=false) while mode is mvp. User Flow Coverage below uses the plan-authored user story from 02-06. Consider /gsd mvp-phase 02 to align ROADMAP wording."
 ---
 
 # Phase 2: Setup Wizard & Grimoire Capture Verification Report
 
-**Phase Goal:** Storyteller can walk the setup wizard, get a legal TB bag, and record who drew which role before night starts.
-**Verified:** 2026-07-16T08:24:00Z
-**Status:** gaps_found
+**Phase Goal:** Storyteller can walk the setup wizard, get a legal TB bag, and record who drew which role before night starts
+**Verified:** 2026-07-16T08:48:30Z
+**Status:** human_needed
+**Re-verification:** Yes — after gap closure (02-06)
+
+## User Flow Coverage
+
+User story (from plan 02-06 objective; ROADMAP goal is abbreviated MVP text): *As a Storyteller, I want to walk the setup wizard, get a legal TB bag, and record who drew which role before night starts, so that I can reach a Night ready handoff without a paper setup sheet.*
+
+| Step | Expected | Evidence | Status |
+|------|----------|----------|--------|
+| Open setup | Home → Start setup lands on `/setup` Trouble Brewing confirm | `SetupWizard` on `/setup`; `e2e/setup-wizard.spec.ts` | ✓ |
+| Enter players | Unique seat-ordered names (5–15), optional More profiles | `PlayersStep` / `PlayerRow`; Playwright roster + More | ✓ |
+| Set difficulty | Easy / Standard / Hard, default Standard | `DifficultyStep.tsx`; browser coverage | ✓ |
+| Accept bag | Legal private TB bag from count + difficulty only | `buildBag` / `validateBag`; 5–15 × 3 matrix unit tests | ✓ |
+| Deal + record | Physical deal coaching; tap player → remaining token | `DealStep` / `RecordStep`; `setup-record.spec.ts` | ✓ |
+| Start night | Soft-gate on invalid composition; Night ready on `/setup` | `validateAssignments` + `ConfirmDialog`; Night ready E2E | ✓ |
+| Outcome | Night ready handoff without paper setup sheet | Summary labels + durable save gated on `persistWriteStatus` | ✓ |
 
 ## Goal Achievement
 
-The normal setup path is implemented and green end-to-end. The phase does not pass goal-backward verification because two persistence integrity paths can either strand the setup route or lose recorded assignments while claiming they were saved. These are core-session risks, not cosmetic review observations.
+Prior blockers G-01 / G-02 / G-03 and the Drunk behavior-unverified item are closed by plan 02-06. Automated evidence is green. Phase status is `human_needed` solely for phone-overflow backstops and judgment-tier prohibition review — not for missing product wiring.
 
 ### Observable Truths
 
 | # | Truth | Status | Evidence |
-|---|---|---|---|
-| 1 | Storyteller can confirm Trouble Brewing and enter 5–15 unique, seat-ordered players with optional profiles | ✓ VERIFIED | `PlayersStep`, `PlayerRow`, and `setup-wizard.spec.ts`; browser tests cover five names, duplicate rejection, default/optional profile values, and back navigation persistence |
-| 2 | Storyteller can choose Easy / Standard / Hard, defaulting to Standard | ✓ VERIFIED | `DifficultyStep.tsx`; browser test exercises all three selections and the Standard default |
-| 3 | App generates a legal TB bag from count and difficulty while excluding profiles | ✓ VERIFIED | `buildBag.ts` accepts count/difficulty/catalog only; 36 bag tests cover all 5–15 × 3 combinations plus Baron and Drunk invariants |
-| 4 | Wizard enforces script → players → difficulty → bag → deal → record | ✓ VERIFIED | `SetupWizard.tsx` mounts the persisted step switch on `/setup`; Playwright traverses the sequence without skip controls |
-| 5 | Storyteller can tap a player, assign only a remaining physical token, and clear it back into the pool | ✓ VERIFIED | Store guards `assignRole`; `setup-record.spec.ts` assigns all seats and proves clear/restoration |
-| 6 | Starting with invalid assignments surfaces concrete issues and requires explicit Start anyway confirmation | ✓ VERIFIED | `RecordStep.tsx` calls `validateAssignments`; incomplete and clean paths both pass E2E. This follows locked D-15, which intentionally softens GRIM-02's literal “blocks” wording |
-| 7 | Successful/overridden start reaches Night ready on `/setup`, not `/play` | ✓ VERIFIED | `NightReadyStep.tsx` and E2E assert summary labels, `/setup`, and no play link |
-| 8 | Shape-valid but semantically impossible persisted sessions recover fresh instead of rendering a blank route | ✗ FAILED | `setupSessionStore.ts:50-56,222-231` accepts `wizardStep: bag/nightReady` with `bag: null`; both downstream components return `null`. Existing corruption E2E covers invalid JSON only |
-| 9 | “Assignments are saved” is shown only after the latest IndexedDB write succeeds | ✗ FAILED | `idbStorage.setItem` can reject, but no persistence status/error reaches UI; `NightReadyStep.tsx:39` asserts saved unconditionally |
-| 10 | Drunk cover assignment preserves true and believed identity | ⚠️ PRESENT_BEHAVIOR_UNVERIFIED | Store branch exists at `setupSessionStore.ts:145-151`; bag unit test proves cover generation, but no test exercises the assignment transition |
-| 11 | Long names, a 15-role picker, and a many-issue dialog remain usable at 390×844 | ? UNCERTAIN | CSS contains wrapping/scroll constraints and general phone overflow tests pass, but the three plan backstops have no scenario-specific visual/browser assertions |
+|---|-------|--------|----------|
+| 1 | Storyteller can confirm Trouble Brewing and enter 5–15 unique, seat-ordered players with optional profiles | ✓ VERIFIED | `PlayersStep`, Playwright five-name / duplicate / More path (regression: files present + wired) |
+| 2 | Storyteller can choose Easy / Standard / Hard, defaulting to Standard | ✓ VERIFIED | `DifficultyStep.tsx` + prior browser coverage |
+| 3 | App generates a legal TB bag from count and difficulty while excluding profiles | ✓ VERIFIED | `buildBag.ts` signature; bag unit matrix; prohibition `no-profiles-into-buildBag` |
+| 4 | Wizard enforces script → players → difficulty → bag → deal → record | ✓ VERIFIED | `SetupWizard` step switch on `/setup`; Playwright sequence |
+| 5 | Storyteller can tap a player, assign only a remaining physical token, and clear it back into the pool | ✓ VERIFIED | Store `assignRole` guards; `setup-record.spec.ts` |
+| 6 | Starting with invalid assignments surfaces concrete issues and requires explicit Start anyway confirmation | ✓ VERIFIED | `RecordStep` → `validateAssignments` + soft-gate (D-15 resolves GRIM-02 “blocks” wording) |
+| 7 | Successful/overridden start reaches Night ready on `/setup`, not `/play` | ✓ VERIFIED | `NightReadyStep`; prohibition `no-play-navigation` |
+| 8 | Shape-valid but semantically impossible persisted sessions recover fresh instead of a blank `/setup` | ✓ VERIFIED | `assertSetupSessionSemantics` in merge; unit rejects null-bag downstream; E2E `recovers shape-valid nightReady with null bag` + roster/bag mismatch (pass) |
+| 9 | “Assignments are saved” only after the latest critical IndexedDB write succeeds | ✓ VERIFIED | `awaitCriticalPersist` + `persistWriteStatus`; `NightReadyStep` gates copy; unit error path; E2E `withholds saved assurance… then retries` (pass) |
+| 10 | Drunk cover assignment preserves `trueRoleId=drunk` and `believedRoleId=cover` | ✓ VERIFIED | `setupSessionStore.assignRole.test.ts` named test passes |
+| 11 | ConfirmDialog restores focus to the Start night trigger after soft-gate dismiss | ✓ VERIFIED | `ConfirmDialog` cleanup restores `previouslyFocused`; E2E `restores focus to Start night…` (pass) |
+| 12 | All Phase 2 test-tier prohibitions carry `check_kind` / `check_target` / `check_violation_fixture` with runnable fixtures | ✓ VERIFIED | 15/15 test-tier items complete; `npm run test:prohibitions` 15/15 pass; fail-first RED with `GSD_PROHIB_SUBJECT` on premature-saved fixture |
+| 13 | Long names, 15-role picker, and many-issue soft-gate remain usable at 390×844 | ⚠️ insufficient_spec (backstop) | No scenario-specific held-out test — routes to human verification |
 
-**Score:** 7/11 truths verified (1 present but behavior-unverified; 2 failed; 1 human-only)
+**Score:** 12/13 truths verified (0 present-but-behavior-unverified)
+
+### Deferred Items
+
+None. Phone overflow backstops are end-of-phase human checks, not Phase 3 scope.
 
 ### Required Artifacts
 
-| Artifact group | Status | Details |
-|---|---|---|
-| Session store and IndexedDB adapter | ⚠️ SUBSTANTIVE, INTEGRITY GAPS | Wired throughout wizard; shape validation and hydration gate exist, but semantic validation and write-failure feedback do not |
-| Bag builder and validator | ✓ EXISTS + SUBSTANTIVE + WIRED | All four plan artifacts pass automated artifact checks; legal bag matrix passes |
-| Setup wizard steps | ✓ EXISTS + SUBSTANTIVE + WIRED | `/setup` mounts `SetupWizard`; script through Night ready components are used |
-| Role recording and validation | ✓ EXISTS + SUBSTANTIVE + WIRED | Remaining-token store guard, validator, picker, and record UI are connected |
-| Browser/domain tests | ⚠️ SUBSTANTIVE, RECOVERY GAPS | 26 Playwright and 39 unit tests pass; no semantic-corruption, failed-write, or Drunk-assignment transition test |
-
-**Artifacts:** 18/18 declared artifacts exist and pass substantive checks; two session-integrity behaviors remain incomplete.
+| Artifact | Expected | Status | Details |
+|----------|----------|--------|---------|
+| `src/state/setupSessionSemantics.ts` | Cross-field hydrate invariants | ✓ VERIFIED | Exports `assertSetupSessionSemantics`; wired in store merge |
+| `src/state/setupSessionStore.ts` | Semantic merge + `persistWriteStatus` + critical save | ✓ VERIFIED | Merge → semantics → fresh+`hydrationError`; `advanceToNightReady` awaits persist |
+| `src/ui/setup/steps/NightReadyStep.tsx` | Gated saved / saving / error+Retry | ✓ VERIFIED | Conditional on `persistWriteStatus`; Retry calls `retryCriticalPersist` |
+| `tests/prohibitions/` | node:test guards + known-bad fixtures | ✓ VERIFIED | 15 guards; fixtures exist; clean suite green |
+| `e2e/setup-wizard.spec.ts` | Impossible-session recovery | ✓ VERIFIED | null-bag nightReady + length mismatch cases pass |
+| Wizard / bag / record stack (plans 02-01–05) | Prior phase delivery | ✓ VERIFIED (regression) | Core step components + bag domain present and wired |
 
 ### Key Link Verification
 
-Automated plan checks verified 12/15 declared links. The three reported failures in plan 02-05 are malformed `from:` descriptors rather than missing product wiring; manual inspection confirms all three connections:
+| From | To | Via | Status | Details |
+|------|----|-----|--------|---------|
+| Persist merge after Zod | `assertSetupSessionSemantics` | Failure → `freshSession` + `hydrationError` | ✓ WIRED | `setupSessionStore.ts` merge block |
+| Start night / Start anyway | `advanceToNightReady` → `awaitCriticalPersist` | Status before assurance | ✓ WIRED | `SetupWizard.tsx` calls `advanceToNightReady` |
+| `NightReadyStep` | `persistWriteStatus` | Saved-only assurance; Retry on error | ✓ WIRED | Source branches + Retry button |
+| Plan `check_*` scalars | `tests/prohibitions/*.test.mjs` | Fail-first `GSD_PROHIB_MASTER` / subject injection | ✓ WIRED | 15/15 descriptors + suite |
 
-- `RecordStep` calls `validateAssignments` and branches to a soft-gate or Night ready.
-- `ConfirmDialog` Start anyway invokes the Night ready transition.
-- `NightReadyStep` remains mounted under the `/setup` route and does not navigate to `/play`.
+Automated `verify.key-links` reported false for 02-06 because `from:` values are prose descriptors, not file paths — manual inspection confirms wiring.
 
-## Requirements Coverage
+### Data-Flow Trace (Level 4)
 
-| Requirement | Status | Evidence / blocking issue |
-|---|---|---|
-| SETUP-01 | ✓ SATISFIED | Trouble Brewing confirmation, unique named roster, seating controls, and 5–15 gate are browser-tested |
-| SETUP-02 | ✓ SATISFIED | Three difficulty levels and Standard default are browser-tested |
-| SETUP-03 | ✓ SATISFIED | Optional experience, age, and notes are captured and retained across steps |
-| SETUP-04 | ✓ SATISFIED | Legal bag matrix passes; locked D-07 overrides the older profile-input wording for v1 |
-| SETUP-05 | ✗ BLOCKED (recovery path) | Normal sequence passes, but a shape-valid impossible persisted step can bypass recovery and blank `/setup` |
-| GRIM-01 | ✓ SATISFIED | Physical assignment, remaining-token restriction, and clear restoration are browser-tested |
-| GRIM-02 | ✓ SATISFIED under D-15 | Invalid composition cannot proceed silently; explicit issue list + Start anyway is required |
+| Artifact | Data Variable | Source | Produces Real Data | Status |
+|----------|---------------|--------|-------------------|--------|
+| `NightReadyStep` | `players` / `difficulty` / `bag` / `assignments` | Zustand setup session | Yes — wizard-built bag + recorded assignments | ✓ FLOWING |
+| `NightReadyStep` | `persistWriteStatus` | `awaitCriticalPersist` / IDB `setItem` | Yes — `saving`→`saved`/`error` from real await | ✓ FLOWING |
+| `BagStep` | `bag.tokens` | `buildBag` via store | Yes — legal generator, not empty stub | ✓ FLOWING |
+| Hydrate merge | persisted session | IndexedDB → Zod → semantics | Impossible sessions reset (not hollow blank) | ✓ FLOWING |
 
-**Coverage:** 6/7 requirements satisfied without a blocking recovery-path caveat.
+### Behavioral Spot-Checks
 
-## Prohibition Accounting
+| Behavior | Command | Result | Status |
+|----------|---------|--------|--------|
+| Semantic + Drunk + persist unit | `CURSOR_DEV=true nix develop -c npx vitest run src/state/setupSessionSemantics.test.ts src/state/setupSessionStore.assignRole.test.ts src/state/setupSessionStore.persist.test.ts` | 11/11 passed | ✓ PASS |
+| G-01 E2E recovery | `npx playwright test e2e/setup-wizard.spec.ts -g "recovers shape-valid\|corrupt"` | 3 passed | ✓ PASS |
+| G-02 + focus E2E | `npx playwright test e2e/setup-record.spec.ts -g "withholds saved\|restores focus"` | 2 passed | ✓ PASS |
+| Prohibitions clean | `CURSOR_DEV=true nix develop -c npm run test:prohibitions` | 15/15 passed | ✓ PASS |
+| Prohibition fail-first | `GSD_PROHIB_SUBJECT=…/night-ready-premature-saved.bad.tsx node --test …/no-premature-saved-assurance.test.mjs` | Assertion failure as expected | ✓ PASS |
 
-- **13 test-tier prohibitions:** direct code/test inspection finds no current product violation, but none has the required known-bad `check_violation_fixture`; deterministic prohibition enforcement therefore cannot produce a green verdict and fails closed.
-- **7 judgment-tier prohibitions:** non-authoritative source review finds them honored in the final product. Human review is still recommended. The two plan-01 items are temporal wave constraints, not final-product constraints.
+### Probe Execution
 
-## Anti-Patterns Found
+| Probe | Command | Result | Status |
+|-------|---------|--------|--------|
+| — | — | No `scripts/*/tests/probe-*.sh` declared for this phase | SKIPPED |
+
+### Requirements Coverage
+
+| Requirement | Source Plan | Description | Status | Evidence |
+|-------------|-------------|-------------|--------|----------|
+| SETUP-01 | 02-02 | TB select + unique names + seating | ✓ SATISFIED | Players step + E2E |
+| SETUP-02 | 02-03 | Difficulty at start | ✓ SATISFIED | Difficulty step + E2E |
+| SETUP-03 | 02-02 | Optional experience/age/notes | ✓ SATISFIED | More profiles + E2E |
+| SETUP-04 | 02-03, 02-06 | Legal bag from count/difficulty (profiles excluded per D-07) | ✓ SATISFIED | Bag matrix + prohibitions |
+| SETUP-05 | 02-02–06 | Ordered wizard + recovery | ✓ SATISFIED | Full path E2E + G-01 semantic hydrate |
+| GRIM-01 | 02-04, 02-06 | Tap → pick remaining; Drunk metadata | ✓ SATISFIED | Record E2E + Drunk unit |
+| GRIM-02 | 02-05, 02-06 | Gate start on composition (D-15 soft confirm) + durable save truth | ✓ SATISFIED | Soft-gate E2E + G-02 persist status |
+
+No orphaned Phase 2 requirement IDs. GRIM-03/GRIM-04 correctly belong to Phase 3.
+
+### Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
-|---|---:|---|---|---|
-| `src/state/setupSessionStore.ts` | 50 | Shape-only persistence schema | 🛑 Blocker | Validly-shaped impossible sessions can strand downstream wizard steps |
-| `src/state/setupSessionStore.ts` | 121 | Fire-and-forget critical persisted transitions | 🛑 Blocker | IndexedDB failure is invisible to the Storyteller |
-| `src/ui/setup/steps/NightReadyStep.tsx` | 39 | Unconditional saved assurance | 🛑 Blocker | UI may claim durability after a failed write |
-| `src/ui/setup/components/ConfirmDialog.tsx` | 27 | Dialog focus is not restored to trigger | ⚠️ Warning | Keyboard/assistive-technology users lose their place after close |
+|------|------|---------|----------|--------|
+| — | — | No `TBD`/`FIXME`/`XXX` in phase-modified setup/state UI | — | Prior blockers closed |
+| `src/ui/setup/steps/NightReadyStep.tsx` | 25 | `if (!bag) return null` | ℹ️ Info | Unreachable after semantic hydrate; defense-in-depth only |
 
-## Human Verification Required
+### Human Verification Required
 
 ### 1. Phone overflow backstops
 
 **Test:** At 390×844, use a very long player name, open a maximum-size role picker, and open a soft-gate with many issues.
 **Expected:** No horizontal scrolling; picker and dialog scroll vertically; footer does not cover the last actionable row.
-**Why human:** General overflow tests pass, but these exact extreme scenarios are not covered.
+**Why human:** `verification: backstop` — insufficient_spec without a held-out scenario test.
 
 ### 2. Judgment-tier negative constraints
 
 **Test:** Review the seven judgment-tier prohibitions against the final setup flow and shipped assets/copy.
-**Expected:** No HTML injection, token art, Vaul picker, dropout flow, or shaming copy; temporal Wave-1 constraints are treated as historical only.
-**Why human:** The GSD contract classifies these as non-authoritative LLM judgments.
+**Expected:** No HTML injection, token art, Vaul picker, dropout flow, or shaming copy; Wave-1 temporal constraints treated as historical.
+**Why human:** Judgment-tier contract — non-authoritative without human sign-off.
 
-## Gaps Summary
+### Gaps Summary
 
-### Critical Gaps (Block Progress)
+No blocking gaps remain after 02-06. Previous gaps G-01, G-02, and G-03 are closed with unit, Playwright, and prohibition-enforcement evidence. Awaiting human checkpoint for overflow backstops and judgment-tier review before treating the phase as fully signed off.
 
-1. **Semantic hydration validation is absent**
-   - Add cross-field validation for downstream steps, legal bag/roster cardinality, unique player IDs, and assignment key/player consistency.
-   - Reset fresh with the existing recovery alert when an invariant fails.
-   - Add browser tests for at least `bag: null` on a downstream step and roster/bag mismatch.
+### MVP Mode Note
 
-2. **Durable assignment saving is neither awaited nor surfaced**
-   - Add saving/saved/error state or an explicit awaited critical save before Night ready.
-   - Remove/gate the saved assurance until persistence succeeds and provide retry/error handling.
-   - Add a browser test with a rejecting storage seam.
-
-### Workflow Enforcement Gap
-
-3. **Test-tier prohibitions are not mechanically enforceable**
-   - Supply projected check descriptors plus known-bad fixtures, or change the authored verification tier where deterministic enforcement is not intended.
-
-## Recommended Fix Plan
-
-### 02-06-PLAN.md: Persisted Session Integrity
-
-**Objective:** Make hydration and critical assignment persistence fail safely.
-
-1. Add semantic validation for hydrated session relationships and fresh-session recovery tests.
-2. Add explicit durable-save status/error handling for the Night ready transition and truthful UI copy.
-3. Add Drunk assignment, failed-write, and focus-restoration regression coverage; wire prohibition fixtures where applicable.
-
-**Estimated scope:** Medium
-
-## Decision Coverage
-
-All 21 trackable `02-CONTEXT.md` decisions are honored by shipped artifacts. This is a non-blocking heuristic result.
-
-## Automated Verification
-
-- `CURSOR_DEV=true nix develop -c npm run test:unit` — 39/39 passed.
-- `CURSOR_DEV=true nix develop -c npm test` — 26/26 Playwright tests passed.
-- `CURSOR_DEV=true nix develop -c npm run lint` — passed.
-- `CURSOR_DEV=true nix develop -c npm run build` — passed.
-- Declared artifacts — 18/18 passed automated checks.
-- Declared key links — 12/15 machine-verified; remaining 3 manually verified after descriptor-format failure.
+ROADMAP lists `mode: mvp` but the phase goal string fails `user-story.validate`. Plans already use a proper user story in their objectives. Align ROADMAP via `/gsd mvp-phase 02` when convenient — does not block product truths above.
 
 ---
-*Verifier: gsd-verifier (generic-agent workaround)*
+
+_Verified: 2026-07-16T08:48:30Z_
+_Verifier: Claude (gsd-verifier)_
