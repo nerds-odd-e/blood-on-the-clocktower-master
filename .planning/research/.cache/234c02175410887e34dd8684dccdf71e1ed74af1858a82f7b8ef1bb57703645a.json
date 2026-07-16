@@ -1,0 +1,1 @@
+{"content":"Phone PWA shell: viewport width=device-width initial-scale=1 viewport-fit=cover; pad with env(safe-area-inset-*); max-w full overflow-x-hidden; touch targets >=44px; display standalone in manifest. HTTPS required for SW installability.","source":"web","provider":"websearch","confidence":"LOW","fetched_at":"2026-07-16T04:03:47.188Z","ttl":86400000,"kind":"web"}

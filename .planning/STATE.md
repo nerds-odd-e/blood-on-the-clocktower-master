@@ -4,11 +4,11 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 03
 current_phase_name: night-coach-live-grimoire
-status: verifying
-stopped_at: Completed 03-05-PLAN.md
-last_updated: "2026-07-16T09:59:01.688Z"
+status: human_needed
+stopped_at: Phase 03 verification — human_needed (visual backstops + MVP walkthrough)
+last_updated: "2026-07-16T10:02:19Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 03 execution started
+last_activity_desc: Phase 03 verification complete — 8/12 must-haves; awaiting human checks
 progress:
   total_phases: 3
   completed_phases: 3
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 ## Current Position
 
-Phase: 03 (night-coach-live-grimoire) — EXECUTING
+Phase: 03 (night-coach-live-grimoire) — VERIFYING
 Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-07-16 — Phase 03 execution started
+Status: Verification human_needed — see 03-VERIFICATION.md
+Last activity: 2026-07-16 — Phase 03 verification written (8/12; E2E green)
 
 Progress: [██████████] 100%
 
