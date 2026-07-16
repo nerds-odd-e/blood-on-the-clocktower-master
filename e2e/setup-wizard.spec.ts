@@ -146,4 +146,90 @@ test.describe('setup wizard roster', () => {
       page.getByRole('heading', { name: 'Trouble Brewing' }),
     ).toBeVisible()
   })
+
+  async function seedPersistedSession(
+    page: import('@playwright/test').Page,
+    state: Record<string, unknown>,
+  ) {
+    await page.goto('/setup')
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
+
+    await page.evaluate(async (sessionState) => {
+      const envelope = JSON.stringify({ state: sessionState, version: 1 })
+      const database = await new Promise<IDBDatabase>((resolve, reject) => {
+        const request = indexedDB.open('keyval-store')
+        request.onsuccess = () => resolve(request.result)
+        request.onerror = () => reject(request.error)
+      })
+      await new Promise<void>((resolve, reject) => {
+        const transaction = database.transaction('keyval', 'readwrite')
+        transaction
+          .objectStore('keyval')
+          .put(envelope, 'st-copilot-setup-session')
+        transaction.oncomplete = () => resolve()
+        transaction.onerror = () => reject(transaction.error)
+      })
+      database.close()
+    }, state)
+  }
+
+  test('recovers shape-valid nightReady with null bag', async ({ page }) => {
+    await seedPersistedSession(page, {
+      wizardStep: 'nightReady',
+      players: [
+        { id: 'p1', name: 'Alice' },
+        { id: 'p2', name: 'Ben' },
+        { id: 'p3', name: 'Clara' },
+        { id: 'p4', name: 'Diego' },
+        { id: 'p5', name: 'Evelyn' },
+      ],
+      difficulty: 'standard',
+      bag: null,
+      assignments: {},
+    })
+
+    await page.reload()
+    await expect(page.getByText(/Couldn’t restore your setup/)).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
+  })
+
+  test('recovers shape-valid session when roster and bag lengths mismatch', async ({
+    page,
+  }) => {
+    await seedPersistedSession(page, {
+      wizardStep: 'record',
+      players: [
+        { id: 'p1', name: 'Alice' },
+        { id: 'p2', name: 'Ben' },
+        { id: 'p3', name: 'Clara' },
+        { id: 'p4', name: 'Diego' },
+        { id: 'p5', name: 'Evelyn' },
+        { id: 'p6', name: 'Fran' },
+      ],
+      difficulty: 'standard',
+      bag: {
+        tokens: ['washerwoman', 'librarian', 'investigator', 'chef', 'imp'],
+        composition: {
+          townsfolk: 3,
+          outsiders: 0,
+          minions: 1,
+          demons: 1,
+        },
+        drunk: null,
+        setupNotes: [],
+        whyNote: 'Seeded mismatch fixture',
+      },
+      assignments: {},
+    })
+
+    await page.reload()
+    await expect(page.getByText(/Couldn’t restore your setup/)).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
+  })
 })

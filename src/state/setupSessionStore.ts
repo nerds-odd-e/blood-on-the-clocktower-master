@@ -5,6 +5,7 @@ import { buildBag, type BagPlan } from '../domain/bag'
 import type { Assignment } from '../domain/grimoire'
 import { loadCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
+import { assertSetupSessionSemantics } from './setupSessionSemantics'
 
 export const WizardStepSchema = z.enum([
   'script',
@@ -222,6 +223,17 @@ export const useSetupSessionStore = create<SetupSessionState>()(
       merge: (persistedState, currentState) => {
         const parsed = PersistedSetupSessionSchema.safeParse(persistedState)
         if (!parsed.success) {
+          return {
+            ...currentState,
+            ...freshSession(),
+            hydrationError: true,
+          }
+        }
+        const semantics = assertSetupSessionSemantics(
+          parsed.data,
+          loadCatalog(),
+        )
+        if (!semantics.ok) {
           return {
             ...currentState,
             ...freshSession(),

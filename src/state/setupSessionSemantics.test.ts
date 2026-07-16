@@ -18,23 +18,21 @@ function legalSession(
 ): PersistedSetupSession {
   const players = overrides.players ?? basePlayers(5)
   const bag =
-    overrides.bag === undefined
-      ? buildBag({
+    'bag' in overrides
+      ? (overrides.bag ?? null)
+      : buildBag({
           playerCount: players.length,
           difficulty: 'standard',
           catalog,
           rng: () => 0.42,
         })
-      : overrides.bag
   return {
     wizardStep: 'nightReady',
-    players,
     difficulty: 'standard',
-    bag,
     assignments: {},
     ...overrides,
-    bag: overrides.bag === undefined ? bag : overrides.bag,
-    players: overrides.players ?? players,
+    players,
+    bag,
   }
 }
 
