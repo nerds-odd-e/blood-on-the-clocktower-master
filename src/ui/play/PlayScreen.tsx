@@ -5,6 +5,7 @@ import { loadCatalog } from '../../domain/script'
 import { useSetupSessionStore } from '../../state/setupSessionStore'
 import { CoachBeatView } from './CoachBeatView'
 import { LiveGrimoireView } from './LiveGrimoireView'
+import { NightBridgeView } from './NightBridgeView'
 
 /**
  * Play shell — coach / grimoire / bridge via playSurface (D-01).
@@ -35,6 +36,7 @@ export function PlayScreen() {
   const setPlayerReminders = useSetupSessionStore(
     (state) => state.setPlayerReminders,
   )
+  const startOtherNight = useSetupSessionStore((state) => state.startOtherNight)
   const retryCriticalPersist = useSetupSessionStore(
     (state) => state.retryCriticalPersist,
   )
@@ -110,22 +112,11 @@ export function PlayScreen() {
 
   if (playSurface === 'bridge') {
     return (
-      <section className="flex min-h-dvh min-w-0 flex-col gap-4 overflow-x-hidden pt-8 pb-8">
-        <header className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-          <p className="text-label text-[var(--color-text-muted)]">Night complete</p>
-          <button
-            type="button"
-            className="min-h-11 text-body text-[var(--color-text-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-            onClick={() => setPlaySurface('grimoire')}
-          >
-            Grimoire
-          </button>
-        </header>
-        <h1 className="text-heading">Night complete</h1>
-        <p className="text-body text-[var(--color-text-muted)]">
-          Bridge controls arrive next — use Grimoire if you need the table truth.
-        </p>
-      </section>
+      <NightBridgeView
+        nightKind={nightKind}
+        onStartOtherNight={startOtherNight}
+        onOpenGrimoire={() => setPlaySurface('grimoire')}
+      />
     )
   }
 

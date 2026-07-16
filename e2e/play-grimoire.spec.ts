@@ -46,42 +46,59 @@ test.describe('play live grimoire and other night bridge', () => {
   }) => {
     await reachFirstNightCoach(page)
 
-    await page.getByRole('link', { name: 'Grimoire' }).click()
+    await page.getByRole('button', { name: 'Grimoire' }).click()
     await expect(page.getByRole('heading', { name: 'Grimoire' })).toBeVisible()
 
     const firstRow = page.getByTestId('grimoire-player-row').first()
     await expect(firstRow).toBeVisible()
 
-    const deadToggle = firstRow.getByRole('button', { name: 'Dead' })
-    await deadToggle.click()
-    await expect(firstRow.getByText('Dead', { exact: true })).toBeVisible()
+    await firstRow.getByRole('button', { name: 'Dead' }).click()
+    await expect(firstRow).toHaveAttribute('data-dead', 'true')
+    await expect(firstRow.getByText('Dead', { exact: true }).first()).toBeVisible()
 
-    const aliveToggle = firstRow.getByRole('button', { name: 'Alive' })
-    await aliveToggle.click()
-    await expect(firstRow.getByText('Dead', { exact: true })).toHaveCount(0)
+    await firstRow.getByRole('button', { name: 'Alive' }).click()
+    await expect(firstRow).toHaveAttribute('data-dead', 'false')
 
-    await firstRow.getByRole('button', { name: 'Add reminder' }).click()
-    const reminderChip = page.getByTestId('reminder-chip').first()
-    await expect(reminderChip).toBeVisible()
-    const reminderLabel = (await reminderChip.textContent())?.trim() ?? ''
-    await reminderChip.click()
-    await expect(firstRow.getByText(reminderLabel)).toBeVisible()
+    // Prefer a seated role that has catalog reminder tokens.
+    const rows = page.getByTestId('grimoire-player-row')
+    const rowCount = await rows.count()
+    let reminderRow = firstRow
+    let reminderLabel = ''
+    for (let index = 0; index < rowCount; index += 1) {
+      const row = rows.nth(index)
+      await row.getByRole('button', { name: 'Add reminder' }).click()
+      const chip = page.getByTestId('reminder-chip').first()
+      if (await chip.isVisible().catch(() => false)) {
+        reminderRow = row
+        reminderLabel = (await chip.textContent())?.trim() ?? ''
+        await chip.click()
+        break
+      }
+    }
+    expect(reminderLabel.length).toBeGreaterThan(0)
+    await expect(reminderRow.getByText(reminderLabel, { exact: true })).toBeVisible()
 
-    // Clear by tapping the placed chip
-    await firstRow.getByText(reminderLabel).click()
-    await expect(firstRow.getByText(reminderLabel)).toHaveCount(0)
+    // Clear by tapping the placed chip on the row (not the picker chip).
+    await reminderRow
+      .locator('button', { hasText: reminderLabel })
+      .first()
+      .click()
+    await expect(
+      reminderRow.locator('button', { hasText: reminderLabel }),
+    ).toHaveCount(0)
 
-    await page.getByRole('link', { name: 'Back to coach' }).click()
+    await page.getByRole('button', { name: 'Back to coach' }).click()
     await expect(page.getByText(/First night · step/i)).toBeVisible()
 
     for (let i = 0; i < 60; i += 1) {
-      if (await page.getByRole('heading', { name: 'Night complete' }).isVisible()) {
+      if (
+        await page.getByRole('heading', { name: 'Night complete' }).isVisible()
+      ) {
         break
       }
       const next = page.getByRole('button', { name: 'Next' })
       if (await next.isVisible()) {
         await next.click()
-        // Soft-confirm bluffs if dialog appears
         const continueAnyway = page.getByRole('button', {
           name: 'Continue anyway',
         })
