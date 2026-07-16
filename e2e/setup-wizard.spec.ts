@@ -115,6 +115,16 @@ test.describe('setup wizard roster', () => {
     await expect(page.getByRole('heading', { name: 'Players' })).toBeVisible()
   })
 
+  test('cold setup visit does not show restore-failure alert', async ({
+    page,
+  }) => {
+    await page.goto('/setup')
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
+    await expect(page.getByText(/Couldn’t restore your setup/)).toHaveCount(0)
+  })
+
   test('recovers a corrupt persisted session into a fresh wizard', async ({
     page,
   }) => {
