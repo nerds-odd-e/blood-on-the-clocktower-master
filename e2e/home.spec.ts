@@ -20,7 +20,12 @@ test.describe('home smoke', () => {
       .or(page.getByRole('button', { name: 'Start setup' }))
       .click()
     await expect(page).toHaveURL(/\/setup/)
-    await expect(page.getByRole('heading', { name: 'Setup' })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Continue setup' }),
+    ).toBeVisible()
     await expect(page.getByRole('link', { name: 'Back to home' })).toBeVisible()
   })
 
