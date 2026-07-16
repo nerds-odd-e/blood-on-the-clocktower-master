@@ -19,15 +19,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **GRIM-01**: After a random deal, Storyteller can record who received which role (tap player → pick character)
 - [x] **GRIM-02**: App blocks starting night until recorded roles match the expected team composition
-- [ ] **GRIM-03**: Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens
-- [ ] **GRIM-04**: Storyteller can record Demon bluffs for the game
+- [x] **GRIM-03**: Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens
+- [x] **GRIM-04**: Storyteller can record Demon bluffs for the game
 
 ### Night Coach
 
-- [ ] **COACH-01**: App derives First Night and Other Nights wake order from roles currently in play
-- [ ] **COACH-02**: Next-beat screen shows the current step, a short prompt, and a primary Next action
-- [ ] **COACH-03**: Storyteller can tap to expand ability/procedure detail for the current beat
-- [ ] **COACH-04**: First-night Demon/Minion information steps appear when those roles are in play
+- [x] **COACH-01**: App derives First Night and Other Nights wake order from roles currently in play
+- [x] **COACH-02**: Next-beat screen shows the current step, a short prompt, and a primary Next action
+- [x] **COACH-03**: Storyteller can tap to expand ability/procedure detail for the current beat
+- [x] **COACH-04**: First-night Demon/Minion information steps appear when those roles are in play
 
 ### Platform
 
@@ -80,12 +80,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETUP-05 | Phase 2 | Complete |
 | GRIM-01 | Phase 2 | Complete |
 | GRIM-02 | Phase 2 | Complete |
-| GRIM-03 | Phase 3 | Pending |
-| GRIM-04 | Phase 3 | Pending |
-| COACH-01 | Phase 3 | Pending |
-| COACH-02 | Phase 3 | Pending |
-| COACH-03 | Phase 3 | Pending |
-| COACH-04 | Phase 3 | Pending |
+| GRIM-03 | Phase 3 | Complete |
+| GRIM-04 | Phase 3 | Complete |
+| COACH-01 | Phase 3 | Complete |
+| COACH-02 | Phase 3 | Complete |
+| COACH-03 | Phase 3 | Complete |
+| COACH-04 | Phase 3 | Complete |
 | PLAT-01 | Phase 1 | Complete |
 | PLAT-02 | Phase 1 | Complete |
 

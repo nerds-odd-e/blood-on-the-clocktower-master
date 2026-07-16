@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 3
-current_phase_name: Night Coach & Live Grimoire
-status: ready_to_execute
-stopped_at: Phase 3 plans created (03-01..03-05)
-last_updated: "2026-07-16T09:35:00.000Z"
+current_phase: 03
+current_phase_name: night-coach-live-grimoire
+status: executing
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-07-16T09:44:18.689Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 3 PLAN.md files written (5 MVP vertical slices)
+last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 16
-  completed_plans: 11
+  completed_plans: 12
 ---
 
 # Project State
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16)
 
 **Core value:** A new Storyteller can run a complete Trouble Brewing game without a paper night sheet — always knowing what to do next and what to say.
-**Current focus:** Phase 3 — Night Coach & Live Grimoire
+**Current focus:** Phase 03 — night-coach-live-grimoire
 
 ## Current Position
 
-Phase: 3 — Night Coach & Live Grimoire
-Plan: 0/5 plans executed
-Status: Plans ready — run /gsd-execute-phase 3
-Last activity: 2026-07-16 — Phase 3 plans created (03-01..03-05)
+Phase: 03 (night-coach-live-grimoire) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-07-16 — Phase 03 execution started
 
-Progress: Phase 3 planning complete (0/5 plans executed)
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: Phase 3 planning complete (0/5 plans executed)
 | Phase 02 P04 | 5min | 2 tasks | 11 files |
 | Phase 02 P05 | 4min | 2 tasks | 7 files |
 | Phase 02 P06 | 6min | 3 tasks | 45 files |
+| Phase 03 P01 | 2min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -106,6 +107,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Semantic hydration failures reuse Zod hydrationError recovery path
 - [Phase ?]: Night ready saved assurance gated on persistWriteStatus after awaitCriticalPersist
 - [Phase ?]: Phase 2 test-tier prohibitions wired via tests/prohibitions node:test + check_* descriptors
+- [Phase ?]: Bluff helper import path locked to ./eligibleBluffs (PATTERNS preferred name)
+- [Phase ?]: setup-record Night ready asserts Start first night button instead of forbidding /play links
+- [Phase ?]: stubs /play asserts Nothing to coach yet OR night meta — not Play stub heading
 
 ### Pending Todos
 
@@ -135,6 +139,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T09:25:34.951Z
-Stopped at: Phase 3 UI-SPEC approved
-Resume file: .planning/phases/03-night-coach-live-grimoire/03-UI-SPEC.md
+Last session: 2026-07-16T09:44:18.684Z
+Stopped at: Completed 03-01-PLAN.md
+Resume file: None
