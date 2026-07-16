@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: phone-shell-tb-catalog
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-07-16T05:15:12.045Z"
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-07-16T05:28:12.241Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 01 (phone-shell-tb-catalog) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 01 execution started
 
-Progress: [████░░░░░░] 40%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [████░░░░░░] 40%
 |------|----------|-------|-------|
 | Phase 01 P01 | 10min | 2 tasks | 25 files |
 | Phase 01 P02 | 5min | 2 tasks | 13 files |
+| Phase 01 P03 | 9min | 2 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Confirmed fontsource + Tailwind + react-router-dom on npm before install (T-01-SC)
 - [Phase ?]: Start setup CTA stays hidden until loadCatalog greens in 01-03
 - [Phase ?]: Thin-reexport src/App.tsx so create-vite path does not dual-mount
+- [Phase ?]: TB roles from townsquare TB interchange excluding travelers (22 / 13-4-4-1)
+- [Phase ?]: Setup chart locked to RESEARCH A1; verification note in loadCatalog.ts header
+- [Phase ?]: Offline ready chip optimistic on Zod success; original PWA icons only
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T05:15:12.040Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-07-16T05:28:12.237Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None

@@ -24,7 +24,7 @@ Ship a phone-first offline co-pilot so a new Storyteller can run Trouble Brewing
   2. After first load, Storyteller can reload and use the app with no network connection and no account
   3. App exposes Trouble Brewing as the available script with roles/night data loaded for later setup and coach
 
-**Plans:** 2/5 plans executed
+**Plans:** 3/5 plans executed
 
 Plans:
 **Wave 1**
@@ -37,7 +37,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03-PLAN.md — TB catalog + Zod loaders + VitePWA + smoke GREEN
+- [x] 01-03-PLAN.md — TB catalog + Zod loaders + VitePWA + smoke GREEN
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Phone Shell & TB Catalog | 2/5 | In Progress|  |
+| 1. Phone Shell & TB Catalog | 3/5 | In Progress|  |
 | 2. Setup Wizard & Grimoire Capture | 0/TBD | Not started | - |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
