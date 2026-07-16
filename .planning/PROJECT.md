@@ -16,10 +16,13 @@ A new Storyteller can run a complete Trouble Brewing game without a paper night 
 - [x] Storyteller records who drew which role into a digital grimoire after random deal — Validated in Phase 2: Setup Wizard & Grimoire Capture
 - [x] Difficulty is configurable in the UI at game start — Validated in Phase 2: Setup Wizard & Grimoire Capture
 - [x] Player profiles influence overall setup difficulty (not who gets which role — bag draw stays random) — Validated in Phase 2 (profiles optional; bag from count + difficulty)
+- [x] Next-beat coach: current wake/step, short prompt, tap for more detail, primary Next action — Validated in Phase 3: Night Coach & Live Grimoire
+- [x] Live grimoire during play: alive/dead, reminders, Demon bluffs, ST-private truth — Validated in Phase 3: Night Coach & Live Grimoire
+- [x] First Night → Other Nights bridge without day-phase chrome — Validated in Phase 3: Night Coach & Live Grimoire
 
 ### Active
 
-- [ ] Next-beat coach: current wake/step, short prompt, tap for more detail, primary Next action
+_(none for v1.0 — Phase 1 still has open human UAT debt before milestone seal)_
 
 ### Out of Scope
 
@@ -62,8 +65,10 @@ Blood on the Clocktower requires a Storyteller to design the game and facilitate
 | Script is an input; bag/seating/first-night designed by app | ST chooses script; app handles the rest of setup | — Pending |
 | Difficulty is a start-of-game UI control | Explicit control over how hard the game feels | — Pending |
 | Player profiles optional; affect overall difficulty, not who draws what | Bag remains random; profiles tune setup | — Pending |
-| Short prompts + tap for detail | Friendly to new STs without blocking deeper help | — Pending |
-| Role recording: tap player → pick character (v1 default) | Simplest path to a correct digital grimoire | — Pending |
+| Short prompts + tap for detail | Friendly to new STs without blocking deeper help | Phase 3 coach UX |
+| Role recording: tap player → pick character (v1 default) | Simplest path to a correct digital grimoire | Phase 2 record step |
+| Night queue derived from in-play roles + alive filter | Paper night sheet replacement | Phase 3 buildNightBeats |
+| Soft confirm on incomplete Demon bluffs | Don't hard-block a live table | Phase 3 BluffPicker |
 
 ## Evolution
 
@@ -83,4 +88,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-16 — Phase 2 complete (setup wizard + grimoire capture validated)*
+*Last updated: 2026-07-16 — Phase 3 complete (night coach + live grimoire UAT passed)*

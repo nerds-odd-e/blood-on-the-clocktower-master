@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16)
 
 **Core value:** A new Storyteller can run a complete Trouble Brewing game without a paper night sheet — always knowing what to do next and what to say.
-**Current focus:** Phase 03 — night-coach-live-grimoire
+**Current focus:** Phase 1 human UAT debt (Phase 3 complete) — then milestone seal
 
 ## Current Position
 
 Phase: 1 — Phone Shell & TB Catalog
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-16 — Phase 03 complete, transitioned to Phase 1
+Status: Phase 1 UAT incomplete (blocking milestone seal)
+Last activity: 2026-07-16 — Phase 3 UAT passed (5/5); Phase 1 human verification still open
 
 Progress: [██████████] 100%
 
