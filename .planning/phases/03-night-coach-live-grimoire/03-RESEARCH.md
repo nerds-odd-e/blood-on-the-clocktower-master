@@ -469,23 +469,27 @@ export function eligibleBluffRoleIds(
 | A3 | Star-pass (Imp self-kill → Minion becomes Imp) is coached as grimoire edit note, not a full auto role-swap flow in v1 | Open Questions | ST must manually update truth; still playable |
 | A4 | Extending the single `setupSessionStore` (version 2) is better than a second store | Architecture | Larger merge surface — mitigated by Zod |
 
-**If wrong:** Planner should resolve A1–A3 in PLAN with explicit task acceptance criteria before UI polish.
+**Status:** A1–A3 locked in PLAN acceptance criteria (03-02 / 03-03 / 03-05) and listed under Open Questions (RESOLVED) below.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Ravenkeeper / conditional Other Night wakes**
+1. **Ravenkeeper / conditional Other Night wakes (A1)** — RESOLVED: `diedTonightIds` / Ravenkeeper
    - What we know: Ravenkeeper has `otherNight: 52` and only acts if killed at night; Imp has `otherNight: 24` and acts each night*.
-   - What's unclear: Minimal state to track “died tonight” vs showing conditional beats with Skip.
-   - Recommendation: Add `diedTonightIds` cleared at Dawn→bridge; include Ravenkeeper only when in that set. Avoid Skip as primary UX (D-08).
+   - **RESOLVED:** Track `diedTonightIds` (cleared at Dawn→bridge / Start other night). Include Ravenkeeper on Other Night only when that player is in the set. Avoid Skip as primary UX (D-08). Plans 03-02 engine + 03-05 grimoire toggle enforce this.
 
-2. **Back one beat**
+2. **Scarlet Woman Other Night queue (A2)** — RESOLVED: alive queue + conditional detail
+   - **RESOLVED:** Scarlet Woman stays in the Other Night wake queue whenever alive. Coach other-night detail copy explains the conditional ability (becomes Demon if Imp dies with enough living players). Plan 03-03 coach-copy acceptance requires that detail.
+
+3. **Star-pass (A3)** — RESOLVED: tip only
+   - **RESOLVED:** Imp self-kill → Minion becomes Imp is coached as a grimoire-edit / tip note only. No auto role-swap engine in Phase 3 (plan 03-02 lock).
+
+4. **Back one beat** — RESOLVED
    - What we know: D-08 allows if cheap; Claude discretion to defer.
-   - Recommendation: Ship Back if cursor is a simple `beatIndex` decrement with clamp; defer if beat-id remapping after re-derive gets messy.
+   - **RESOLVED:** Ship Back as `beatIndex` decrement with floor 0 (UI-SPEC + plan 03-03). Remap/clamp when re-derived queue shrinks.
 
-3. **Spy “show grimoire” privacy**
+5. **Spy “show grimoire” privacy** — RESOLVED: no shutter (UI-SPEC)
    - What we know: PITFALLS require fully obscuring ST chrome for Spy show.
-   - What's unclear: Is a dedicated Spy-safe view in Phase 3 success criteria? Roadmap success criteria do not list it.
-   - Recommendation: Coach detail for Spy says “orient privacy / show grimoire carefully”; full obscure view can be a follow-up if it threatens MVP cut — flag for UI-SPEC.
+   - **RESOLVED:** No dedicated Spy shutter view in Phase 3 (UI-SPEC Spy privacy lock). Spy wake detail is tip-only — orient privacy / tip device or cover headers. Full obscure view deferred.
 
 ## Environment Availability
 
@@ -529,7 +533,7 @@ Step 2.6: external services not required (offline SPA).
 
 ### Sampling Rate
 
-- **Per task commit:** `CURSOR_DEV=true nix develop -c npm run test:unit`
+- **Per task commit (Nyquist):** `CURSOR_DEV=true nix develop -c npm run test:unit` (+ cheap `rg` file-content checks in PLAN verifies). Do not block each task commit on Playwright (&gt;30s latency).
 - **Per wave merge:** unit + affected Playwright specs
 - **Phase gate:** Full unit + full Playwright green before `/gsd-verify-work`
 
@@ -561,7 +565,7 @@ Step 2.6: external services not required (offline SPA).
 |---------|--------|---------------------|
 | Corrupt/malicious persisted JSON | Tampering | Zod + semantic assert; hydrationError → fresh session (existing) |
 | XSS via player names in coach copy | Tampering | React text nodes only; no `dangerouslySetInnerHTML` |
-| Shoulder-surf / Spy reveal leak | Information Disclosure | ST-private default; Spy coach warns; dedicated obscure view deferred unless UI-SPEC requires |
+| Shoulder-surf / Spy reveal leak | Information Disclosure | ST-private default; Spy coach tip warns; no shutter in Phase 3 (UI-SPEC RESOLVED) |
 | Accidental day-phase fake UI | Spoofing (UX) | Bridge only — no nomination/vote chrome (D-06) |
 | Supply-chain new deps | Tampering | No new packages this phase |
 
@@ -585,15 +589,15 @@ Step 2.6: external services not required (offline SPA).
 
 ### Tertiary (LOW confidence)
 
-- Exact Ravenkeeper/Scarlet Woman coach filtering heuristics for MVP (A1/A2) — needs planner lock
-- Whether Spy privacy shutter is in Phase 3 UI-SPEC vs later polish
+- None outstanding for A1–A3 / Spy shutter — all RESOLVED in Open Questions (RESOLVED) and PLAN locks (03-02 / 03-03 / 03-05); UI-SPEC Spy privacy = no shutter
 
 ## Metadata
 
 **Confidence breakdown:**
 - Standard stack: HIGH — reuse verified installed packages; no new installs
 - Architecture: HIGH — aligns CONTEXT + ARCHITECTURE + existing Phase 2 seams
-- Pitfalls: HIGH for night-order/Drunk/bluffs; MEDIUM for conditional other-night edge cases
+- Pitfalls: HIGH for night-order/Drunk/bluffs; HIGH for A1–A3 / Spy (planner + UI-SPEC locked)
 
 **Research date:** 2026-07-16
 **Valid until:** 2026-08-16 (stable domain rules; re-check if catalog ordinals change)
+**Open questions:** All RESOLVED (A1 diedTonightIds/Ravenkeeper; A2 Scarlet Woman alive queue; A3 star-pass tip only; Spy no shutter per UI-SPEC)
