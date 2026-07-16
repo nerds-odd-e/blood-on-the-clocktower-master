@@ -4,11 +4,11 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
-status: executing
-stopped_at: Completed 02-06-PLAN.md
-last_updated: "2026-07-16T08:42:48.649Z"
+status: verifying
+stopped_at: Phase 02 verification human_needed (12/13)
+last_updated: "2026-07-16T08:48:30Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 02 execution started
+last_activity_desc: Phase 02 re-verification after 02-06 gap closure
 progress:
   total_phases: 2
   completed_phases: 2
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 ## Current Position
 
-Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
+Phase: 02 (setup-wizard-grimoire-capture) — VERIFYING
 Plan: 6 of 6
-Status: Phase 02 plans complete — ready for verify
-Last activity: 2026-07-16 — Completed 02-06-PLAN.md
+Status: Verification human_needed (12/13) — overflow backstops + judgment prohibitions
+Last activity: 2026-07-16 — Re-verified after 02-06; report at 02-VERIFICATION.md
 
 Progress: [██████████] 100% (6/6 plans executed)
 
