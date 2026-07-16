@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const setItem = vi.fn(async () => undefined)
+const setItem = vi.fn(async (_name: string, _value: string) => undefined)
 
 vi.mock('./idbStorage', () => ({
   idbStorage: {
     getItem: async () => null,
-    setItem: (...args: unknown[]) => setItem(...args),
+    setItem: (name: string, value: string) => setItem(name, value),
     removeItem: async () => undefined,
   },
 }))
@@ -55,7 +55,8 @@ describe('awaitCriticalPersist', () => {
   })
 
   it('sets persistWriteStatus to error when the critical write rejects', async () => {
-    setItem.mockRejectedValueOnce(new Error('disk full'))
+    // Reject every setItem — middleware may also write when status flips to saving.
+    setItem.mockRejectedValue(new Error('disk full'))
     await useSetupSessionStore.getState().awaitCriticalPersist()
     expect(useSetupSessionStore.getState().persistWriteStatus).toBe('error')
   })

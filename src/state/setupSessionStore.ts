@@ -5,7 +5,10 @@ import { buildBag, type BagPlan } from '../domain/bag'
 import type { Assignment } from '../domain/grimoire'
 import { loadCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
+import type { PersistWriteStatus } from './persistStatus'
 import { assertSetupSessionSemantics } from './setupSessionSemantics'
+
+export const SETUP_SESSION_STORAGE_KEY = 'st-copilot-setup-session'
 
 export const WizardStepSchema = z.enum([
   'script',
@@ -67,6 +70,7 @@ type PersistedSetupSession = z.infer<typeof PersistedSetupSessionSchema>
 type SetupSessionState = PersistedSetupSession & {
   hasHydrated: boolean
   hydrationError: boolean
+  persistWriteStatus: PersistWriteStatus
   setWizardStep: (wizardStep: WizardStep) => void
   setDifficulty: (difficulty: Difficulty) => void
   generateBag: () => void
@@ -79,6 +83,19 @@ type SetupSessionState = PersistedSetupSession & {
   removePlayer: (id: string) => void
   resetFresh: () => void
   clearHydrationError: () => void
+  awaitCriticalPersist: () => Promise<void>
+  retryCriticalPersist: () => Promise<void>
+  advanceToNightReady: () => Promise<void>
+}
+
+function partializedSession(state: PersistedSetupSession) {
+  return {
+    wizardStep: state.wizardStep,
+    players: state.players,
+    difficulty: state.difficulty,
+    bag: state.bag,
+    assignments: state.assignments,
+  }
 }
 
 const freshSession = (): PersistedSetupSession => ({
@@ -115,10 +132,11 @@ export function remainingTokens(
 
 export const useSetupSessionStore = create<SetupSessionState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...freshSession(),
       hasHydrated: false,
       hydrationError: false,
+      persistWriteStatus: 'saved' as PersistWriteStatus,
       setWizardStep: (wizardStep) => set({ wizardStep }),
       setDifficulty: (difficulty) =>
         set({ difficulty, bag: null, assignments: {} }),
@@ -206,20 +224,32 @@ export const useSetupSessionStore = create<SetupSessionState>()(
             assignments,
           }
         }),
-      resetFresh: () => set({ ...freshSession() }),
+      resetFresh: () => set({ ...freshSession(), persistWriteStatus: 'saved' }),
       clearHydrationError: () => set({ hydrationError: false }),
+      awaitCriticalPersist: async () => {
+        set({ persistWriteStatus: 'saving' })
+        const snapshot = partializedSession(get())
+        const payload = JSON.stringify({ state: snapshot, version: 1 })
+        try {
+          await idbStorage.setItem(SETUP_SESSION_STORAGE_KEY, payload)
+          set({ persistWriteStatus: 'saved' })
+        } catch {
+          set({ persistWriteStatus: 'error' })
+        }
+      },
+      retryCriticalPersist: async () => {
+        await get().awaitCriticalPersist()
+      },
+      advanceToNightReady: async () => {
+        set({ wizardStep: 'nightReady', persistWriteStatus: 'saving' })
+        await get().awaitCriticalPersist()
+      },
     }),
     {
-      name: 'st-copilot-setup-session',
+      name: SETUP_SESSION_STORAGE_KEY,
       version: 1,
       storage: createJSONStorage(() => idbStorage),
-      partialize: (state) => ({
-        wizardStep: state.wizardStep,
-        players: state.players,
-        difficulty: state.difficulty,
-        bag: state.bag,
-        assignments: state.assignments,
-      }),
+      partialize: (state) => partializedSession(state),
       merge: (persistedState, currentState) => {
         const parsed = PersistedSetupSessionSchema.safeParse(persistedState)
         if (!parsed.success) {

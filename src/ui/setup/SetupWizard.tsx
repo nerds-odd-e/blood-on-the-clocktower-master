@@ -15,6 +15,9 @@ export function SetupWizard() {
     (state) => state.clearHydrationError,
   )
   const setWizardStep = useSetupSessionStore((state) => state.setWizardStep)
+  const advanceToNightReady = useSetupSessionStore(
+    (state) => state.advanceToNightReady,
+  )
 
   if (!hasHydrated) {
     return (
@@ -58,7 +61,9 @@ export function SetupWizard() {
       {wizardStep === 'record' ? (
         <RecordStep
           onBack={() => setWizardStep('deal')}
-          onStartNight={() => setWizardStep('nightReady')}
+          onStartNight={() => {
+            void advanceToNightReady()
+          }}
         />
       ) : null}
       {wizardStep === 'nightReady' ? (

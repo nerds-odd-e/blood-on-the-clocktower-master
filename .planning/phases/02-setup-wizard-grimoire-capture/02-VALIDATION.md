@@ -50,6 +50,7 @@ created: 2026-07-16
 | 02-05-T2 | 05 | 5 | GRIM-02 | T-02-12 | Mismatch warning lists concrete issues; Start anyway → Night ready on `/setup`; clean assignments skip override | e2e | `npx playwright test e2e/setup-record.spec.ts` | ✅ exists | ✅ green |
 | 02-01-T2 / 02-02-T2 | 01 / 02 | 1 / 2 | — | — | `/setup` stub copy removed; `/play` still stub | e2e | update `e2e/stubs.spec.ts` | ✅ rewritten | ✅ green |
 | 02-06-T1 | 06 | 6 | SETUP-05 | T-02-16 | Semantic merge rejects impossible sessions; hydrate recovery copy | unit+e2e | `npx vitest run src/state/setupSessionSemantics.test.ts src/state/setupSessionStore.assignRole.test.ts` · `npx playwright test e2e/setup-wizard.spec.ts` | ✅ exists | ✅ green |
+| 02-06-T2 | 06 | 6 | GRIM-02 | T-02-17 | Saved assurance only after critical IDB write; soft-gate focus restore | unit+e2e | `npx vitest run src/state/setupSessionStore.persist.test.ts` · `npx playwright test e2e/setup-record.spec.ts` | ✅ exists | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 *Task IDs: `{plan}-{task}` from PLAN.md after revision (5 plans, waves 1–5).*

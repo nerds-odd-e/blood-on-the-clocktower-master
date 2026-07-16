@@ -25,6 +25,10 @@ export function ConfirmDialog({
   const dismissRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null
     dismissRef.current?.focus()
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -47,7 +51,12 @@ export function ConfirmDialog({
       }
     }
     document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus()
+      }
+    }
   }, [onDismiss])
 
   return (

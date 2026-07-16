@@ -15,6 +15,12 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
   const difficulty = useSetupSessionStore((state) => state.difficulty)
   const bag = useSetupSessionStore((state) => state.bag)
   const assignments = useSetupSessionStore((state) => state.assignments)
+  const persistWriteStatus = useSetupSessionStore(
+    (state) => state.persistWriteStatus,
+  )
+  const retryCriticalPersist = useSetupSessionStore(
+    (state) => state.retryCriticalPersist,
+  )
 
   if (!bag) return null
 
@@ -31,14 +37,31 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
     },
   ]
 
+  const statusCopy =
+    persistWriteStatus === 'saved'
+      ? 'Assignments are saved. Night coaching arrives in the next update — stay ready at the table.'
+      : persistWriteStatus === 'saving'
+        ? 'Saving your assignments… keep this screen open for a moment.'
+        : 'Couldn’t save your assignments on this device. Check storage, then try again — nothing here blames you.'
+
   return (
     <section className="flex min-h-dvh flex-col gap-6 pt-8 pb-8">
       <header>
         <h1 className="text-display">Night ready</h1>
         <p className="mt-3 text-body text-[var(--color-text-muted)]">
-          Assignments are saved. Night coaching arrives in the next update — stay
-          ready at the table.
+          {statusCopy}
         </p>
+        {persistWriteStatus === 'error' ? (
+          <button
+            type="button"
+            className="mt-4 min-h-12 rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            onClick={() => {
+              void retryCriticalPersist()
+            }}
+          >
+            Retry
+          </button>
+        ) : null}
       </header>
 
       <dl className="rounded-sm border border-[var(--color-border)] bg-[var(--color-secondary)] p-4">
