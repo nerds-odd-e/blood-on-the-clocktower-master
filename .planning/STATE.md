@@ -22,8 +22,8 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 1 of 3 (Phone Shell & TB Catalog)
 Plan: — of — in current phase
-Status: Ready to plan (research complete)
-Last activity: 2026-07-16 — Phase 1 RESEARCH.md written
+Status: Ready to plan (research + UI-SPEC draft complete)
+Last activity: 2026-07-16 — Phase 1 UI-SPEC.md written (draft, awaiting checker)
 
 Progress: [░░░░░░░░░░] 0%
 
