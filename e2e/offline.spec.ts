@@ -34,7 +34,9 @@ test.describe('offline PWA reload', () => {
     await expect(page.getByTestId('offline-ready')).toBeVisible()
 
     await page.goto('/setup', { waitUntil: 'domcontentloaded' })
-    await expect(page.getByRole('heading', { name: 'Setup' })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Trouble Brewing' }),
+    ).toBeVisible()
     await expect(page.getByRole('link', { name: 'Back to home' })).toBeVisible()
   })
 })

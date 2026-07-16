@@ -18,6 +18,14 @@ async function reachRecordStep(page: Page) {
   await expect(page.getByRole('heading', { name: 'Record roles' })).toBeVisible()
 }
 
+async function assignEveryBagToken(page: Page) {
+  const rows = page.getByTestId('setup-player-row')
+  for (let index = 0; index < PLAYER_NAMES.length; index += 1) {
+    await rows.nth(index).click()
+    await page.getByTestId('setup-role-chip').first().click()
+  }
+}
+
 test.describe('setup record roles', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 
@@ -50,5 +58,55 @@ test.describe('setup record roles', () => {
         `[data-testid="setup-role-chip"][data-role-id="${clearedRoleId}"]`,
       ),
     ).toHaveCount(1)
+  })
+
+  test('lists incomplete recording issues before Start anyway reaches Night ready', async ({
+    page,
+  }) => {
+    await reachRecordStep(page)
+
+    await page.getByRole('button', { name: 'Start night' }).click()
+    const dialog = page.getByRole('dialog', {
+      name: 'Recording is incomplete',
+    })
+    await expect(dialog).toBeVisible()
+    await expect(dialog).toContainText('Alice has no character yet.')
+    await expect(dialog).toContainText('Recorded roles do not match the bag')
+    await expect(page).toHaveURL(/\/setup$/)
+
+    await dialog.getByRole('button', { name: 'Keep recording' }).click()
+    await expect(dialog).toHaveCount(0)
+    await expect(
+      page.getByRole('heading', { name: 'Record roles' }),
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Start night' }).click()
+    await page.getByRole('button', { name: 'Start anyway' }).click()
+    await expect(
+      page.getByRole('heading', { name: 'Night ready' }),
+    ).toBeVisible()
+    await expect(page).toHaveURL(/\/setup$/)
+    await expect(page.getByRole('link', { name: /play/i })).toHaveCount(0)
+  })
+
+  test('a complete recording reaches Night ready without an override', async ({
+    page,
+  }) => {
+    await reachRecordStep(page)
+    await assignEveryBagToken(page)
+
+    await page.getByRole('button', { name: 'Start night' }).click()
+
+    await expect(
+      page.getByRole('heading', { name: 'Night ready' }),
+    ).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Recording is incomplete' }),
+    ).toHaveCount(0)
+    await expect(page).toHaveURL(/\/setup$/)
+    await expect(page.getByText('Players')).toBeVisible()
+    await expect(page.getByText('Difficulty')).toBeVisible()
+    await expect(page.getByText('Bag', { exact: true })).toBeVisible()
+    await expect(page.getByText('Assignments', { exact: true })).toBeVisible()
   })
 })
