@@ -4,7 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
+// VITE_BASE=/blood-on-the-clocktower-master/ for GitHub Pages project site.
 export default defineConfig({
+  base: process.env.VITE_BASE || '/',
   plugins: [
     react(),
     tailwindcss(),
