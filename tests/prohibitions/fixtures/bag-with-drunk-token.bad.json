@@ -1,0 +1,12 @@
+{
+  "tokens": ["washerwoman", "librarian", "investigator", "drunk", "imp"],
+  "composition": {
+    "townsfolk": 3,
+    "outsiders": 0,
+    "minions": 1,
+    "demons": 1
+  },
+  "drunk": null,
+  "setupNotes": [],
+  "whyNote": "violation: drunk physical token"
+}

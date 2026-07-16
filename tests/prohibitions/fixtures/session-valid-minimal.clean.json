@@ -1,0 +1,24 @@
+{
+  "wizardStep": "nightReady",
+  "players": [
+    { "id": "p1", "name": "Alice" },
+    { "id": "p2", "name": "Ben" },
+    { "id": "p3", "name": "Clara" },
+    { "id": "p4", "name": "Diego" },
+    { "id": "p5", "name": "Evelyn" }
+  ],
+  "difficulty": "standard",
+  "bag": {
+    "tokens": ["washerwoman", "librarian", "investigator", "chef", "imp"],
+    "composition": {
+      "townsfolk": 3,
+      "outsiders": 0,
+      "minions": 1,
+      "demons": 1
+    },
+    "drunk": null,
+    "setupNotes": [],
+    "whyNote": "clean fixture"
+  },
+  "assignments": {}
+}
