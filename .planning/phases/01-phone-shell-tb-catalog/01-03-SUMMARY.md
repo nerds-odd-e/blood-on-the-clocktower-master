@@ -121,7 +121,7 @@ Each task was committed atomically:
 1. **Task 1: TB catalog JSON, Zod schemas, and loadCatalog** - `164b7cb` (feat)
 2. **Task 2: ScriptHome catalog wire, VitePWA, and green smoke E2E** - `be28d8e` (feat)
 
-**Plan metadata:** _(pending final docs commit)_
+**Plan metadata:** `9c001d3` (docs: complete plan)
 
 ## TDD Gate Compliance
 
