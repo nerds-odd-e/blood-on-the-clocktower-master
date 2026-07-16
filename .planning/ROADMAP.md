@@ -63,12 +63,12 @@ Plans:
   4. After the physical deal, Storyteller can record assignments via tap player → pick character
   5. App blocks starting night until recorded roles match the expected team composition
 
-**Plans:** 5 plans
+**Plans:** 1/5 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Wave 0 deps + RED wizard E2E + stub/home expectation rewrite
+- [x] 02-01-PLAN.md — Wave 0 deps + RED wizard E2E + stub/home expectation rewrite
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
-| 2. Setup Wizard & Grimoire Capture | 0/5 | Not started | - |
+| 2. Setup Wizard & Grimoire Capture | 1/5 | In Progress|  |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
 ## Coverage Map
