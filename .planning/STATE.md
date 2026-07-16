@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 03
 current_phase_name: night-coach-live-grimoire
 status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-07-16T09:47:31.390Z"
+stopped_at: Completed 03-03-PLAN.md
+last_updated: "2026-07-16T09:51:50.911Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 16
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 03 (night-coach-live-grimoire) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 03 execution started
 
-Progress: [████████░░] 81%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Progress: [████████░░] 81%
 | Phase 02 P06 | 6min | 3 tasks | 45 files |
 | Phase 03 P01 | 2min | 2 tasks | 8 files |
 | Phase 03 P02 | 5min | 2 tasks | 10 files |
+| Phase 03 P03 | 3min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -114,6 +115,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Resolve hasMinion/hasDemon via trueRoleId ?? bagRoleId (truth), not believed wake role
 - [Phase ?]: PlayScreen empty coach when !playStarted or no assignments; otherwise night meta + beat label
 - [Phase ?]: Delete PlayStub; /play routes only to PlayScreen
+- [Phase ?]: Coach copy keyed by procedure id / wake:{roleId} with optional nightKind; missing entries fall back to catalog reminders
+- [Phase ?]: Ship index-based Back + end-of-queue → playSurface bridge with minimal stub until 03-05
+- [Phase ?]: Exclude unit tests from app tsconfig so eligibleBluffs RED scaffold cannot break npm run build
 
 ### Pending Todos
 
@@ -143,6 +147,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T09:47:31.385Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-07-16T09:51:50.906Z
+Stopped at: Completed 03-03-PLAN.md
 Resume file: None
