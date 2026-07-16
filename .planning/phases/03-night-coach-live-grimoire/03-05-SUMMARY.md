@@ -124,7 +124,7 @@ Each task was committed atomically:
 1. **Task 1: LiveGrimoireView alive/dead + reminders + ST truth** - `a07daa2` (test RED) → `03d0bb4` (feat GREEN)
 2. **Task 2: Night bridge + Start other night + green play-grimoire E2E** - `0ae4e1f` (feat)
 
-**Plan metadata:** *(pending docs commit)*
+**Plan metadata:** `7e2ad2d` (docs: complete plan)
 
 ## Files Created/Modified
 
