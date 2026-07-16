@@ -157,6 +157,60 @@ describe('assertSetupSessionSemantics', () => {
     expect(orphan.ok).toBe(false)
   })
 
+  it('rejects invented bagRoleId values not present in bag.tokens', () => {
+    const players = basePlayers(5)
+    const bag = buildBag({
+      playerCount: 5,
+      difficulty: 'standard',
+      catalog,
+      rng: () => 0.42,
+    })
+    const result = assertSetupSessionSemantics(
+      legalSession({
+        players,
+        bag,
+        assignments: {
+          p1: {
+            playerId: 'p1',
+            bagRoleId: 'not-a-real-token',
+            trueRoleId: 'not-a-real-token',
+            believedRoleId: 'not-a-real-token',
+          },
+        },
+      }),
+      catalog,
+    )
+    expect(result.ok).toBe(false)
+  })
+
+  it('rejects Drunk cover assignments missing trueRoleId drunk', () => {
+    const players = basePlayers(8)
+    const values = [0.99, 0, 0, 0, 0, 0, 0, 0]
+    const bag = buildBag({
+      playerCount: 8,
+      difficulty: 'standard',
+      catalog,
+      rng: () => values.shift() ?? 0,
+    })
+    expect(bag.drunk).not.toBeNull()
+    const result = assertSetupSessionSemantics(
+      legalSession({
+        players,
+        bag,
+        assignments: {
+          p1: {
+            playerId: 'p1',
+            bagRoleId: bag.drunk!.coverRoleId,
+            trueRoleId: bag.drunk!.coverRoleId,
+            believedRoleId: bag.drunk!.coverRoleId,
+          },
+        },
+      }),
+      catalog,
+    )
+    expect(result.ok).toBe(false)
+  })
+
   it('rejects downstream steps with invalid roster (empty names / wrong count)', () => {
     const bag = buildBag({
       playerCount: 5,
