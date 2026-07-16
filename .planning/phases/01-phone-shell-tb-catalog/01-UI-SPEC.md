@@ -1,10 +1,11 @@
 ---
 phase: 1
 slug: phone-shell-tb-catalog
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-07-16
+reviewed_at: 2026-07-16T11:12:00+07:00
 ---
 
 # Phase 1 — UI Design Contract
@@ -174,22 +175,39 @@ One composition, not a dashboard:
 
 > Populated by the ui-phase UI-consideration probe. Empty/error COPY lives in Copywriting Contract — this section covers state coverage and references those rows.
 
-Applicable state considerations resolved: **8 covered, 2 backstop, 0 unresolved**
+Applicable state considerations resolved: **16 covered, 4 backstop, 2 dismissed, 0 unresolved**
 
 | Category | Element(s) | Status | Resolution / Reason |
 |----------|------------|--------|---------------------|
-| empty | Script catalog (`list-collection`) | ✅ covered | Catalog is bundled; if parse yields zero scripts, home shows Empty state heading/body from Copywriting Contract (not a blank screen) |
-| loading | Script catalog | ✅ covered | Data is sync-imported at module init — no loading skeleton; first paint is either populated or error/empty |
-| error | Script catalog / Zod load | ✅ covered | Failed `Zod.parse` shows Error state copy; primary CTA hidden until catalog valid |
-| populated | Script catalog | ✅ covered | Exactly one script card: Trouble Brewing, status Available, meta line, Start setup CTA |
-| partial | Script catalog | ✅ covered | Partial/corrupt role arrays fail Zod entirely → same as error (no half-rendered script card) |
-| overflow | Script card / optional role list | 🧪 backstop | Role list (if shown) scrolls inside shell vertically; page never gains horizontal scroll at 390×844 — held-out visual check at verify |
-| zero-one-many | Script catalog | ✅ covered | Phase 1 always targets one available script; UI copy is singular (“Trouble Brewing”); zero → empty state |
-| long-text | Script title, stub body, role names | 🧪 backstop | Long role names wrap within card; no ellipsis clipping of names; stub body wraps — visual check at verify |
-| overflow | PhoneShell / nav | ✅ covered | Shell enforces `overflow-x: hidden`; Back link text wraps if needed |
-| long-text | Primary CTA label | ✅ covered | Fixed label “Start setup” — no dynamic truncation |
+| overflow | E1 | ✅ covered | PhoneShell enforces overflow-x:hidden; content scrolls vertically only |
+| long-text | E1 | 🧪 backstop | Shell copy wraps within max-width 40rem — visual check at verify |
+| overflow | E2 | ✅ covered | Home hero is single-column within shell; no horizontal overflow |
+| long-text | E2 | ✅ covered | Display app name and supporting sentence wrap; no ellipsis clipping |
+| empty | E3 | ✅ covered | If parse yields zero scripts, show Empty state heading/body from Copywriting Contract |
+| loading | E3 | ✅ covered | Catalog is sync-imported at module init — no loading skeleton; first paint is populated or empty/error |
+| error | E3 | ✅ covered | Failed Zod.parse shows Error state copy; Start setup CTA hidden until catalog valid |
+| populated | E3 | ✅ covered | Exactly one script card: Trouble Brewing, Available, meta line, Start setup CTA |
+| partial | E3 | ✅ covered | Partial/corrupt role arrays fail Zod entirely — same as error (no half-rendered card) |
+| overflow | E3 | 🧪 backstop | Optional role list scrolls vertically inside shell; page never gains horizontal scroll at 390x844 |
+| zero-one-many | E3 | ✅ covered | Phase 1 targets one available script with singular copy; zero scripts → empty state |
+| long-text | E4 | ✅ covered | Fixed label Start setup — no dynamic truncation |
+| overflow | E5 | ✅ covered | Stub /setup panel stays within PhoneShell; vertical scroll only |
+| long-text | E5 | 🧪 backstop | Stub /setup body wraps — visual check at verify |
+| overflow | E6 | ✅ covered | Stub /play panel stays within PhoneShell; vertical scroll only |
+| long-text | E6 | 🧪 backstop | Stub /play body wraps — visual check at verify |
+| loading | E7 | 🚫 dismissed | Back to home is a static React Router link — no async navigation data load |
+| error | E7 | 🚫 dismissed | Back to home has no fetch/submit failure mode in Phase 1 |
+| overflow | E7 | ✅ covered | Back link text wraps if needed; shell overflow-x:hidden |
+| long-text | E7 | ✅ covered | Fixed label Back to home — no truncation |
+| overflow | E8 | ✅ covered | Empty/error message panels stay within shell; vertical scroll only |
+| long-text | E8 | ✅ covered | Empty/error copy wraps; uses Copywriting Contract strings verbatim |
 
----
+### Planner lift notes
+- **covered** → `must_haves.truths` string
+- **backstop** → `{ statement, verification: backstop }` (held-out visual check at verify)
+- **dismissed** → not lifted (reason retained here)
+- **unresolved** → planner must treat as assumption
+
 
 ## Registry Safety
 
@@ -202,14 +220,14 @@ Applicable state considerations resolved: **8 covered, 2 backstop, 0 unresolved*
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-07-16
 
 ---
 
