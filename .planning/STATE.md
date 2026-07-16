@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 3
 current_phase_name: Night Coach & Live Grimoire
 status: planning
-stopped_at: Phase 3 UI-SPEC draft complete
-last_updated: "2026-07-16T09:25:00.000Z"
+stopped_at: Phase 3 UI-SPEC approved
+last_updated: "2026-07-16T09:25:34.958Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 3 UI-SPEC.md written — ready for UI checker / planning
+last_activity_desc: Phase 3 UI-SPEC written
 progress:
   total_phases: 3
   completed_phases: 2
@@ -135,6 +135,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T09:25:00.000Z
-Stopped at: Phase 3 UI-SPEC draft complete
+Last session: 2026-07-16T09:25:34.951Z
+Stopped at: Phase 3 UI-SPEC approved
 Resume file: .planning/phases/03-night-coach-live-grimoire/03-UI-SPEC.md
