@@ -1,3 +1,4 @@
+import { loadCatalog } from '../../../domain/script'
 import { useSetupSessionStore } from '../../../state/setupSessionStore'
 
 type NightReadyStepProps = {
@@ -24,6 +25,21 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
 
   if (!bag) return null
 
+  const roleById = new Map(
+    loadCatalog().roles.map((role) => [role.id, role]),
+  )
+  const drunkAssignment = Object.values(assignments).find(
+    (assignment) => assignment.trueRoleId === 'drunk',
+  )
+  const drunkPlayer = drunkAssignment
+    ? players.find((player) => player.id === drunkAssignment.playerId)
+    : undefined
+  const drunkCoverName =
+    drunkAssignment != null
+      ? (roleById.get(drunkAssignment.bagRoleId)?.name ??
+        drunkAssignment.bagRoleId)
+      : null
+
   const summary = [
     { label: 'Players', value: String(players.length) },
     { label: 'Difficulty', value: DIFFICULTY_LABEL[difficulty] },
@@ -35,6 +51,14 @@ export function NightReadyStep({ onBack }: NightReadyStepProps) {
       label: 'Assignments',
       value: `${Object.keys(assignments).length} recorded`,
     },
+    ...(drunkAssignment && drunkCoverName
+      ? [
+          {
+            label: 'Drunk',
+            value: `${drunkPlayer?.name || 'A player'} believes ${drunkCoverName}`,
+          },
+        ]
+      : []),
   ]
 
   const statusCopy =

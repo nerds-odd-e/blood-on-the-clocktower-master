@@ -72,8 +72,13 @@ export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
               <span className="block text-body">{player.name}</span>
               <span className="mt-1 block text-label text-[var(--color-text-muted)]">
                 {assignment
-                  ? roleById.get(assignment.bagRoleId)?.name ??
-                    assignment.bagRoleId
+                  ? assignment.trueRoleId === 'drunk'
+                    ? `Drunk (believes ${
+                        roleById.get(assignment.bagRoleId)?.name ??
+                        assignment.bagRoleId
+                      })`
+                    : (roleById.get(assignment.bagRoleId)?.name ??
+                      assignment.bagRoleId)
                   : 'Not recorded yet'}
               </span>
             </button>
