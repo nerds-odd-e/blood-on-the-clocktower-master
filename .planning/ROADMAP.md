@@ -109,10 +109,24 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 03-01-PLAN.md — Wave 0 RED unit + Playwright gates; invert Night ready /play stub contracts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 03-02-PLAN.md — buildNightBeats engine + persist v2 + Start first night → PlayScreen beat landing
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 03-03-PLAN.md — coach-copy + composePrompt + full-screen Next/expand/Back coach UX
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 03-04-PLAN.md — Minion/Demon Info gating + Demon bluff picker + soft confirm; green play-coach E2E
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 03-05-PLAN.md — Live grimoire (dead/reminders/truth) + Night complete → Start other night; green play-grimoire E2E
 
 **UI hint**: yes
