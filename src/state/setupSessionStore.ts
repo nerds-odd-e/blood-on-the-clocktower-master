@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { buildBag, type BagPlan } from '../domain/bag'
 import { eligibleBluffRoleIds, type Assignment } from '../domain/grimoire'
-import { loadCatalog } from '../domain/script'
+import { loadCatalog, type LoadedCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
 import type { PersistWriteStatus } from './persistStatus'
 import { assertSetupSessionSemantics } from './setupSessionSemantics'
@@ -89,6 +89,36 @@ const PLAY_FIELD_DEFAULTS = {
   demonBluffs: [] as string[],
   diedTonightIds: [] as string[],
   playStarted: false,
+}
+
+/**
+ * Drop orphan death/reminder/bluff entries so persist semantics stay valid
+ * after player/assignment mutations (CR-01 / WR-03).
+ */
+function scrubPlayFieldsForPlayers(
+  state: PersistedSetupSession,
+  catalog: LoadedCatalog,
+): Pick<
+  PersistedSetupSession,
+  'deadPlayerIds' | 'diedTonightIds' | 'reminders' | 'demonBluffs'
+> {
+  const playerIds = new Set(state.players.map((p) => p.id))
+  const deadPlayerIds = state.deadPlayerIds.filter((id) => playerIds.has(id))
+  const diedTonightIds = state.diedTonightIds.filter((id) => playerIds.has(id))
+  const reminders: Record<string, string[]> = {}
+  for (const [playerId, tokens] of Object.entries(state.reminders)) {
+    if (!playerIds.has(playerId)) continue
+    const assignment = state.assignments[playerId]
+    if (!assignment) continue
+    const truthId = assignment.trueRoleId ?? assignment.bagRoleId
+    const allowed = new Set(
+      catalog.roles.find((r) => r.id === truthId)?.reminders ?? [],
+    )
+    reminders[playerId] = tokens.filter((t) => allowed.has(t))
+  }
+  const eligible = new Set(eligibleBluffRoleIds(state.assignments, catalog))
+  const demonBluffs = state.demonBluffs.filter((id) => eligible.has(id)).slice(0, 3)
+  return { deadPlayerIds, diedTonightIds, reminders, demonBluffs }
 }
 
 type SetupSessionState = PersistedSetupSession & {
@@ -181,7 +211,12 @@ export const useSetupSessionStore = create<SetupSessionState>()(
       persistWriteStatus: 'saved' as PersistWriteStatus,
       setWizardStep: (wizardStep) => set({ wizardStep }),
       setDifficulty: (difficulty) =>
-        set({ difficulty, bag: null, assignments: {} }),
+        set({
+          difficulty,
+          bag: null,
+          assignments: {},
+          ...PLAY_FIELD_DEFAULTS,
+        }),
       generateBag: () =>
         set((state) => {
           const bag: BagPlan = buildBag({
@@ -189,9 +224,15 @@ export const useSetupSessionStore = create<SetupSessionState>()(
             difficulty: state.difficulty,
             catalog: loadCatalog(),
           })
-          return { bag, assignments: {}, wizardStep: 'bag' }
+          return {
+            bag,
+            assignments: {},
+            wizardStep: 'bag' as const,
+            ...PLAY_FIELD_DEFAULTS,
+          }
         }),
-      clearBag: () => set({ bag: null, assignments: {} }),
+      clearBag: () =>
+        set({ bag: null, assignments: {}, ...PLAY_FIELD_DEFAULTS }),
       assignRole: (playerId, bagRoleId) =>
         set((state) => {
           if (
@@ -211,8 +252,13 @@ export const useSetupSessionStore = create<SetupSessionState>()(
               ? { trueRoleId: 'drunk', believedRoleId: bagRoleId }
               : { trueRoleId: bagRoleId, believedRoleId: bagRoleId }),
           }
-          return {
+          const next: PersistedSetupSession = {
+            ...partializedSession(state),
             assignments: { ...state.assignments, [playerId]: assignment },
+          }
+          return {
+            assignments: next.assignments,
+            ...scrubPlayFieldsForPlayers(next, loadCatalog()),
           }
         }),
       clearRole: (playerId) =>
@@ -220,7 +266,14 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           if (!state.assignments[playerId]) return state
           const assignments = { ...state.assignments }
           delete assignments[playerId]
-          return { assignments }
+          const next: PersistedSetupSession = {
+            ...partializedSession(state),
+            assignments,
+          }
+          return {
+            assignments,
+            ...scrubPlayFieldsForPlayers(next, loadCatalog()),
+          }
         }),
       addPlayer: () =>
         set((state) => ({
@@ -261,9 +314,16 @@ export const useSetupSessionStore = create<SetupSessionState>()(
         set((state) => {
           const assignments = { ...state.assignments }
           delete assignments[id]
-          return {
-            players: state.players.filter((player) => player.id !== id),
+          const players = state.players.filter((player) => player.id !== id)
+          const next: PersistedSetupSession = {
+            ...partializedSession(state),
+            players,
             assignments,
+          }
+          return {
+            players,
+            assignments,
+            ...scrubPlayFieldsForPlayers(next, loadCatalog()),
           }
         }),
       resetFresh: () => set({ ...freshSession(), persistWriteStatus: 'saved' }),
