@@ -4,6 +4,7 @@ import { buildNightBeats } from '../../domain/engine'
 import { loadCatalog } from '../../domain/script'
 import { useSetupSessionStore } from '../../state/setupSessionStore'
 import { CoachBeatView } from './CoachBeatView'
+import { LiveGrimoireView } from './LiveGrimoireView'
 
 /**
  * Play shell — coach / grimoire / bridge via playSurface (D-01).
@@ -19,6 +20,7 @@ export function PlayScreen() {
   const playStarted = useSetupSessionStore((state) => state.playStarted)
   const playSurface = useSetupSessionStore((state) => state.playSurface)
   const demonBluffs = useSetupSessionStore((state) => state.demonBluffs)
+  const reminders = useSetupSessionStore((state) => state.reminders)
   const persistWriteStatus = useSetupSessionStore(
     (state) => state.persistWriteStatus,
   )
@@ -28,6 +30,10 @@ export function PlayScreen() {
   const setPlaySurface = useSetupSessionStore((state) => state.setPlaySurface)
   const toggleDemonBluff = useSetupSessionStore(
     (state) => state.toggleDemonBluff,
+  )
+  const toggleDead = useSetupSessionStore((state) => state.toggleDead)
+  const setPlayerReminders = useSetupSessionStore(
+    (state) => state.setPlayerReminders,
   )
   const retryCriticalPersist = useSetupSessionStore(
     (state) => state.retryCriticalPersist,
@@ -81,26 +87,24 @@ export function PlayScreen() {
     )
   }
 
-  if (beats.length === 0) {
+  if (playSurface === 'grimoire') {
     return (
-      <section className="flex min-h-dvh min-w-0 flex-col gap-4 overflow-x-hidden pt-8 pb-8">
-        <header className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-          <p className="text-label text-[var(--color-text-muted)]">
-            {nightKind === 'first' ? 'First night' : 'Other night'}
-          </p>
-          <button
-            type="button"
-            className="min-h-11 text-body text-[var(--color-text-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-            onClick={() => setPlaySurface('grimoire')}
-          >
-            Grimoire
-          </button>
-        </header>
-        <h1 className="text-heading">Nothing to coach yet</h1>
-        <p className="text-body text-[var(--color-text-muted)]">
-          Record at least one role in setup, then start the first night again.
-        </p>
-      </section>
+      <LiveGrimoireView
+        players={players}
+        assignments={assignments}
+        catalog={catalog}
+        deadPlayerIds={deadPlayerIds}
+        reminders={reminders}
+        demonBluffs={demonBluffs}
+        persistWriteStatus={persistWriteStatus}
+        onToggleDead={toggleDead}
+        onSetPlayerReminders={setPlayerReminders}
+        onToggleDemonBluff={toggleDemonBluff}
+        onBackToCoach={() => setPlaySurface('coach')}
+        onRetryPersist={() => {
+          void retryCriticalPersist()
+        }}
+      />
     )
   }
 
@@ -125,22 +129,24 @@ export function PlayScreen() {
     )
   }
 
-  if (playSurface === 'grimoire') {
+  if (beats.length === 0) {
     return (
       <section className="flex min-h-dvh min-w-0 flex-col gap-4 overflow-x-hidden pt-8 pb-8">
         <header className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-          <h1 className="text-heading">Grimoire</h1>
+          <p className="text-label text-[var(--color-text-muted)]">
+            {nightKind === 'first' ? 'First night' : 'Other night'}
+          </p>
           <button
             type="button"
             className="min-h-11 text-body text-[var(--color-text-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
-            onClick={() => setPlaySurface('coach')}
+            onClick={() => setPlaySurface('grimoire')}
           >
-            Back to coach
+            Grimoire
           </button>
         </header>
+        <h1 className="text-heading">Nothing to coach yet</h1>
         <p className="text-body text-[var(--color-text-muted)]">
-          Live grimoire panel arrives in a later step. Keep coaching from the
-          beat screen.
+          Record at least one role in setup, then start the first night again.
         </p>
       </section>
     )

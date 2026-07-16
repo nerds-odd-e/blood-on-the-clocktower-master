@@ -117,6 +117,9 @@ type SetupSessionState = PersistedSetupSession & {
   setPlaySurface: (playSurface: PlaySurface) => void
   setDemonBluffs: (roleIds: string[]) => void
   toggleDemonBluff: (roleId: string) => void
+  toggleDead: (playerId: string) => void
+  setPlayerReminders: (playerId: string, reminders: string[]) => void
+  startOtherNight: () => void
 }
 
 function partializedSession(state: PersistedSetupSession) {
@@ -347,6 +350,56 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           }
           if (state.demonBluffs.length >= 3) return state
           return { demonBluffs: [...state.demonBluffs, roleId] }
+        }),
+      toggleDead: (playerId) =>
+        set((state) => {
+          if (!state.players.some((player) => player.id === playerId)) {
+            return state
+          }
+          const isDead = state.deadPlayerIds.includes(playerId)
+          if (isDead) {
+            return {
+              deadPlayerIds: state.deadPlayerIds.filter((id) => id !== playerId),
+            }
+          }
+          const diedTonightIds = state.diedTonightIds.includes(playerId)
+            ? state.diedTonightIds
+            : [...state.diedTonightIds, playerId]
+          return {
+            deadPlayerIds: [...state.deadPlayerIds, playerId],
+            diedTonightIds,
+          }
+        }),
+      setPlayerReminders: (playerId, nextReminders) =>
+        set((state) => {
+          if (!state.players.some((player) => player.id === playerId)) {
+            return state
+          }
+          const assignment = state.assignments[playerId]
+          if (!assignment) {
+            return state
+          }
+          const catalog = loadCatalog()
+          const truthRoleId = assignment.trueRoleId ?? assignment.bagRoleId
+          const role = catalog.roles.find((entry) => entry.id === truthRoleId)
+          const allowed = new Set(role?.reminders ?? [])
+          const seen = new Set<string>()
+          const filtered: string[] = []
+          for (const token of nextReminders) {
+            if (!allowed.has(token) || seen.has(token)) continue
+            seen.add(token)
+            filtered.push(token)
+          }
+          return {
+            reminders: { ...state.reminders, [playerId]: filtered },
+          }
+        }),
+      startOtherNight: () =>
+        set({
+          nightKind: 'other',
+          beatIndex: 0,
+          diedTonightIds: [],
+          playSurface: 'coach',
         }),
     }),
     {

@@ -145,6 +145,12 @@ export function assertSetupSessionSemantics(
   const bluffEligibility = assertDemonBluffEligibility(session, catalog)
   if (!bluffEligibility.ok) return bluffEligibility
 
+  const reminderCatalog = assertReminderCatalog(session, catalog)
+  if (!reminderCatalog.ok) return reminderCatalog
+
+  const lifeIds = assertLifePlayerIds(session)
+  if (!lifeIds.ok) return lifeIds
+
   return { ok: true }
 }
 
@@ -160,6 +166,57 @@ function assertDemonBluffEligibility(
   for (const id of session.demonBluffs) {
     if (!eligible.has(id)) {
       return fail('demonBluffs contains an ineligible role id')
+    }
+  }
+  return { ok: true }
+}
+
+/** Reminder tokens ⊆ catalog role.reminders for the player's true role (T-03-02). */
+function assertReminderCatalog(
+  session: PersistedSetupSession,
+  catalog: LoadedCatalog,
+): SemanticsResult {
+  if (session.reminders === undefined) return { ok: true }
+
+  const roleById = new Map(catalog.roles.map((role) => [role.id, role]))
+  const playerIds = new Set(session.players.map((player) => player.id))
+
+  for (const [playerId, tokens] of Object.entries(session.reminders)) {
+    if (!playerIds.has(playerId)) {
+      return fail('reminders reference an unknown player')
+    }
+    const assignment = session.assignments[playerId]
+    if (!assignment) {
+      if (tokens.length > 0) {
+        return fail('reminders require a recorded role for the player')
+      }
+      continue
+    }
+    const truthRoleId = assignment.trueRoleId ?? assignment.bagRoleId
+    const allowed = new Set(roleById.get(truthRoleId)?.reminders ?? [])
+    for (const token of tokens) {
+      if (typeof token !== 'string' || token.length === 0) {
+        return fail('reminder tokens must be nonempty strings')
+      }
+      if (!allowed.has(token)) {
+        return fail('reminders contain a token outside role.reminders')
+      }
+    }
+  }
+  return { ok: true }
+}
+
+/** deadPlayerIds / diedTonightIds ⊆ seated players (T-03-02). */
+function assertLifePlayerIds(session: PersistedSetupSession): SemanticsResult {
+  const playerIds = new Set(session.players.map((player) => player.id))
+  for (const id of session.deadPlayerIds ?? []) {
+    if (!playerIds.has(id)) {
+      return fail('deadPlayerIds references an unknown player')
+    }
+  }
+  for (const id of session.diedTonightIds ?? []) {
+    if (!playerIds.has(id)) {
+      return fail('diedTonightIds references an unknown player')
     }
   }
   return { ok: true }
