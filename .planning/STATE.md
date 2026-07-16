@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
-status: ready_to_execute
-stopped_at: Completed 02-05-PLAN.md
-last_updated: "2026-07-16T08:33:55.288Z"
+status: executing
+stopped_at: Completed 02-06-PLAN.md
+last_updated: "2026-07-16T08:42:48.649Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 2
   completed_phases: 2
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 11
+  completed_plans: 11
 ---
 
 # Project State
@@ -27,12 +27,12 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 ## Current Position
 
-Phase: 02 (setup-wizard-grimoire-capture) — READY TO EXECUTE
-Plan: 6 of 6
+Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-07-16 — Phase 02 gap-closure planning complete
+Last activity: 2026-07-16 — Phase 02 execution started
 
-Progress: [████████░░] 83% (5/6 plans executed; 02-06 pending)
+Progress: [██████████] 100% (5/6 plans executed; 02-06 pending)
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Progress: [████████░░] 83% (5/6 plans executed; 02-06 pendin
 | Phase 02 P03 | 6min | 2 tasks | 12 files |
 | Phase 02 P04 | 5min | 2 tasks | 11 files |
 | Phase 02 P05 | 4min | 2 tasks | 7 files |
+| Phase 02 P06 | 6min | 3 tasks | 45 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,9 @@ Recent decisions affecting current work:
 - [Phase 02]: Persist both true Drunk identity and the Townsfolk role the player believes when its physical cover token is recorded. — Preserves both mechanical truth and player-facing knowledge for night coaching.
 - [Phase 02]: Keep Start night primary on the record surface, but render Start anyway as a neutral secondary outline inside the warning dialog. — Preserves one clear forward action without styling a local override as destructive or as the default.
 - [Phase 02]: Advance by persisted wizardStep only, retaining /setup and exposing no /play affordance until Phase 3. — Keeps the setup handoff available to the next phase without prematurely opening the coach.
+- [Phase ?]: Semantic hydration failures reuse Zod hydrationError recovery path
+- [Phase ?]: Night ready saved assurance gated on persistWriteStatus after awaitCriticalPersist
+- [Phase ?]: Phase 2 test-tier prohibitions wired via tests/prohibitions node:test + check_* descriptors
 
 ### Pending Todos
 
@@ -130,6 +134,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T08:13:28.494Z
-Stopped at: Completed 02-05-PLAN.md
+Last session: 2026-07-16T08:42:48.644Z
+Stopped at: Completed 02-06-PLAN.md
 Resume file: None

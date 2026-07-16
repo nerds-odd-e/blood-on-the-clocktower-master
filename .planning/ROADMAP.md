@@ -63,7 +63,7 @@ Plans:
   4. After the physical deal, Storyteller can record assignments via tap player → pick character
   5. App blocks starting night until recorded roles match the expected team composition
 
-**Plans:** 5/5 executed + 1 gap-closure planned
+**Plans:** 6/6 plans executed
 
 Plans:
 **Wave 1**
@@ -88,7 +88,7 @@ Plans:
 
 **Wave 6** *(gap closure — blocked on Wave 5)*
 
-- [ ] 02-06-PLAN.md — Persisted session integrity (semantic hydrate, durable save, prohibition fixtures)
+- [x] 02-06-PLAN.md — Persisted session integrity (semantic hydrate, durable save, prohibition fixtures)
 
 **UI hint**: yes
 
@@ -118,7 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
-| 2. Setup Wizard & Grimoire Capture | 5/6 | Gap closure planned |  |
+| 2. Setup Wizard & Grimoire Capture | 6/6 | In Progress|  |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
 ## Coverage Map
