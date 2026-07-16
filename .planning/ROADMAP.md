@@ -21,7 +21,12 @@ Ship a phone-first offline co-pilot so a new Storyteller can run Trouble Brewing
   1. Storyteller can use the app on a phone-sized viewport without horizontal scrolling or unusable controls
   2. After first load, Storyteller can reload and use the app with no network connection and no account
   3. App exposes Trouble Brewing as the available script with roles/night data loaded for later setup and coach
-**Plans:** TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Walking skeleton: Vite phone shell, TB catalog load, stubs, PWA, Playwright smoke
+- [ ] 01-02-PLAN.md — Catalog lock + home surface + Playwright catalog assertions (real TB JSON)
+- [ ] 01-03-PLAN.md — Offline/viewport Playwright proof + VALIDATION.md retargeted to Playwright
 
 **UI hint**: yes
 
@@ -62,7 +67,7 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Phone Shell & TB Catalog | 0/TBD | Not started | - |
+| 1. Phone Shell & TB Catalog | 0/3 | Planned | - |
 | 2. Setup Wizard & Grimoire Capture | 0/TBD | Not started | - |
 | 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
 
