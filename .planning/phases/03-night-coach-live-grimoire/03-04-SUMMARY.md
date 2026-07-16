@@ -117,7 +117,7 @@ Each task was committed atomically:
 1. **Task 1: eligibleBluffs domain + store validation** - `0bc0367` (feat)
 2. **Task 2: Demon Info BluffPicker + soft confirm + green play-coach E2E** - `d4c0661` (feat)
 
-**Plan metadata:** _(pending docs commit)_
+**Plan metadata:** `27d63ab` (docs: complete plan)
 
 ## Files Created/Modified
 
