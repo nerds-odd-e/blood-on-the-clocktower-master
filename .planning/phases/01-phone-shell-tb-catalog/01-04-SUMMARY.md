@@ -112,7 +112,7 @@ Each task was committed atomically:
 1. **Task 1: Lock setup chart, night ordinals, and home catalog surface** - `9cf6160` (feat)
 2. **Task 2: Playwright catalog suite against real bundled TB data** - `983e4f2` (test)
 
-**Plan metadata:** _(pending docs commit)_
+**Plan metadata:** `5c4b60b` (docs: complete plan)
 
 ## Files Created/Modified
 
