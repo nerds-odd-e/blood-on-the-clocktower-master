@@ -27,7 +27,7 @@ export function PlayScreen() {
   )
   const advanceBeat = useSetupSessionStore((state) => state.advanceBeat)
   const retreatBeat = useSetupSessionStore((state) => state.retreatBeat)
-  const clampBeatIndex = useSetupSessionStore((state) => state.clampBeatIndex)
+  const syncBeatCursor = useSetupSessionStore((state) => state.syncBeatCursor)
   const setPlaySurface = useSetupSessionStore((state) => state.setPlaySurface)
   const toggleDemonBluff = useSetupSessionStore(
     (state) => state.toggleDemonBluff,
@@ -57,10 +57,14 @@ export function PlayScreen() {
         )
       : []
 
+  const beatIds = beats.map((beat) => beat.id)
+  const beatIdsKey = beatIds.join('\0')
+
   useEffect(() => {
     if (!playStarted || !hasAssignments) return
-    clampBeatIndex(beats.length)
-  }, [playStarted, hasAssignments, beats.length, clampBeatIndex])
+    // Remap by beat id when queue membership changes (deaths / Ravenkeeper).
+    syncBeatCursor(beatIdsKey === '' ? [] : beatIdsKey.split('\0'))
+  }, [playStarted, hasAssignments, beatIdsKey, syncBeatCursor])
 
   if (!hasHydrated) {
     return (
@@ -163,8 +167,8 @@ export function PlayScreen() {
       demonBluffs={demonBluffs}
       persistWriteStatus={persistWriteStatus}
       onToggleDemonBluff={toggleDemonBluff}
-      onNext={() => advanceBeat(total)}
-      onBack={() => retreatBeat()}
+      onNext={() => advanceBeat(beatIds)}
+      onBack={() => retreatBeat(beatIds)}
       onOpenGrimoire={() => setPlaySurface('grimoire')}
       onRetryPersist={() => {
         void retryCriticalPersist()

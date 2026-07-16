@@ -125,6 +125,8 @@ type SetupSessionState = PersistedSetupSession & {
   hasHydrated: boolean
   hydrationError: boolean
   persistWriteStatus: PersistWriteStatus
+  /** Anchor beat id for remapping when the night queue membership changes. */
+  currentBeatId: string | null
   setWizardStep: (wizardStep: WizardStep) => void
   setDifficulty: (difficulty: Difficulty) => void
   generateBag: () => void
@@ -141,9 +143,10 @@ type SetupSessionState = PersistedSetupSession & {
   retryCriticalPersist: () => Promise<void>
   advanceToNightReady: () => Promise<void>
   startFirstNight: () => void
-  advanceBeat: (queueLength: number) => void
-  retreatBeat: () => void
+  advanceBeat: (beatIds: string[]) => void
+  retreatBeat: (beatIds: string[]) => void
   clampBeatIndex: (queueLength: number) => void
+  syncBeatCursor: (beatIds: string[]) => void
   setPlaySurface: (playSurface: PlaySurface) => void
   setDemonBluffs: (roleIds: string[]) => void
   toggleDemonBluff: (roleId: string) => void
@@ -206,6 +209,7 @@ export const useSetupSessionStore = create<SetupSessionState>()(
   persist(
     (set, get) => ({
       ...freshSession(),
+      currentBeatId: null,
       hasHydrated: false,
       hydrationError: false,
       persistWriteStatus: 'saved' as PersistWriteStatus,
@@ -326,7 +330,12 @@ export const useSetupSessionStore = create<SetupSessionState>()(
             ...scrubPlayFieldsForPlayers(next, loadCatalog()),
           }
         }),
-      resetFresh: () => set({ ...freshSession(), persistWriteStatus: 'saved' }),
+      resetFresh: () =>
+        set({
+          ...freshSession(),
+          currentBeatId: null,
+          persistWriteStatus: 'saved',
+        }),
       clearHydrationError: () => set({ hydrationError: false }),
       awaitCriticalPersist: async () => {
         set({ persistWriteStatus: 'saving' })
@@ -350,33 +359,73 @@ export const useSetupSessionStore = create<SetupSessionState>()(
         set({
           nightKind: 'first',
           beatIndex: 0,
+          currentBeatId: null,
           playSurface: 'coach',
           playStarted: true,
         }),
-      advanceBeat: (queueLength) =>
+      advanceBeat: (beatIds) =>
         set((state) => {
+          const queueLength = beatIds.length
           if (queueLength <= 0) {
-            return { playSurface: 'bridge' as const }
+            return { playSurface: 'bridge' as const, currentBeatId: null }
           }
           if (state.beatIndex >= queueLength - 1) {
-            return { playSurface: 'bridge' as const }
+            return { playSurface: 'bridge' as const, currentBeatId: null }
           }
-          return { beatIndex: state.beatIndex + 1 }
+          const nextIndex = state.beatIndex + 1
+          return {
+            beatIndex: nextIndex,
+            currentBeatId: beatIds[nextIndex] ?? null,
+          }
         }),
-      retreatBeat: () =>
-        set((state) => ({
-          beatIndex: Math.max(0, state.beatIndex - 1),
-        })),
+      retreatBeat: (beatIds) =>
+        set((state) => {
+          const nextIndex = Math.max(0, state.beatIndex - 1)
+          return {
+            beatIndex: nextIndex,
+            currentBeatId: beatIds[nextIndex] ?? null,
+          }
+        }),
       clampBeatIndex: (queueLength) =>
         set((state) => {
           if (queueLength <= 0) {
-            return state.beatIndex === 0 ? state : { beatIndex: 0 }
+            return state.beatIndex === 0 && state.currentBeatId === null
+              ? state
+              : { beatIndex: 0, currentBeatId: null }
           }
           const maxIndex = queueLength - 1
           if (state.beatIndex > maxIndex) {
-            return { beatIndex: maxIndex }
+            return { beatIndex: maxIndex, currentBeatId: null }
           }
           return state
+        }),
+      syncBeatCursor: (beatIds) =>
+        set((state) => {
+          if (beatIds.length === 0) {
+            return state.beatIndex === 0 && state.currentBeatId === null
+              ? state
+              : { beatIndex: 0, currentBeatId: null }
+          }
+          const anchorId = state.currentBeatId
+          if (anchorId) {
+            const remapped = beatIds.indexOf(anchorId)
+            if (remapped >= 0) {
+              return remapped === state.beatIndex
+                ? state
+                : { beatIndex: remapped }
+            }
+            // Beat removed: same index becomes the next remaining beat (or clamp).
+            const clamped = Math.min(state.beatIndex, beatIds.length - 1)
+            return {
+              beatIndex: clamped,
+              currentBeatId: beatIds[clamped] ?? null,
+            }
+          }
+          const clamped = Math.min(state.beatIndex, beatIds.length - 1)
+          return {
+            beatIndex: clamped,
+            currentBeatId: beatIds[clamped] ?? null,
+          }
         }),
       setPlaySurface: (playSurface) => set({ playSurface }),
       setDemonBluffs: (roleIds) =>
@@ -458,6 +507,7 @@ export const useSetupSessionStore = create<SetupSessionState>()(
         set({
           nightKind: 'other',
           beatIndex: 0,
+          currentBeatId: null,
           diedTonightIds: [],
           playSurface: 'coach',
         }),
