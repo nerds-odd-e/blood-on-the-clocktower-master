@@ -106,7 +106,7 @@ Plans:
   4. First-night Demon/Minion information steps appear when those roles are in play, and Storyteller can record Demon bluffs
   5. Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens during play
 
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans executed
 
 Plans:
 **Wave 1**
@@ -127,7 +127,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 03-05-PLAN.md — Live grimoire (dead/reminders/truth) + Night complete → Start other night; green play-grimoire E2E
+- [x] 03-05-PLAN.md — Live grimoire (dead/reminders/truth) + Night complete → Start other night; green play-grimoire E2E
 
 **UI hint**: yes
 
@@ -140,7 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
 | 2. Setup Wizard & Grimoire Capture | 6/6 | Complete    | 2026-07-16 |
-| 3. Night Coach & Live Grimoire | 4/5 | In Progress|  |
+| 3. Night Coach & Live Grimoire | 5/5 | In Progress|  |
 
 ## Coverage Map
 

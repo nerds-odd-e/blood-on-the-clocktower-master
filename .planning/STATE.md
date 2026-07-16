@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 03
 current_phase_name: night-coach-live-grimoire
-status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-07-16T09:54:36.050Z"
+status: verifying
+stopped_at: Completed 03-05-PLAN.md
+last_updated: "2026-07-16T09:59:01.688Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 16
-  completed_plans: 15
+  completed_plans: 16
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 03 (night-coach-live-grimoire) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-16 — Phase 03 execution started
 
-Progress: [█████████░] 94%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -73,6 +73,7 @@ Progress: [█████████░] 94%
 | Phase 03 P02 | 5min | 2 tasks | 10 files |
 | Phase 03 P03 | 3min | 2 tasks | 11 files |
 | Phase 03 P04 | 2min | 2 tasks | 10 files |
+| Phase 03 P05 | 3min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Exclude unit tests from app tsconfig so eligibleBluffs RED scaffold cannot break npm run build
 - [Phase ?]: Continue anyway uses accent ConfirmDialog primary (UI-SPEC reserved CTA), not secondaryConfirm outline
 - [Phase ?]: toggleDemonBluff at cap ignores new taps until a selected chip is cleared
+- [Phase ?]: Reminder catalog uses trueRoleId ?? bagRoleId (Drunk empty reminders → picker empty copy)
+- [Phase ?]: Reviving keeps diedTonightIds until startOtherNight for Ravenkeeper gating
+- [Phase ?]: E2E uses button locators + data-dead; scans seats for reminder-capable roles
 
 ### Pending Todos
 
@@ -150,6 +154,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T09:54:36.044Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-07-16T09:59:01.684Z
+Stopped at: Completed 03-05-PLAN.md
 Resume file: None
