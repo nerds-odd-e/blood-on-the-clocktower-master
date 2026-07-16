@@ -6,9 +6,9 @@ current_phase: 03
 current_phase_name: night-coach-live-grimoire
 status: human_needed
 stopped_at: Phase 03 verification — human_needed (visual backstops + MVP walkthrough)
-last_updated: "2026-07-16T10:02:19Z"
+last_updated: "2026-07-16T10:15:00Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 03 verification complete — 8/12 must-haves; awaiting human checks
+last_activity_desc: Phase 03 security audit verified — threats_open: 0; awaiting human UAT checks
 progress:
   total_phases: 3
   completed_phases: 3
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 03 (night-coach-live-grimoire) — VERIFYING
 Plan: 5 of 5
-Status: Verification human_needed — see 03-VERIFICATION.md
-Last activity: 2026-07-16 — Phase 03 verification written (8/12; E2E green)
+Status: Verification human_needed — see 03-VERIFICATION.md; security threats_open: 0 (03-SECURITY.md)
+Last activity: 2026-07-16 — Phase 03 security audit verified (7/7 threats closed)
 
 Progress: [██████████] 100%
 
