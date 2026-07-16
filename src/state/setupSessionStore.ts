@@ -368,6 +368,11 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           currentBeatId: null,
           playSurface: 'coach',
           playStarted: true,
+          deadPlayerIds: [],
+          diedTonightIds: [],
+          reminders: {},
+          demonBluffs: [],
+          grimoireReturnSurface: 'coach',
         }),
       advanceBeat: (beatIds) =>
         set((state) => {
