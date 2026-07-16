@@ -51,7 +51,7 @@ patterns-established:
   - "E2E gate: npm run build && npx playwright test against real preview"
   - "RED until shell/catalog: smoke asserts Storyteller Copilot / Start setup / Setup / Play / Back to home"
 
-requirements-completed: [PLAT-01, PLAT-02]
+requirements-completed: []  # PLAT-01/PLAT-02 addressed (scaffold + RED gate) but not fully delivered until 01-02–01-05
 
 coverage:
   - id: D1
@@ -111,7 +111,7 @@ Each task was committed atomically:
 1. **Task 1: Playwright RED smoke + VALIDATION Playwright retarget** - `bf1c9b4` (test)
 2. **Task 2: create-vite react-ts scaffold without shell/catalog** - `e30f49c` (feat)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `1cc9e97` (docs: complete plan)
 
 _Note: TDD Task 1 is RED-only by design; GREEN lands in plan 01-03._
 
@@ -151,10 +151,18 @@ _Note: TDD Task 1 is RED-only by design; GREEN lands in plan 01-03._
 - **Verification:** `npm run build` exit 0; Playwright smoke still non-zero
 - **Committed in:** `e30f49c` (Task 2)
 
+**3. [Rule 1 - Bug] Reverted premature PLAT-01/PLAT-02 mark-complete**
+- **Found during:** Post-summary state update
+- **Issue:** `requirements.mark-complete` from plan frontmatter marked phone/offline PWA requirements done after scaffold-only plan
+- **Fix:** Restored Pending checkboxes/traceability; SUMMARY `requirements-completed` left empty until later plans deliver truths
+- **Files modified:** `.planning/REQUIREMENTS.md`, `01-01-SUMMARY.md`
+- **Verification:** PLAT-01/PLAT-02 unchecked and Pending in REQUIREMENTS.md
+- **Committed in:** (follow-up docs commit)
+
 ---
 
-**Total deviations:** 2 auto-fixed (1 missing critical, 1 blocking)
-**Impact on plan:** Necessary for safe greenfield merge and clean git hygiene; no scope creep into shell/catalog/PWA.
+**Total deviations:** 3 auto-fixed (1 bug, 1 missing critical, 1 blocking)
+**Impact on plan:** Necessary for safe greenfield merge, clean git hygiene, and accurate requirement status; no scope creep into shell/catalog/PWA.
 
 ## Issues Encountered
 
