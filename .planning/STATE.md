@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: phone-shell-tb-catalog
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-07-16T05:03:30.042Z"
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-07-16T05:15:12.045Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 01 (phone-shell-tb-catalog) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 01 execution started
 
-Progress: [██░░░░░░░░] 20%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [██░░░░░░░░] 20%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 01 P01 | 10min | 2 tasks | 25 files |
+| Phase 01 P02 | 5min | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Scaffolded create-vite via /tmp merge to preserve e2e/.planning
 - [Phase ?]: Playwright-only Phase 1 testing; no Vitest/jsdom/Testing Library (D-05 D-07)
 - [Phase ?]: Kept create-vite 9.x oxlint baseline over outdated eslint/vite.svg assumptions
+- [Phase ?]: Confirmed fontsource + Tailwind + react-router-dom on npm before install (T-01-SC)
+- [Phase ?]: Start setup CTA stays hidden until loadCatalog greens in 01-03
+- [Phase ?]: Thin-reexport src/App.tsx so create-vite path does not dual-mount
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T05:03:30.038Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-07-16T05:15:12.040Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

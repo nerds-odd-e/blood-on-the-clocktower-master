@@ -31,7 +31,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Platform
 
-- [ ] **PLAT-01**: UI is phone-first and usable on tablet
+- [x] **PLAT-01**: UI is phone-first and usable on tablet
 - [ ] **PLAT-02**: App works offline as a PWA after first load with no account required
 
 ## v2 Requirements
@@ -86,7 +86,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COACH-02 | Phase 3 | Pending |
 | COACH-03 | Phase 3 | Pending |
 | COACH-04 | Phase 3 | Pending |
-| PLAT-01 | Phase 1 | Pending |
+| PLAT-01 | Phase 1 | Complete |
 | PLAT-02 | Phase 1 | Pending |
 
 **Coverage:**
