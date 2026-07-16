@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import type { Beat } from '../../domain/engine'
 import { composePrompt } from '../../domain/coach'
+import type { Assignment } from '../../domain/grimoire'
 import type { LoadedCatalog } from '../../domain/script'
 import type { NightKind } from '../../state/setupSessionStore'
 import type { PersistWriteStatus } from '../../state/persistStatus'
+import { ConfirmDialog } from '../setup/components/ConfirmDialog'
+import { BluffPicker } from './BluffPicker'
 
 type CoachBeatViewProps = {
   beat: Beat
@@ -12,7 +15,10 @@ type CoachBeatViewProps = {
   totalSteps: number
   playerName?: string
   catalog: LoadedCatalog
+  assignments: Record<string, Assignment>
+  demonBluffs: string[]
   persistWriteStatus: PersistWriteStatus
+  onToggleDemonBluff: (roleId: string) => void
   onNext: () => void
   onBack: () => void
   onOpenGrimoire: () => void
@@ -21,6 +27,7 @@ type CoachBeatViewProps = {
 
 /**
  * Full-screen next-beat coach: short prompt, inline expand, sticky Next (D-01–D-04, D-08).
+ * Demon Info embeds BluffPicker + soft confirm when leaving with fewer than 3 bluffs (D-10–D-12).
  */
 export function CoachBeatView({
   beat,
@@ -29,13 +36,17 @@ export function CoachBeatView({
   totalSteps,
   playerName,
   catalog,
+  assignments,
+  demonBluffs,
   persistWriteStatus,
+  onToggleDemonBluff,
   onNext,
   onBack,
   onOpenGrimoire,
   onRetryPersist,
 }: CoachBeatViewProps) {
   const [expanded, setExpanded] = useState(false)
+  const [bluffConfirmOpen, setBluffConfirmOpen] = useState(false)
   const prompt = composePrompt(beat, {
     nightKind,
     catalog,
@@ -44,11 +55,21 @@ export function CoachBeatView({
 
   useEffect(() => {
     setExpanded(false)
+    setBluffConfirmOpen(false)
   }, [beat.id])
 
   const stepLabel = nightKind === 'first' ? 'First night' : 'Other night'
   const nightMeta = `${stepLabel} · step ${stepIndex + 1} of ${totalSteps}`
   const showBack = stepIndex > 0
+  const isDemonInfo = beat.id === 'demon-info'
+
+  const handleNext = () => {
+    if (isDemonInfo && demonBluffs.length < 3) {
+      setBluffConfirmOpen(true)
+      return
+    }
+    onNext()
+  }
 
   return (
     <section className="flex min-h-dvh min-w-0 flex-col overflow-x-hidden pt-8">
@@ -100,6 +121,15 @@ export function CoachBeatView({
           ) : null}
           <p className="mt-8 text-body break-words">{prompt.short}</p>
 
+          {isDemonInfo ? (
+            <BluffPicker
+              assignments={assignments}
+              catalog={catalog}
+              selected={demonBluffs}
+              onToggle={onToggleDemonBluff}
+            />
+          ) : null}
+
           <button
             type="button"
             className="mt-4 min-h-11 text-body text-[var(--color-text-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
@@ -130,11 +160,29 @@ export function CoachBeatView({
         <button
           type="button"
           className="min-h-12 w-full rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-          onClick={onNext}
+          onClick={handleNext}
         >
           Next
         </button>
       </footer>
+
+      {bluffConfirmOpen ? (
+        <ConfirmDialog
+          title="Bluffs incomplete"
+          confirmLabel="Continue anyway"
+          dismissLabel="Keep editing"
+          onConfirm={() => {
+            setBluffConfirmOpen(false)
+            onNext()
+          }}
+          onDismiss={() => setBluffConfirmOpen(false)}
+        >
+          <p>
+            You have {demonBluffs.length} of 3 bluffs. You can continue, but the
+            Demon info step is easier with all three.
+          </p>
+        </ConfirmDialog>
+      ) : null}
     </section>
   )
 }

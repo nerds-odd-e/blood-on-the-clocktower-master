@@ -18,6 +18,7 @@ export function PlayScreen() {
   const diedTonightIds = useSetupSessionStore((state) => state.diedTonightIds)
   const playStarted = useSetupSessionStore((state) => state.playStarted)
   const playSurface = useSetupSessionStore((state) => state.playSurface)
+  const demonBluffs = useSetupSessionStore((state) => state.demonBluffs)
   const persistWriteStatus = useSetupSessionStore(
     (state) => state.persistWriteStatus,
   )
@@ -25,6 +26,9 @@ export function PlayScreen() {
   const retreatBeat = useSetupSessionStore((state) => state.retreatBeat)
   const clampBeatIndex = useSetupSessionStore((state) => state.clampBeatIndex)
   const setPlaySurface = useSetupSessionStore((state) => state.setPlaySurface)
+  const toggleDemonBluff = useSetupSessionStore(
+    (state) => state.toggleDemonBluff,
+  )
   const retryCriticalPersist = useSetupSessionStore(
     (state) => state.retryCriticalPersist,
   )
@@ -158,7 +162,10 @@ export function PlayScreen() {
       totalSteps={total}
       playerName={playerName}
       catalog={catalog}
+      assignments={assignments}
+      demonBluffs={demonBluffs}
       persistWriteStatus={persistWriteStatus}
+      onToggleDemonBluff={toggleDemonBluff}
       onNext={() => advanceBeat(total)}
       onBack={() => retreatBeat()}
       onOpenGrimoire={() => setPlaySurface('grimoire')}
