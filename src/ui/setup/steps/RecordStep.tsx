@@ -83,7 +83,11 @@ export function RecordStep({ onBack, onStartNight }: RecordStepProps) {
 
       {selectedPlayerId ? (
         <RolePicker
-          remaining={remainingTokens(bag, assignments)}
+          remaining={remainingTokens(
+            bag,
+            assignments,
+            selectedPlayerId ?? undefined,
+          )}
           roles={roles}
           canClear={selectedAssignment !== undefined}
           onAssign={(roleId) => {
