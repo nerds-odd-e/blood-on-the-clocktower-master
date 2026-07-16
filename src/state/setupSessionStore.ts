@@ -111,6 +111,10 @@ type SetupSessionState = PersistedSetupSession & {
   retryCriticalPersist: () => Promise<void>
   advanceToNightReady: () => Promise<void>
   startFirstNight: () => void
+  advanceBeat: (queueLength: number) => void
+  retreatBeat: () => void
+  clampBeatIndex: (queueLength: number) => void
+  setPlaySurface: (playSurface: PlaySurface) => void
 }
 
 function partializedSession(state: PersistedSetupSession) {
@@ -284,6 +288,32 @@ export const useSetupSessionStore = create<SetupSessionState>()(
           playSurface: 'coach',
           playStarted: true,
         }),
+      advanceBeat: (queueLength) =>
+        set((state) => {
+          if (queueLength <= 0) {
+            return { playSurface: 'bridge' as const }
+          }
+          if (state.beatIndex >= queueLength - 1) {
+            return { playSurface: 'bridge' as const }
+          }
+          return { beatIndex: state.beatIndex + 1 }
+        }),
+      retreatBeat: () =>
+        set((state) => ({
+          beatIndex: Math.max(0, state.beatIndex - 1),
+        })),
+      clampBeatIndex: (queueLength) =>
+        set((state) => {
+          if (queueLength <= 0) {
+            return state.beatIndex === 0 ? state : { beatIndex: 0 }
+          }
+          const maxIndex = queueLength - 1
+          if (state.beatIndex > maxIndex) {
+            return { beatIndex: maxIndex }
+          }
+          return state
+        }),
+      setPlaySurface: (playSurface) => set({ playSurface }),
     }),
     {
       name: SETUP_SESSION_STORAGE_KEY,

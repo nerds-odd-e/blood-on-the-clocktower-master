@@ -97,6 +97,21 @@ body {
   line-height: 1.4;
 }
 
+@keyframes coach-beat-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.coach-beat-enter {
+  animation: coach-beat-enter 200ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

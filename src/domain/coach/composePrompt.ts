@@ -1,6 +1,5 @@
 import type { Beat, NightKind } from '../engine'
-import type { LoadedCatalog } from '../script'
-import type { CoachCopyEntry } from '../script'
+import type { CoachCopyEntry, LoadedCatalog } from '../script'
 
 export type ComposePromptContext = {
   nightKind: NightKind
