@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-07-16T07:38:42.812Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-07-16T07:49:12.919Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 10
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 02 execution started
 
-Progress: [██████░░░░] 60%
+Progress: [███████░░░] 70%
 
 ## Performance Metrics
 
@@ -64,6 +64,7 @@ Progress: [██████░░░░] 60%
 | Phase 01 P04 | 7min | 2 tasks | 5 files |
 | Phase 01 P05 | 8min | 2 tasks | 4 files |
 | Phase 02 P01 | 9min | 2 tasks | 7 files |
+| Phase 02 P02 | 14min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Offline proof uses browserContext.setOffline against vite preview after SW control
 - [Phase ?]: wave_0_complete true; nyquist_compliant left for validate-phase
 - [Phase ?]: TDD Task 1 suite green on first run — PWA already in 01-03; no separate RED fail
+- [Phase ?]: Validate persisted setup data during Zustand merge and expose hydration failure as an ephemeral UI flag.
+- [Phase ?]: Keep optional player profiles in session state only; bag generation remains independent of profiles.
 
 ### Pending Todos
 
@@ -118,6 +121,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T07:38:42.808Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-07-16T07:49:12.915Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

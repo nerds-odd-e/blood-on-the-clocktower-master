@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **SETUP-01**: Storyteller can select Trouble Brewing and enter unique player names with seating order
 - [ ] **SETUP-02**: Storyteller can set game difficulty at the start of a game
-- [ ] **SETUP-03**: Storyteller can optionally set experience, age band, and notes per player (sensible defaults when blank)
+- [x] **SETUP-03**: Storyteller can optionally set experience, age band, and notes per player (sensible defaults when blank)
 - [ ] **SETUP-04**: App generates a legal Trouble Brewing bag from player count, difficulty, and optional player profiles
 - [x] **SETUP-05**: Setup wizard walks script → players → difficulty → bag → deal → role recording in order
 
@@ -75,7 +75,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | SETUP-01 | Phase 2 | Complete |
 | SETUP-02 | Phase 2 | Pending |
-| SETUP-03 | Phase 2 | Pending |
+| SETUP-03 | Phase 2 | Complete |
 | SETUP-04 | Phase 2 | Pending |
 | SETUP-05 | Phase 2 | Complete |
 | GRIM-01 | Phase 2 | Pending |
