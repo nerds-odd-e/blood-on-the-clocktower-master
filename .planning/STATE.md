@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 02
 current_phase_name: setup-wizard-grimoire-capture
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-07-16T07:49:12.919Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-07-16T07:57:09.803Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 ## Current Position
 
 Phase: 02 (setup-wizard-grimoire-capture) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-16 — Phase 02 execution started
 
-Progress: [███████░░░] 70%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [███████░░░] 70%
 | Phase 01 P05 | 8min | 2 tasks | 4 files |
 | Phase 02 P01 | 9min | 2 tasks | 7 files |
 | Phase 02 P02 | 14min | 2 tasks | 12 files |
+| Phase 02 P03 | 6min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Recent decisions affecting current work:
 - [Phase ?]: TDD Task 1 suite green on first run — PWA already in 01-03; no separate RED fail
 - [Phase ?]: Validate persisted setup data during Zustand merge and expose hydration failure as an ephemeral UI flag.
 - [Phase ?]: Keep optional player profiles in session state only; bag generation remains independent of profiles.
+- [Phase 02]: Represent Drunk with a Townsfolk cover token while retaining true Outsider composition. — Keeps the digital grimoire aligned with the physical token players draw.
+- [Phase 02]: Generate bags from player count, difficulty, and catalog only. — Enforces D-07 profile isolation at the type and store boundary.
 
 ### Pending Todos
 
@@ -121,6 +124,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T07:49:12.915Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-07-16T07:57:09.799Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
