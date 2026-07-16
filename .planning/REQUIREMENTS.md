@@ -73,27 +73,27 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SETUP-01 | — | Pending |
-| SETUP-02 | — | Pending |
-| SETUP-03 | — | Pending |
-| SETUP-04 | — | Pending |
-| SETUP-05 | — | Pending |
-| GRIM-01 | — | Pending |
-| GRIM-02 | — | Pending |
-| GRIM-03 | — | Pending |
-| GRIM-04 | — | Pending |
-| COACH-01 | — | Pending |
-| COACH-02 | — | Pending |
-| COACH-03 | — | Pending |
-| COACH-04 | — | Pending |
-| PLAT-01 | — | Pending |
-| PLAT-02 | — | Pending |
+| SETUP-01 | Phase 2 | Pending |
+| SETUP-02 | Phase 2 | Pending |
+| SETUP-03 | Phase 2 | Pending |
+| SETUP-04 | Phase 2 | Pending |
+| SETUP-05 | Phase 2 | Pending |
+| GRIM-01 | Phase 2 | Pending |
+| GRIM-02 | Phase 2 | Pending |
+| GRIM-03 | Phase 3 | Pending |
+| GRIM-04 | Phase 3 | Pending |
+| COACH-01 | Phase 3 | Pending |
+| COACH-02 | Phase 3 | Pending |
+| COACH-03 | Phase 3 | Pending |
+| COACH-04 | Phase 3 | Pending |
+| PLAT-01 | Phase 1 | Pending |
+| PLAT-02 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 15 total
-- Mapped to phases: 0
-- Unmapped: 15
+- Mapped to phases: 15
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-07-16*
-*Last updated: 2026-07-16 after requirements approval*
+*Last updated: 2026-07-16 after roadmap creation*
