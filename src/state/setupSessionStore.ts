@@ -251,6 +251,11 @@ export const useSetupSessionStore = create<SetupSessionState>()(
       storage: createJSONStorage(() => idbStorage),
       partialize: (state) => partializedSession(state),
       merge: (persistedState, currentState) => {
+        // Empty IndexedDB / first visit: zustand calls merge(undefined, current).
+        // That is not a corrupt restore — keep the fresh in-memory session.
+        if (persistedState == null) {
+          return currentState
+        }
         const parsed = PersistedSetupSessionSchema.safeParse(persistedState)
         if (!parsed.success) {
           return {

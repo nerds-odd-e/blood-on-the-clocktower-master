@@ -99,12 +99,33 @@ export function assertSetupSessionSemantics(
     return fail(bagValidation.issues[0] ?? 'Bag failed validateBag')
   }
 
+  const tokenCounts = new Map<string, number>()
+  for (const roleId of bag.tokens) {
+    tokenCounts.set(roleId, (tokenCounts.get(roleId) ?? 0) + 1)
+  }
+
   for (const [key, assignment] of Object.entries(assignments)) {
     if (key !== assignment.playerId) {
       return fail('Assignment key must equal assignment.playerId')
     }
     if (!ids.has(assignment.playerId)) {
       return fail('Assignment references unknown player')
+    }
+
+    const remaining = tokenCounts.get(assignment.bagRoleId) ?? 0
+    if (remaining <= 0) {
+      return fail('Assignment bagRoleId is not among bag tokens')
+    }
+    tokenCounts.set(assignment.bagRoleId, remaining - 1)
+
+    const isDrunkCover =
+      bag.drunk != null && assignment.bagRoleId === bag.drunk.coverRoleId
+    if (isDrunkCover) {
+      if (assignment.trueRoleId !== 'drunk') {
+        return fail('Drunk cover assignment must set trueRoleId to drunk')
+      }
+    } else if (assignment.trueRoleId === 'drunk') {
+      return fail('trueRoleId drunk requires the Drunk cover bag token')
     }
   }
 
