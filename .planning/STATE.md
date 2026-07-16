@@ -23,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16)
 
 **Core value:** A new Storyteller can run a complete Trouble Brewing game without a paper night sheet — always knowing what to do next and what to say.
-**Current focus:** Phase 02 — setup-wizard-grimoire-capture
+**Current focus:** Phase 3 — Night Coach & Live Grimoire
 
 ## Current Position
 

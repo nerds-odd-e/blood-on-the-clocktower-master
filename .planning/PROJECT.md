@@ -12,15 +12,14 @@ A new Storyteller can run a complete Trouble Brewing game without a paper night 
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Setup wizard: script (TB), players, difficulty, optional player profiles → generate bag — Validated in Phase 2: Setup Wizard & Grimoire Capture
+- [x] Storyteller records who drew which role into a digital grimoire after random deal — Validated in Phase 2: Setup Wizard & Grimoire Capture
+- [x] Difficulty is configurable in the UI at game start — Validated in Phase 2: Setup Wizard & Grimoire Capture
+- [x] Player profiles influence overall setup difficulty (not who gets which role — bag draw stays random) — Validated in Phase 2 (profiles optional; bag from count + difficulty)
 
 ### Active
 
-- [ ] Setup wizard: script (TB), players, difficulty, optional player profiles → generate bag
-- [ ] Storyteller records who drew which role into a digital grimoire after random deal
 - [ ] Next-beat coach: current wake/step, short prompt, tap for more detail, primary Next action
-- [ ] Player profiles influence overall setup difficulty (not who gets which role — bag draw stays random)
-- [ ] Difficulty is configurable in the UI at game start
 
 ### Out of Scope
 
@@ -84,4 +83,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-16 after initialization*
+*Last updated: 2026-07-16 — Phase 2 complete (setup wizard + grimoire capture validated)*
