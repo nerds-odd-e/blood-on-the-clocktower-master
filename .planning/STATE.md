@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 1
 current_phase_name: Phone Shell & TB Catalog
 status: ready_to_execute
-stopped_at: Phase 1 plans revised (5 plans after scope split)
-last_updated: "2026-07-16T04:55:00.000Z"
+stopped_at: Phase 1 plans revised (verify gate fix)
+last_updated: "2026-07-16T04:46:00.000Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 1 plans revised iteration 2 — split 01-02 shell vs 01-03 catalog/PWA; catalog lock 01-04; offline 01-05
+last_activity_desc: Phase 1 plans revised iteration 3 — fix 01-02-02 build+rg verify so build failure cannot green
 progress:
   total_phases: 1
   completed_phases: 0
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-07-16)
 
 Phase: 1 of 3 (Phone Shell & TB Catalog)
 Plan: 0 of 5 in current phase
-Status: Ready to execute (5 plans after checker revision iteration 2, walking skeleton)
-Last activity: 2026-07-16 — Plans revised: 01-01 RED scaffold, 01-02 shell/routes, 01-03 catalog/PWA/green smoke, 01-04 catalog lock, 01-05 offline
+Status: Ready to execute (5 plans after checker revision iteration 3, walking skeleton)
+Last activity: 2026-07-16 — Iteration 3: fixed 01-02 Task 2 verify (`npm run build && ! rg -q …`) so build failure cannot green; VALIDATION.md row mirrored
 
 Progress: [░░░░░░░░░░] 0%
 
