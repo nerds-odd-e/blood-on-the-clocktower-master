@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 1
-current_phase_name: Phone Shell & TB Catalog
-status: ready_to_execute
-stopped_at: Phase 1 plans revised (verify gate fix)
-last_updated: "2026-07-16T04:46:00.000Z"
+current_phase: 01
+current_phase_name: phone-shell-tb-catalog
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-07-16T05:03:30.042Z"
 last_activity: 2026-07-16
-last_activity_desc: Phase 1 plans revised iteration 3 — fix 01-02-02 build+rg verify so build failure cannot green
+last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 5
-  completed_plans: 0
+  completed_plans: 1
 ---
 
 # Project State
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16)
 
 **Core value:** A new Storyteller can run a complete Trouble Brewing game without a paper night sheet — always knowing what to do next and what to say.
-**Current focus:** Phase 1 — Phone Shell & TB Catalog
+**Current focus:** Phase 01 — phone-shell-tb-catalog
 
 ## Current Position
 
-Phase: 1 of 3 (Phone Shell & TB Catalog)
-Plan: 0 of 5 in current phase
-Status: Ready to execute (5 plans after checker revision iteration 3, walking skeleton)
-Last activity: 2026-07-16 — Iteration 3: fixed 01-02 Task 2 verify (`npm run build && ! rg -q …`) so build failure cannot green; VALIDATION.md row mirrored
+Phase: 01 (phone-shell-tb-catalog) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-07-16 — Phase 01 execution started
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
@@ -54,6 +54,11 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 01 P01 | 10min | 2 tasks | 25 files |
 
 ## Accumulated Context
 
@@ -65,6 +70,9 @@ Recent decisions affecting current work:
 - Roadmap: 3-phase MVP so playable TB night lands at end of Phase 3 (wizard → bag → record → coach)
 - Phone-first + offline PWA ships in Phase 1 with the shell, not deferred
 - v2 (assists, day phase, other scripts) stays out of this milestone
+- [Phase ?]: Scaffolded create-vite via /tmp merge to preserve e2e/.planning
+- [Phase ?]: Playwright-only Phase 1 testing; no Vitest/jsdom/Testing Library (D-05 D-07)
+- [Phase ?]: Kept create-vite 9.x oxlint baseline over outdated eslint/vite.svg assumptions
 
 ### Pending Todos
 
@@ -86,6 +94,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-16T04:55:00.000Z
-Stopped at: Phase 1 plans revised (iteration 2/3)
-Resume file: .planning/phases/01-phone-shell-tb-catalog/01-01-PLAN.md
+Last session: 2026-07-16T05:03:30.038Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None
