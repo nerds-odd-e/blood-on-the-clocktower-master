@@ -106,7 +106,14 @@ Plans:
   4. First-night Demon/Minion information steps appear when those roles are in play, and Storyteller can record Demon bluffs
   5. Storyteller can mark players alive/dead and place/clear Trouble Brewing reminder tokens during play
 
-**Plans:** TBD
+**Plans:** 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Wave 0 RED unit + Playwright gates; invert Night ready /play stub contracts
+- [ ] 03-02-PLAN.md — buildNightBeats engine + persist v2 + Start first night → PlayScreen beat landing
+- [ ] 03-03-PLAN.md — coach-copy + composePrompt + full-screen Next/expand/Back coach UX
+- [ ] 03-04-PLAN.md — Minion/Demon Info gating + Demon bluff picker + soft confirm; green play-coach E2E
+- [ ] 03-05-PLAN.md — Live grimoire (dead/reminders/truth) + Night complete → Start other night; green play-grimoire E2E
 
 **UI hint**: yes
 
@@ -119,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Phone Shell & TB Catalog | 5/5 | In Progress|  |
 | 2. Setup Wizard & Grimoire Capture | 6/6 | Complete    | 2026-07-16 |
-| 3. Night Coach & Live Grimoire | 0/TBD | Not started | - |
+| 3. Night Coach & Live Grimoire | 0/5 | Not started | - |
 
 ## Coverage Map
 
