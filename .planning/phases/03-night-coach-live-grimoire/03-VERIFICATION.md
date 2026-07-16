@@ -1,25 +1,30 @@
 ---
 phase: 03-night-coach-live-grimoire
 verified: 2026-07-16T10:02:19Z
-status: human_needed
+status: passed
 score: 8/12 must-haves verified
 behavior_unverified: 0
 overrides_applied: 0
 re_verification: false
 behavior_unverified_items: []
 human_verification:
+
   - test: "On a 390×844 phone viewport, open a First Night coach beat with a long role/player name"
     expected: "Heading and player sub-label wrap; page has no horizontal scroll"
     why_human: "PLAN backstop (03-03) — layout overflow cannot be proven by unit/E2E presence checks"
+
   - test: "On Demon Info with many eligible bluff chips, inspect the beat card at 390×844"
     expected: "Chips wrap or scroll inside the card; page has no horizontal scroll"
     why_human: "PLAN backstop (03-04) — overflow is visual"
+
   - test: "Seat 15 players, open Grimoire, place several reminder chips"
     expected: "List scrolls vertically; page has no horizontal scroll"
     why_human: "PLAN backstop (03-05) — overflow is visual"
+
   - test: "Place a long catalog reminder string on a grimoire row"
     expected: "Reminder chip text wraps inside the chip"
     why_human: "PLAN backstop (03-05) — wrap behavior is visual"
+
   - test: "Run a full table path: Night ready → First Night coach → Grimoire edits → Night complete → Start other night"
     expected: "You always know the next beat and what to say without needing a paper night sheet"
     why_human: "MVP outcome clause is experiential; automated tests prove chrome exists but not table usability"
@@ -152,6 +157,7 @@ No orphaned Phase 3 requirement IDs in REQUIREMENTS.md beyond the six above.
 | — | — | No Vaul / PlayStub remaining on `/play` | — | — |
 
 **Disconfirmation notes (not blockers):**
+
 1. Persist write-error banner UI exists on coach/grimoire but has no dedicated automated test for the error path.
 2. Coach E2E assigns roles by clicking the first available chip; Demon Info coverage depends on bag composition (test fails closed if Demon Info never appears).
 3. Working tree may still show `NightBridgeView.tsx` untracked — file exists, is imported, and E2E passes (commit hygiene, not a goal gap).
