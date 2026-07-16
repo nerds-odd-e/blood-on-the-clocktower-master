@@ -28,3 +28,8 @@ playwright/.cache
 *.njsproj
 *.sln
 *.sw?
+
+# Nix / direnv
+.direnv
+result
+result-*

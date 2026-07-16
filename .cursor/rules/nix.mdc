@@ -1,0 +1,36 @@
+---
+description: Always run repo tooling through the Nix flake via nix develop
+alwaysApply: true
+---
+
+# Nix development environment
+
+This repo is developed inside the Nix flake (`flake.nix`).
+
+## Required command prefix
+
+Prefix **every** shell command that runs project tooling with:
+
+```bash
+CURSOR_DEV=true nix develop -c …
+```
+
+Examples:
+
+```bash
+CURSOR_DEV=true nix develop -c npm install
+CURSOR_DEV=true nix develop -c npm run dev
+CURSOR_DEV=true nix develop -c npm run build
+CURSOR_DEV=true nix develop -c npm test
+CURSOR_DEV=true nix develop -c npx playwright install
+```
+
+## Exceptions
+
+- **Git** commands do **not** need the Nix prefix — run `git` directly.
+- Pure filesystem reads/writes via editor tools do not need Nix.
+- Do not run bare `npm`, `node`, `npx`, or `playwright` outside `nix develop` unless the user explicitly bypasses Nix.
+
+## Why
+
+The flake pins Node.js and related tooling so agent and human environments match. Skipping the prefix risks wrong Node versions and flaky builds/tests.
