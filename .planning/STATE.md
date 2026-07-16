@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 1
-current_phase_name: Phone Shell & TB Catalog
-status: planning
-stopped_at: Completed 03-05-PLAN.md
-last_updated: "2026-07-16T10:12:59.185Z"
+status: Awaiting next milestone
+stopped_at: Completed quick home Start over
+last_updated: "2026-07-16T10:43:05.520Z"
 last_activity: 2026-07-16
-last_activity_desc: Quick home Start over complete
+last_activity_desc: Milestone v1.0 completed and archived
 progress:
   total_phases: 3
   completed_phases: 3
   total_plans: 16
   completed_plans: 16
+current_phase: 1
+current_phase_name: Phone Shell & TB Catalog
 ---
 
 # Project State
@@ -23,16 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16)
 
 **Core value:** A new Storyteller can run a complete Trouble Brewing game without a paper night sheet — always knowing what to do next and what to say.
-**Current focus:** Phase 1 human UAT debt (Phase 3 complete) — then milestone seal
+**Current focus:** Planning next milestone (`/gsd-new-milestone`)
 
 ## Current Position
 
-Phase: 1 — Phone Shell & TB Catalog
-Plan: Not started
-Status: Phase 1 UAT incomplete (blocking milestone seal)
-Last activity: 2026-07-16 — Phase 3 UAT passed (5/5); Phase 1 human verification still open
-
-Progress: [██████████] 100%
+Phase: — (v1.0 MVP shipped)
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-16 — Milestone v1.0 archived (override_closeout)
 
 ## Performance Metrics
 
@@ -159,3 +157,7 @@ Items acknowledged and carried forward from previous milestone close:
 Last session: 2026-07-16T10:20:00.000Z
 Stopped at: Completed quick home Start over
 Resume file: None
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
