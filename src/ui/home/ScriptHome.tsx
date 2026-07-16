@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   loadCatalog,
@@ -5,6 +6,8 @@ import {
   type Role,
   type TeamCounts,
 } from '../../domain/script'
+import { useSetupSessionStore } from '../../state/setupSessionStore'
+import { ConfirmDialog } from '../setup/components/ConfirmDialog'
 
 type CatalogView =
   | { status: 'ok'; catalog: LoadedCatalog }
@@ -129,9 +132,25 @@ function RoleRoster({ roles }: { roles: Role[] }) {
  * Copy from 01-UI-SPEC Copywriting Contract — React text children only (T-01-01).
  * Offline ready chip is optimistic on valid catalog (D-01 D-02 D-03) — not SW-gated.
  * Catalog facts + data-* hooks expose TB correctness for Playwright (D-07 D-08).
+ * Start over (when session has progress) wipes via resetFresh after ConfirmDialog.
  */
 export function ScriptHome() {
   const view = readCatalog()
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const hasHydrated = useSetupSessionStore((s) => s.hasHydrated)
+  const players = useSetupSessionStore((s) => s.players)
+  const bag = useSetupSessionStore((s) => s.bag)
+  const playStarted = useSetupSessionStore((s) => s.playStarted)
+  const wizardStep = useSetupSessionStore((s) => s.wizardStep)
+  const resetFresh = useSetupSessionStore((s) => s.resetFresh)
+  const clearHydrationError = useSetupSessionStore((s) => s.clearHydrationError)
+
+  const hasSessionProgress =
+    players.length > 0 ||
+    bag !== null ||
+    playStarted ||
+    wizardStep !== 'script'
+  const showStartOver = hasHydrated && hasSessionProgress
 
   return (
     <section className="flex flex-col gap-8 pt-16 pb-8">
@@ -219,13 +238,42 @@ export function ScriptHome() {
             <RoleRoster roles={view.catalog.roles} />
           </article>
 
-          <Link
-            to="/setup"
-            className="inline-flex min-h-11 items-center justify-center rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-          >
-            Start setup
-          </Link>
+          <div className="flex flex-col gap-2">
+            <Link
+              to="/setup"
+              className="inline-flex min-h-11 items-center justify-center rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            >
+              Start setup
+            </Link>
+            {showStartOver ? (
+              <button
+                type="button"
+                data-testid="home-start-over"
+                className="inline-flex min-h-11 items-center justify-center rounded-sm px-6 text-body underline underline-offset-4 text-[var(--color-text-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
+                onClick={() => setConfirmOpen(true)}
+              >
+                Start over
+              </button>
+            ) : null}
+          </div>
         </div>
+      ) : null}
+
+      {confirmOpen ? (
+        <ConfirmDialog
+          title="Start over?"
+          confirmLabel="Start over"
+          dismissLabel="Keep game"
+          destructive
+          onConfirm={() => {
+            resetFresh()
+            clearHydrationError()
+            setConfirmOpen(false)
+          }}
+          onDismiss={() => setConfirmOpen(false)}
+        >
+          Clears this game — players, bag, roles, and night progress.
+        </ConfirmDialog>
       ) : null}
     </section>
   )
