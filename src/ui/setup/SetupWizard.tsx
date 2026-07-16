@@ -1,5 +1,6 @@
 import { useSetupSessionStore } from '../../state/setupSessionStore'
 import { DifficultyStep } from './steps/DifficultyStep'
+import { BagStep } from './steps/BagStep'
 import { PlayersStep } from './steps/PlayersStep'
 import { ScriptStep } from './steps/ScriptStep'
 
@@ -44,6 +45,7 @@ export function SetupWizard() {
       ) : null}
       {wizardStep === 'players' ? <PlayersStep /> : null}
       {wizardStep === 'difficulty' ? <DifficultyStep /> : null}
+      {wizardStep === 'bag' ? <BagStep /> : null}
     </div>
   )
 }

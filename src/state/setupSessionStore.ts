@@ -1,6 +1,8 @@
 import { z } from 'zod'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { buildBag, type BagPlan } from '../domain/bag'
+import { loadCatalog } from '../domain/script'
 import { idbStorage } from './idbStorage'
 
 export const WizardStepSchema = z.enum([
@@ -16,6 +18,19 @@ export const DifficultySchema = z.enum(['easy', 'standard', 'hard'])
 export const ExperienceSchema = z.enum(['new', 'some', 'veteran'])
 export const AgeSchema = z.enum(['kid', 'teen', 'adult'])
 
+const BagPlanSchema = z.object({
+  tokens: z.array(z.string().min(1)).min(5).max(15),
+  composition: z.object({
+    townsfolk: z.number().int().nonnegative(),
+    outsiders: z.number().int().nonnegative(),
+    minions: z.number().int().nonnegative(),
+    demons: z.number().int().nonnegative(),
+  }),
+  drunk: z.object({ coverRoleId: z.string().min(1) }).nullable(),
+  setupNotes: z.array(z.string()),
+  whyNote: z.string().min(1),
+})
+
 export const SetupPlayerSchema = z.object({
   id: z.string().min(1),
   name: z.string(),
@@ -28,7 +43,7 @@ const PersistedSetupSessionSchema = z.object({
   wizardStep: WizardStepSchema,
   players: z.array(SetupPlayerSchema).max(15),
   difficulty: DifficultySchema,
-  bag: z.null(),
+  bag: BagPlanSchema.nullable(),
   assignments: z.record(z.string(), z.unknown()),
 })
 
@@ -45,6 +60,8 @@ type SetupSessionState = PersistedSetupSession & {
   hydrationError: boolean
   setWizardStep: (wizardStep: WizardStep) => void
   setDifficulty: (difficulty: Difficulty) => void
+  generateBag: () => void
+  clearBag: () => void
   addPlayer: () => void
   updatePlayer: (id: string, changes: Partial<Omit<SetupPlayer, 'id'>>) => void
   movePlayer: (id: string, direction: -1 | 1) => void
@@ -68,7 +85,18 @@ export const useSetupSessionStore = create<SetupSessionState>()(
       hasHydrated: false,
       hydrationError: false,
       setWizardStep: (wizardStep) => set({ wizardStep }),
-      setDifficulty: (difficulty) => set({ difficulty }),
+      setDifficulty: (difficulty) =>
+        set({ difficulty, bag: null, assignments: {} }),
+      generateBag: () =>
+        set((state) => {
+          const bag: BagPlan = buildBag({
+            playerCount: state.players.length,
+            difficulty: state.difficulty,
+            catalog: loadCatalog(),
+          })
+          return { bag, assignments: {}, wizardStep: 'bag' }
+        }),
+      clearBag: () => set({ bag: null, assignments: {} }),
       addPlayer: () =>
         set((state) => ({
           players:

@@ -12,6 +12,7 @@ const difficulties: { value: Difficulty; label: string }[] = [
 export function DifficultyStep() {
   const difficulty = useSetupSessionStore((state) => state.difficulty)
   const setDifficulty = useSetupSessionStore((state) => state.setDifficulty)
+  const generateBag = useSetupSessionStore((state) => state.generateBag)
   const setWizardStep = useSetupSessionStore((state) => state.setWizardStep)
 
   return (
@@ -56,7 +57,7 @@ export function DifficultyStep() {
         <button
           type="button"
           className="min-h-12 rounded-sm bg-[var(--color-accent)] px-6 text-body font-semibold text-[#0B0B0B]"
-          onClick={() => setWizardStep('bag')}
+          onClick={generateBag}
         >
           Next step
         </button>

@@ -42,9 +42,9 @@ created: 2026-07-16
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | 02-02-T2 | 02 | 2 | SETUP-01 | T-02-02 | Unique names + seating 5–15 gate | e2e | `npx playwright test e2e/setup-wizard.spec.ts` | ✅ exists | ✅ green |
-| 02-03-T2 | 03 | 3 | SETUP-02 | — | Difficulty default Standard; Easy/Hard selectable | e2e | `npx playwright test e2e/setup-wizard.spec.ts` | ❌ W0 | ⬜ pending |
+| 02-03-T2 | 03 | 3 | SETUP-02 | — | Difficulty default Standard; Easy/Hard selectable | e2e | `npx playwright test e2e/setup-wizard.spec.ts` | ✅ exists | ✅ green |
 | 02-02-T2 | 02 | 2 | SETUP-03 | T-02-02 | More → Experience New/Some/Veteran, Age Kid/Teen/Adult, notes persist after returning from Difficulty | e2e | `npx playwright test e2e/setup-wizard.spec.ts` | ✅ exists | ✅ green |
-| 02-03-T1 | 03 | 3 | SETUP-04 | T-02-04 | Legal bag for N×difficulty; Baron/Drunk rules | unit | `npx vitest run src/domain/bag` | ❌ W0 | ⬜ pending |
+| 02-03-T1 | 03 | 3 | SETUP-04 | T-02-04 | Legal bag for N×difficulty; Baron/Drunk rules | unit | `npx vitest run src/domain/bag` | ✅ exists | ✅ green |
 | 02-02-T2 / 02-05-T2 | 02 / 05 | 2 / 5 | SETUP-05 | — | Script → players → difficulty order enforced; Night ready stays on /setup in plan 05 | e2e | `npx playwright test e2e/setup-wizard.spec.ts e2e/setup-record.spec.ts` | ✅ wizard scaffold | ✅ current slice green |
 | 02-04-T2 | 04 | 4 | GRIM-01 | T-02-08 | Tap player → pick remaining token; clear restores | e2e | `npx playwright test e2e/setup-record.spec.ts` | ❌ W0 | ⬜ pending |
 | 02-05-T2 | 05 | 5 | GRIM-02 | T-02-12 | Mismatch warning; Start anyway → Night ready | e2e | `npx playwright test e2e/setup-record.spec.ts` | ❌ W0 | ⬜ pending |
@@ -59,7 +59,7 @@ created: 2026-07-16
 
 - [x] Install `zustand`, `idb-keyval`, `vitest`; add `test:unit` script
 - [x] `vitest.config.ts` with `environment: 'node'`, include `src/**/*.test.ts`
-- [ ] `src/domain/bag/buildBag.test.ts` — N=5..15 × 3 difficulties; Baron±Drunk fixtures; never `tokens.includes('drunk')`
+- [x] `src/domain/bag/buildBag.test.ts` — N=5..15 × 3 difficulties; Baron±Drunk fixtures; never `tokens.includes('drunk')`
 - [ ] `src/domain/grimoire/validateAssignments.test.ts` — match / missing / duplicate
 - [x] `e2e/setup-wizard.spec.ts` — RED happy path through five players to Difficulty
 - [ ] `e2e/setup-record.spec.ts` — assign all + soft gate

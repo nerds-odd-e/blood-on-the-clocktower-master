@@ -57,6 +57,33 @@ test.describe('setup wizard roster', () => {
     await expect(
       persistedFirstPlayer.getByPlaceholder('Optional notes'),
     ).toHaveValue('First-time player; offer short prompts.')
+
+    await page.getByRole('button', { name: 'Next step' }).click()
+    await expect(page.getByRole('button', { name: 'Standard' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    await page.getByRole('button', { name: 'Easy' }).click()
+    await expect(page.getByRole('button', { name: 'Easy' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    await page.getByRole('button', { name: 'Hard' }).click()
+    await expect(page.getByRole('button', { name: 'Hard' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    await page.getByRole('button', { name: 'Next step' }).click()
+
+    await expect(page.getByRole('heading', { name: 'Your bag' })).toBeVisible()
+    await expect(page.getByTestId('setup-bag-list')).toBeVisible()
+    await expect(
+      page.getByText('Keep this screen private — players should not see it.'),
+    ).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Accept bag' })).toBeEnabled()
+    await expect(page.getByRole('button', { name: 'Regenerate' })).toHaveCount(0)
+    await page.getByRole('button', { name: 'Accept bag' }).click()
+    await expect(page).toHaveURL(/\/setup/)
   })
 
   test('blocks invalid rosters and checks trimmed duplicate names on Next', async ({
