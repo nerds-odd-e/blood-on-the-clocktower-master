@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test:e2e": "playwright test"
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:offline": "playwright test e2e/offline.spec.ts"
   },
   "dependencies": {
     "@fontsource/fraunces": "^5.2.9",
