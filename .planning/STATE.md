@@ -3,17 +3,17 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Awaiting next milestone
-stopped_at: Completed quick home Start over
+stopped_at: Milestone v1.0 shipped
 last_updated: "2026-07-16T10:43:05.520Z"
 last_activity: 2026-07-16
-last_activity_desc: Milestone v1.0 completed and archived
+last_activity_desc: Milestone v1.0 archived (override_closeout)
 progress:
   total_phases: 3
   completed_phases: 3
   total_plans: 16
   completed_plans: 16
-current_phase: 1
-current_phase_name: Phone Shell & TB Catalog
+current_phase: null
+current_phase_name: —
 ---
 
 # Project State
@@ -137,11 +137,14 @@ None yet.
 
 ## Deferred Items
 
-Items acknowledged and carried forward from previous milestone close:
+Items acknowledged and deferred at milestone close on 2026-07-16 (override_closeout):
 
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
-| *(none)* | | | |
+| uat_gaps | Phase 01 01-UAT.md (6 pending scenarios) | testing | 2026-07-16 |
+| verification_gaps | Phase 01 01-VERIFICATION.md | human_needed | 2026-07-16 |
+
+Known verification overrides: 2. Closeout type: override_closeout.
 
 ## Quick Tasks Completed
 
