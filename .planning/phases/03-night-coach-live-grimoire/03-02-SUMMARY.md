@@ -117,7 +117,7 @@ Each task was committed atomically:
 1. **Task 1: Implement buildNightBeats and green unit goldens** - `f0dc728` (feat)
 2. **Task 2: Persist v2 play fields + Start first night → PlayScreen beat landing** - `50ccdc0` (feat)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `7f4c87c` (docs: complete night beat engine and Start handoff plan)
 
 ## Files Created/Modified
 
