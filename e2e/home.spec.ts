@@ -23,4 +23,24 @@ test.describe('home smoke', () => {
     await expect(page.getByRole('heading', { name: 'Setup' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Back to home' })).toBeVisible()
   })
+
+  for (const path of ['/', '/setup', '/play'] as const) {
+    test(`PLAT-01: ${path} has no horizontal document scroll`, async ({
+      page,
+    }) => {
+      await page.goto(path)
+      const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      }))
+      expect(scrollWidth).toBeLessThanOrEqual(clientWidth)
+    })
+  }
+
+  test('home has no account login or signup affordances', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByText(/log\s*in/i)).toHaveCount(0)
+    await expect(page.getByText(/sign\s*up/i)).toHaveCount(0)
+    await expect(page.getByRole('link', { name: /account/i })).toHaveCount(0)
+  })
 })
