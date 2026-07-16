@@ -115,7 +115,7 @@ Each task was committed atomically:
 1. **Task 1: Playwright offline reload and phone viewport suite** - `7552a16` (test)
 2. **Task 2: Confirm VALIDATION sampling map matches green suite** - `987e5b5` (docs)
 
-**Plan metadata:** (pending docs commit)
+**Plan metadata:** `900deb1` (docs: complete plan)
 
 ## Files Created/Modified
 
